@@ -8,7 +8,17 @@
         /* Basic styling */
         body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
         #welcomeMessage { font-size: 18px; font-weight: bold; margin: 10px; text-align: center; }
-        #gameArea { width: 500px; height: 500px; position: relative; background-image: url('RMACRAOUniversity1.png'); background-size: cover; background-position: center; border: 1px solid #ddd; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+		#gameArea {
+			display: none;
+			width: 500px;
+			height: 500px;
+			position: relative;
+			background-image: url('RMACRAOUniversity1.png');
+			background-size: cover;
+			background-position: center;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
 
         /* Desk container styling */
         .desk-container { position: absolute; width: 80px; height: 70px; display: flex; flex-direction: column; align-items: center; }
@@ -21,14 +31,14 @@
         /* Positioning each desk based on your numbered layout */
         #deskContainer1 { top: 51%; left: 42%; }
         #deskContainer2 { top: 25%; left: 42%; }
-        #deskContainer3 { top: 51%; left: 75%; }
-        #deskContainer4 { top: 51%; left: 16%; }
-        #deskContainer5 { top: 70%; left: 58%; }
-        #deskContainer6 { top: 70%; left: 32%; }
-        #deskContainer7 { top: 70%; left: 73%; }
-        #deskContainer8 { top: 70%; left: 18%; }
-        #deskContainer9 { top: 70%; left: 85%; }
-        #deskContainer10 { top: 70%; left: 6%; }
+        #deskContainer3 { top: 51%; left: 78%; }
+        #deskContainer4 { top: 51%; left: 10%; }
+        #deskContainer5 { top: 68%; left: 58%; }
+        #deskContainer6 { top: 68%; left: 25%; }
+        #deskContainer7 { top: 68%; left: 79%; }
+        #deskContainer8 { top: 68%; left: 5%; }
+        #deskContainer9 { top: 80%; left: 60%; }
+        #deskContainer10 { top: 80%; left: 30%; }
 
         #infoPanel { margin-top: 20px; font-weight: bold; text-align: center; }
         #notification { color: #3c744c; font-weight: bold; margin-top: 10px; min-height: 20px; transition: opacity 0.5s; opacity: 0; }
@@ -37,7 +47,7 @@
         /* Floating points styling */
         .floating-points {
             position: absolute;
-            font-size: 16px;
+            font-size: 12px;
             color: #33348c; /* Set the color to purple */
             transition: transform 1s ease, opacity 1s ease; /* Smooth transition */
             opacity: 1; /* Start fully visible */
@@ -51,9 +61,99 @@
             display: none; /* Start hidden */
             border-radius: 50%; /* Make it circular */
         }
+		
+			#titleScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #f4f4f4;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			z-index: 10;
+		}
+
+		#titleImage {
+			max-width: 80%;
+			height: auto;
+			margin-bottom: 20px;
+		}
+
+		#startButton {
+			padding: 10px 20px;
+			font-size: 18px;
+			background-color: #33348c;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#startButton:hover {
+			background-color: #5555aa;
+		}
+
+		#gameArea {
+			display: none;
+		}
+
+
+		/* End Screen Styling */
+		#endScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			visibility: hidden; /* Hidden by default */
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		#endScreenContent {
+			background: rgba(255, 255, 255, 0.9) url('RMACRAOUniversityTransition.png') center/cover no-repeat;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+			text-align: center;
+		}
+
+		#replayButton, #nextLevelButton {
+			padding: 10px 20px;
+			margin: 10px;
+			font-size: 16px;
+			background-color: #33348c;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#replayButton:hover, #nextLevelButton:hover {
+			background-color: #5555aa;
+		}
+
+		
+		
+		
+		
     </style>
 </head>
 <body>
+
+<div id="titleScreen">
+    <img src="RMACRAOUniversityTitle.png" alt="RMACRAO University: From Admissions to Graduation" id="titleImage">
+	<button id="startButton" onclick="startGame()">Start</button>
+
+</div>
+
 
 <div id="welcomeMessage">Welcome to the Office of the Registrar, at RMACRAO University. Process some forms to gain points. Click the desk to process a form.</div>
 
@@ -71,6 +171,18 @@
     <img id="studentImage" src="Student1.png" alt="Student Worker" class="student-image" />
 </div>
 
+<!-- End Screen Popup -->
+<div id="endScreen">
+    <div id="endScreenContent">
+        <h2>Office Successfully Managed!</h2>
+        <p id="finalScore"></p>
+        <button id="replayButton" onclick="replayLevel()">Replay Level</button>
+        <button id="nextLevelButton" onclick="nextLevel()">Next Level</button>
+    </div>
+</div>
+
+
+
 <div id="infoPanel">
     <div id="notification"></div>
     <p id="pointsDisplay">Customer Service Points (CSP): 0</p>
@@ -79,37 +191,58 @@
 </div>
 
 <script>
+
+
+	// Move the startGame function outside of the DOMContentLoaded event
+	function startGame() {
+		console.log("Game started"); // Debugging line
+		document.getElementById("titleScreen").style.display = "none";
+		document.getElementById("gameArea").style.display = "block";
+		updateDisplay();
+	}
+
+	document.addEventListener("DOMContentLoaded", () => {
+		console.log("DOM fully loaded and parsed");
+	});
+
+
+
+
+
     let csp = 0;
     let totalCspEarned = 0;
     let deskUnlocked = { 1: true };
     let hasWorker = {};
-    let processingTimes = { 1: 1500 };
-    let pointsPerDesk = { 1: 5 };
+    let processingTimes = { 1: 500 };
+    let pointsPerDesk = { 1: 2 };
     let nextDeskToBuy = 2;
     let baseDeskCost = 50;
     let baseHireCost = 30;
     let deskInProgress = {};
+	let usedImages = []; // Initialize an array to keep track of used images
+
     const penaltyTime = 30000; // 30 seconds penalty time
 
     const deskLabels = [
         "Add/Drop Desk", "Degree Audit", "Transcript Processing",
         "Enrollment Verification", "Graduation Clearance", "Change of Major",
-        "Course Substitution", "Transfer Credit Evaluation", "Advising Appointments",
-        "Special Accommodations"
+        "Course Substitution", "Transfer Evals", "Advising Appointments",
+        "Special Accom."
     ];
+
 
     // Array of student image paths
     const studentImages = [
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student1.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student2.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student3.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student4.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student5.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student6.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student7.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student8.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student9.png',
-        'C:/Users/chads/Desktop/Chad/PythonFiles/Registrar Games/Student10.png',
+        'Student1.png',
+        'Student2.png',
+        'Student3.png',
+        'Student4.png',
+        'Student5.png',
+        'Student6.png',
+        'Student7.png',
+        'Student8.png',
+        'Student9.png',
+        'Student10.png',
     ];
 
     const ferpaQuestions = [
@@ -180,11 +313,12 @@
 	function createFloatingPoints(points, deskNumber) {
 		const pointElement = document.createElement("div");
 		pointElement.className = "floating-points";
-		pointElement.innerText = `+$${points}`;
+		pointElement.innerText = `+${points} CSP`; // Removed the dollar sign and added "CSP" label
+
 		pointElement.style.color = '#33348c'; // Set the color to purple
 
 		// Position the element at the desk's location
-		const desk = document.getElementById(`deskContainer${deskNumber}`); // Make sure this ID matches your desk container ID
+		const desk = document.getElementById(`deskContainer${deskNumber}`);
 		const deskRect = desk.getBoundingClientRect();
 		pointElement.style.left = `${deskRect.left + deskRect.width / 2}px`;
 		pointElement.style.top = `${deskRect.top + deskRect.height / 2}px`;
@@ -193,7 +327,6 @@
 
 		// Animate the points floating away from the desk
 		setTimeout(() => {
-			// Move the points upwards and fade out
 			pointElement.style.transform = 'translateY(-50px)'; // Adjust the value to change how far it floats
 			pointElement.style.opacity = 0; // Fade out effect
 		}, 0);
@@ -203,6 +336,7 @@
 			pointElement.remove();
 		}, 1050); // Adjust timing to match the animation duration
 	}
+
 
 
 
@@ -268,128 +402,142 @@
 	}
 
 
-    function unlockDesk(deskNumber) {
-        const newDeskContainer = document.createElement("div");
-        newDeskContainer.className = "desk-container";
-        newDeskContainer.id = `deskContainer${deskNumber}`;
+	function unlockDesk(deskNumber) {
+		const newDeskContainer = document.createElement("div");
+		newDeskContainer.className = "desk-container";
+		newDeskContainer.id = `deskContainer${deskNumber}`;
 
-        const newDesk = document.createElement("div");
-        newDesk.className = "desk";
-        newDesk.id = `desk${deskNumber}`;
-        newDesk.innerText = deskLabels[deskNumber - 1];
-        newDesk.onclick = () => serveStudent(deskNumber);
+		const newDesk = document.createElement("div");
+		newDesk.className = "desk";
+		newDesk.id = `desk${deskNumber}`;
+		newDesk.innerText = deskLabels[deskNumber - 1];
+		newDesk.onclick = () => serveStudent(deskNumber);
 
-        const worker = document.createElement("div");
-        worker.className = "worker";
-        worker.id = `worker${deskNumber}`;
+		const worker = document.createElement("div");
+		worker.className = "worker";
+		worker.id = `worker${deskNumber}`;
 
-        const progressBar = document.createElement("div");
-        progressBar.className = "progress-bar";
-        progressBar.id = `progressBar${deskNumber}`;
-        
-        const progressFill = document.createElement("div");
-        progressFill.className = "progress-bar-fill";
-        progressFill.id = `progressFill${deskNumber}`;
+		// Ensure progress bar and progress fill are created for every desk
+		const progressBar = document.createElement("div");
+		progressBar.className = "progress-bar";
+		progressBar.id = `progressBar${deskNumber}`;
+		progressBar.style.display = "block";
 
-        progressBar.appendChild(progressFill);
-        newDeskContainer.appendChild(newDesk);
-        newDeskContainer.appendChild(worker);
-        newDeskContainer.appendChild(progressBar);
-        document.getElementById("gameArea").appendChild(newDeskContainer);
+		const progressFill = document.createElement("div");
+		progressFill.className = "progress-bar-fill";
+		progressFill.id = `progressFill${deskNumber}`;
 
-        processingTimes[deskNumber] = processingTimes[deskNumber - 1] + 2000;
-        pointsPerDesk[deskNumber] = pointsPerDesk[deskNumber - 1] + 3;
+		progressBar.appendChild(progressFill);
+		newDeskContainer.appendChild(newDesk);
+		newDeskContainer.appendChild(worker);
+		newDeskContainer.appendChild(progressBar);
+		document.getElementById("gameArea").appendChild(newDeskContainer);
 
-        const hireCost = baseHireCost * deskNumber;
-        const hireWorkerButton = document.createElement("button");
-        hireWorkerButton.id = `hireWorkerButton${deskNumber}`;
-        hireWorkerButton.innerText = `Hire Work-Study Student for ${deskLabels[deskNumber - 1]} (${hireCost} CSP)`;
-        hireWorkerButton.onclick = () => hireWorker(deskNumber, hireCost);
-        document.getElementById("infoPanel").appendChild(hireWorkerButton);
+		processingTimes[deskNumber] = processingTimes[deskNumber - 1] + 2000;
+		pointsPerDesk[deskNumber] = pointsPerDesk[deskNumber - 1] + 3;
 
-        nextDeskToBuy += 1;
-        if (nextDeskToBuy <= deskLabels.length) {
-            document.getElementById("buyDeskButton").innerText = `Buy ${deskLabels[nextDeskToBuy - 1]} (${baseDeskCost * nextDeskToBuy} CSP)`;
-        } else {
-            document.getElementById("buyDeskButton").style.display = "none";
-        }
+		const hireCost = baseHireCost * deskNumber;
+		const hireWorkerButton = document.createElement("button");
+		hireWorkerButton.id = `hireWorkerButton${deskNumber}`;
+		hireWorkerButton.innerText = `Hire Work-Study Student for ${deskLabels[deskNumber - 1]} (${hireCost} CSP)`;
+		hireWorkerButton.onclick = () => hireWorker(deskNumber, hireCost);
+		document.getElementById("infoPanel").appendChild(hireWorkerButton);
 
-        updateDisplay();
-        showNotification(`${deskLabels[deskNumber - 1]} unlocked!`);
-    }
+		nextDeskToBuy += 1;
+		if (nextDeskToBuy <= deskLabels.length) {
+			document.getElementById("buyDeskButton").innerText = `Buy ${deskLabels[nextDeskToBuy - 1]} (${baseDeskCost * nextDeskToBuy} CSP)`;
+		} else {
+			document.getElementById("buyDeskButton").style.display = "none";
+		}
+
+		updateDisplay();
+		showNotification(`${deskLabels[deskNumber - 1]} unlocked!`);
+	}
+
 
 	function serveStudent(deskNumber) {
 		// When the desk is not automated
-		if (deskNumber === 1 && !hasWorker[1]) { 
-			csp += pointsPerDesk[deskNumber];
-			totalCspEarned += pointsPerDesk[deskNumber];
-			updateDisplay();
-			createFloatingPoints(pointsPerDesk[deskNumber], deskNumber); // Call floating points function
-			showNotification(`Served a student at ${deskLabels[deskNumber - 1]}`); 
-		} 
-		// When the desk is automated
-		else if (deskUnlocked[deskNumber]) {
-			if (hasWorker[deskNumber]) {
-				showNotification(`This desk is automated. Please wait for processing.`);
-				return; // Exit function if desk is automated
-			}
+		if (deskUnlocked[deskNumber] && !hasWorker[deskNumber]) {
 			if (!deskInProgress[deskNumber]) {
 				deskInProgress[deskNumber] = true;
 
+				// Get the progress bar and progress fill elements
+				const progressBar = document.getElementById(`progressBar${deskNumber}`);
 				const progressFill = document.getElementById(`progressFill${deskNumber}`);
-				progressFill.style.transition = 'none'; // Disable transitions for immediate action
-				progressFill.style.width = '0%'; // Reset the progress bar to 0%
+				
+				// Show the progress bar and reset it
+				progressBar.style.display = "block";
+				progressFill.style.transition = 'none';
+				progressFill.style.width = '0%';
 
-				// Start filling the progress bar immediately
-				progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
-				progressFill.style.width = '100%'; // Fill the progress bar
+				// Start the smooth filling of the progress bar
+				setTimeout(() => {
+					progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
+					progressFill.style.width = '100%';
+				}, 50); // Small delay to ensure transition effect
 
-				// After the progress fills, give points and reset the bar
+				// Complete the task after the specified time
 				setTimeout(() => {
 					csp += pointsPerDesk[deskNumber];
 					totalCspEarned += pointsPerDesk[deskNumber];
 					updateDisplay();
-					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber); // Call floating points function
+					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
 					showNotification(`Served a student at ${deskLabels[deskNumber - 1]}`);
 
-					// Immediately reset the progress bar without backtracking
-					progressFill.style.transition = 'none'; // Disable transition
-					progressFill.style.width = '0%'; // Reset the progress bar
-					deskInProgress[deskNumber] = false; // Mark the desk as not in progress
-
-					// Show the student image instead of the blue dot
-					showStudentImage(deskNumber);
+					// Reset and hide the progress bar after filling
+					progressFill.style.transition = 'none';
+					progressFill.style.width = '0%';
+					deskInProgress[deskNumber] = false;
+					progressBar.style.display = "none";
 				}, processingTimes[deskNumber]);
 			}
+		} 
+		// When the desk is automated
+		else if (deskUnlocked[deskNumber] && hasWorker[deskNumber]) {
+			showNotification(`This desk is automated. Please wait for processing.`);
+			return;
 		}
 	}
 
 
-    function hireWorker(deskNumber, hireCost) {
-        if (csp >= hireCost && !hasWorker[deskNumber]) {
-            csp -= hireCost;
-            hasWorker[deskNumber] = true;
-            document.getElementById(`worker${deskNumber}`).style.display = "none"; // Hide the worker
-            document.getElementById(`desk${deskNumber}`).classList.add("automated");
-            document.getElementById(`progressBar${deskNumber}`).style.display = "block";
-            document.getElementById(`hireWorkerButton${deskNumber}`).style.display = "none";
-            startAutoProcessing(deskNumber);
-            updateDisplay();
-            
-            // Show the student image for the desk
-            const studentImage = document.createElement("img");
-            studentImage.className = "student-image"; // Add class for styling
-            const randomIndex = Math.floor(Math.random() * studentImages.length);
-            studentImage.src = studentImages[randomIndex]; // Use random image
-            studentImage.style.display = "block"; // Show the student image
-            // Position it at the desk
-            studentImage.style.top = `${document.getElementById(`deskContainer${deskNumber}`).offsetTop - 15}px`;
-            studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`; // Adjust positioning
-            document.getElementById("gameArea").appendChild(studentImage); // Append new image to the game area
-        } else {
-            showNotification("Not enough CSP or worker already hired for this desk!");
-        }
-    }
+
+
+	 function hireWorker(deskNumber, hireCost) {
+		if (csp >= hireCost && !hasWorker[deskNumber]) {
+			csp -= hireCost;
+			hasWorker[deskNumber] = true;
+			document.getElementById(`worker${deskNumber}`).style.display = "none"; // Hide the worker
+			document.getElementById(`desk${deskNumber}`).classList.add("automated");
+			document.getElementById(`progressBar${deskNumber}`).style.display = "block";
+			document.getElementById(`hireWorkerButton${deskNumber}`).style.display = "none";
+			startAutoProcessing(deskNumber);
+			updateDisplay();
+
+			// Select a unique, unused image
+			let randomIndex;
+			do {
+				randomIndex = Math.floor(Math.random() * studentImages.length);
+			} while (usedImages.includes(randomIndex) && usedImages.length < studentImages.length);
+
+			// Add the selected image index to the used list
+			if (!usedImages.includes(randomIndex)) {
+				usedImages.push(randomIndex);
+			}
+
+
+			// Show the student image for the desk
+			const studentImage = document.createElement("img");
+			studentImage.className = "student-image";
+			studentImage.src = studentImages[randomIndex];
+			studentImage.style.display = "block";
+			studentImage.style.top = `${document.getElementById(`deskContainer${deskNumber}`).offsetTop - 15}px`;
+			studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`;
+			document.getElementById("gameArea").appendChild(studentImage);
+		} else {
+			showNotification("Not enough CSP or worker already hired for this desk!");
+		}
+	}
+
 
 	function startAutoProcessing(deskNumber) {
 		setInterval(() => {
@@ -404,13 +552,14 @@
 				progressFill.style.width = '100%'; // Fill the progress bar
 
 				setTimeout(() => {
-					csp += pointsPerDesk[deskNumber] - 2; // Adjust points as needed
-					totalCspEarned += pointsPerDesk[deskNumber] - 2;
+					// Update CSP and total CSP earned using the full points
+					csp += pointsPerDesk[deskNumber];
+					totalCspEarned += pointsPerDesk[deskNumber];
 					updateDisplay();
-					
+
 					// Create the floating points effect
-					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber); // Call floating points function
-					
+					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+
 					// Immediately reset the progress bar without backtracking
 					progressFill.style.transition = 'none'; // Disable transition
 					progressFill.style.width = '0%'; // Clear the progress bar
@@ -419,6 +568,7 @@
 			}
 		}, processingTimes[deskNumber]); // Control the interval timing based on processing time
 	}
+
 
 
     function showStudentImage(deskNumber) {
@@ -434,6 +584,53 @@
     }
 
     updateDisplay();
+	
+		// Function to check if the end conditions are met
+	function checkEndGame() {
+		// Check if all desks are automated and CSP is 3,000 or more
+		const allDesksAutomated = Object.keys(hasWorker).length === 10;
+		if (allDesksAutomated && totalCspEarned >= 3000) {
+			showEndScreen();
+		}
+	}
+
+	// Function to display the end screen
+	function showEndScreen() {
+		const endScreen = document.getElementById("endScreen");
+		const finalScore = document.getElementById("finalScore");
+
+		// Update the final score message
+		finalScore.innerText = `Congratulations! You earned a total of ${totalCspEarned} Customer Service Points (CSP)!`;
+
+		// Show the end screen with fade-in effect
+		endScreen.style.visibility = "visible";
+		endScreen.style.opacity = 1;
+	}
+
+	// Function for Replay Level button
+	function replayLevel() {
+		// Reset game variables and reload the page to restart the level
+		location.reload();
+	}
+
+	// Function for Next Level button
+	function nextLevel() {
+		alert("Level 2 is coming soon! Stay tuned for more challenges!");
+		// Optionally, you could reset the game state or load a new level here
+		location.reload();
+	}
+
+	// Call checkEndGame() after every CSP update
+	function updateDisplay() {
+		document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+		document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+		checkEndGame();
+	}
+
+		
+	
+	
+	
 </script>
 
 </body>
