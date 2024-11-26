@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Office Story</title>
+    <style>
+        /* Basic styling */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
+        #welcomeMessage { font-size: 18px; font-weight: bold; margin: 10px; text-align: center; }
+		#gameArea {
+			display: none;
+			width: 500px;
+			height: 500px;
+			position: relative;
+			background-image: url('RMACRAOUniversity18.png');
+			background-size: cover;
+			background-position: center;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+        /* Desk container styling */
+        .desk-container { position: absolute; width: 80px; height: 70px; display: flex; flex-direction: column; align-items: center; }
+        .desk { background-color: #f5f5dc; border: 2px solid #ddd; border-radius: 8px; width: 80px; height: 40px; display: flex; justify-content: center; align-items: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); text-align: center; font-size: 12px; font-weight: bold; color: #333; cursor: pointer; }
+        .automated { box-shadow: 0 0 10px 2px #3c744c; border-color: #3c744c; cursor: not-allowed; }
+        .worker { width: 25px; height: 25px; border-radius: 50%; position: absolute; top: -10px; display: none; } /* This will be hidden when the desk is automated */
+        .progress-bar { width: 80%; height: 6px; background-color: #ddd; border-radius: 3px; overflow: hidden; margin-top: 5px; display: none; }
+        .progress-bar-fill { height: 100%; width: 0; background-color: #33348c; transition: width linear; }
+
+        /* Positioning each desk based on your numbered layout */
+        #deskContainer1 { top: 51%; left: 46%; }
+        #deskContainer2 { top: 10%; left: 20%; }
+        #deskContainer3 { top: 10%; left: 65%; }
+        #deskContainer4 { top: 40%; left: 23%; }
+        #deskContainer5 { top: 40%; left: 65%; }
+        #deskContainer6 { top: 68%; left: 25%; }
+        #deskContainer7 { top: 68%; left: 79%; }
+        #deskContainer8 { top: 68%; left: 5%; }
+        #deskContainer9 { top: 80%; left: 60%; }
+        #deskContainer10 { top: 80%; left: 30%; }
+
+        #infoPanel { margin-top: 20px; font-weight: bold; text-align: center; }
+        #notification { color: #3c744c; font-weight: bold; margin-top: 10px; min-height: 20px; transition: opacity 0.5s; opacity: 0; }
+        #totalPointsDisplay { font-size: 16px; margin-bottom: 10px; font-weight: bold; color: #333; }
+
+        /* Floating points styling */
+        .floating-points {
+            position: absolute;
+            font-size: 12px;
+            color: #33348c; /* Set the color to purple */
+            transition: transform 1s ease, opacity 1s ease; /* Smooth transition */
+            opacity: 1; /* Start fully visible */
+        }
+
+        /* Student image styling */
+        .student-image {
+            position: absolute;
+            width: 25px; /* Adjust size as needed */
+            height: 25px; /* Adjust size as needed */
+            display: none; /* Start hidden */
+            border-radius: 50%; /* Make it circular */
+        }
+		
+			#titleScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #f4f4f4;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			z-index: 10;
+		}
+
+		#titleImage {
+			max-width: 80%;
+			height: auto;
+			margin-bottom: 20px;
+		}
+
+		#startButton {
+			padding: 10px 20px;
+			font-size: 18px;
+			background-color: #33348c;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#startButton:hover {
+			background-color: #5555aa;
+		}
+
+		#gameArea {
+			display: block;
+		}
+
+
+		/* End Screen Styling */
+		#endScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			visibility: hidden; /* Hidden by default */
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		#endScreenContent {
+			background: rgba(255, 255, 255, 0.9) url('RMACRAOUniversityTransition.png') center/cover no-repeat;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+			text-align: center;
+		}
+
+		#replayButton, #nextLevelButton {
+			padding: 10px 20px;
+			margin: 10px;
+			font-size: 16px;
+			background-color: #33348c;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#replayButton:hover, #nextLevelButton:hover {
+			background-color: #5555aa;
+		}
+
+	#specialProjectsPanel {
+		position: absolute; /* Anchors the panel to a fixed position */
+		top: 575px; /* Adjust to align just below the game area */
+		left: 50%; /* Center horizontally */
+		transform: translateX(-50%); /* Center alignment correction */
+		z-index: 10; /* Ensure it stays on top */
+		display: block; /* Ensure proper rendering */
+	}
+
+		
+		
+		
+		
+    </style>
+</head>
+<body>
+
+
+<div id="welcomeMessage">Welcome to RMACRAO University. Process some forms to gain points. Click the desk to process a form.</div>
+
+<div id="totalPointsDisplay">Total CSP Earned: 0</div>
+
+<div id="gameArea">
+    <!-- Initial Desk - Add/Drop Desk -->
+    <div class="desk-container" id="deskContainer1">
+        <div class="desk" id="desk1" onclick="serveStudent(1)">Catalog Updates</div>
+        <div class="worker" id="worker1"></div>
+        <div class="progress-bar" id="progressBar1"><div class="progress-bar-fill" id="progressFill1"></div></div>
+    </div>
+
+    <!-- Add the student image element -->
+    <img id="studentImage" src="Student1.png" alt="Student Worker" class="student-image" />
+</div>
+
+<!-- End Screen Popup -->
+<div id="endScreen">
+    <div id="endScreenContent">
+        <h2>Office Successfully Managed!</h2>
+        <p id="finalScore"></p>
+        <button id="replayButton" onclick="replayLevel()">Replay Level</button>
+        <button id="nextLevelButton" onclick="nextLevel()">Next Level</button>
+    </div>
+</div>
+
+
+
+<div id="infoPanel">
+    <div id="notification"></div>
+    <p id="pointsDisplay">Customer Service Points (CSP): 0</p>
+    <button id="buyDeskButton" onclick="buyNextDesk()">Schedule Building (100 CSP)</button>
+    <button id="hireWorkerButton1" onclick="hireWorker(1, 30)">Hire Work-Study Student for Catalog Updates Desk (30 CSP)</button>
+</div>
+
+<div id="specialProjectsPanel">
+	<button id="complianceAudit" style="display: none;" onclick="triggerSpecialProject('complianceAudit')">Compliance Audit</button>
+	<button id="studentEngagement" style="display: none;" onclick="triggerSpecialProject('studentEngagement')">Student Engagement</button>
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+	// Move the startGame function outside of the DOMContentLoaded event
+	function startGame() {
+		console.log("Game started"); // Debugging line
+		document.getElementById("titleScreen").style.display = "none";
+		document.getElementById("gameArea").style.display = "block";
+		updateDisplay();
+	}
+
+	document.addEventListener("DOMContentLoaded", () => {
+		console.log("DOM fully loaded and parsed");
+	});
+
+
+
+
+
+    let csp = 0;
+    let totalCspEarned = 0;
+    let deskUnlocked = { 1: true };
+    let hasWorker = {};
+    let processingTimes = { 1: 500 };
+    let pointsPerDesk = { 1: 2 };
+    let nextDeskToBuy = 2;
+    let baseDeskCost = 50;
+    let baseHireCost = 30;
+    let deskInProgress = {};
+	let usedImages = []; // Initialize an array to keep track of used images
+	let currentQuestionIndex = 0; // Declare at the global scope
+
+    const penaltyTime = 30000; // 30 seconds penalty time
+
+	const deskLabelsLevel3 = [
+		"Catalog Updates",
+		"Schedule Building",
+		"Room Assignments",
+		"FERPA Queries",
+		"Academic Policies",
+		"Alumni Records",
+		"Data Verification",
+		"Dual Degrees",
+		"Emergency Services",
+		"Registrar Operations"
+	];
+
+
+    // Array of student image paths
+    const studentImages = [
+        'Student1.png',
+        'Student2.png',
+        'Student3.png',
+        'Student4.png',
+        'Student5.png',
+        'Student6.png',
+        'Student7.png',
+        'Student8.png',
+        'Student9.png',
+        'Student10.png',
+    ];
+
+const advancedQuestionsLevel3 = [
+    {
+        question: "What is the primary purpose of the transfer credit evaluation process?",
+        options: [
+            "Ensure coursework meets institutional standards",
+            "Automatically accept all transfer courses",
+            "Reject all courses from non-accredited schools"
+        ],
+        answer: 0 // Correct: "Ensure coursework meets institutional standards"
+    },
+    {
+        question: "What should you do if a student is over-enrolled in credits for a semester?",
+        options: [
+            "Contact the student to discuss and adjust their schedule",
+            "Drop the extra credits without informing the student",
+            "Wait until the semester starts to address the issue"
+        ],
+        answer: 0 // Correct: "Contact the student to discuss and adjust their schedule"
+    },
+    {
+        question: "Why is it important to keep the academic catalog updated?",
+        options: [
+            "Ensure students and faculty have accurate program information",
+            "Reduce the workload of the registrar's office",
+            "Allow students to create their own interpretations"
+        ],
+        answer: 0 // Correct: "Ensure students and faculty have accurate program information"
+    },
+    {
+        question: "What is a key consideration when building a class schedule?",
+        options: [
+            "Balance class availability with student needs",
+            "Prioritize faculty preferences above all",
+            "Schedule every class in the largest room available"
+        ],
+        answer: 0 // Correct: "Balance class availability with student needs"
+    },
+    {
+        question: "How do you handle conflicts in room assignments?",
+        options: [
+            "Work with faculty and departments to find an alternative solution",
+            "Assign rooms on a first-come, first-served basis",
+            "Leave it to the faculty to resolve the conflict"
+        ],
+        answer: 0 // Correct: "Work with faculty and departments to find an alternative solution"
+    },
+    {
+        question: "When responding to FERPA-related queries, what is a primary consideration?",
+        options: [
+            "Protect student privacy and comply with the law",
+            "Release information if the request seems reasonable",
+            "Ask the student for verbal permission and proceed"
+        ],
+        answer: 0 // Correct: "Protect student privacy and comply with the law"
+    },
+    {
+        question: "Why is it important to enforce academic policies consistently?",
+        options: [
+            "Ensure fairness and maintain institutional integrity",
+            "Avoid upsetting specific students or faculty",
+            "Allow exceptions based on personal judgment"
+        ],
+        answer: 0 // Correct: "Ensure fairness and maintain institutional integrity"
+    },
+    {
+        question: "What is the primary goal of graduation audits?",
+        options: [
+            "Confirm that students meet all degree requirements",
+            "Make exceptions to allow more students to graduate",
+            "Prioritize students with the highest GPAs"
+        ],
+        answer: 0 // Correct: "Confirm that students meet all degree requirements"
+    },
+    {
+        question: "How should discrepancies in enrollment data be handled?",
+        options: [
+            "Investigate and correct the issue promptly",
+            "Ignore them if they seem minor",
+            "Adjust the data without verifying accuracy"
+        ],
+        answer: 0 // Correct: "Investigate and correct the issue promptly"
+    },
+    {
+        question: "What is a key consideration for dual-degree programs?",
+        options: [
+            "Ensure both degrees meet all institutional requirements",
+            "Allow students to waive requirements for one degree",
+            "Focus only on the major requirements for the primary degree"
+        ],
+        answer: 0 // Correct: "Ensure both degrees meet all institutional requirements"
+    }
+];
+
+	
+	const advancedFeedbackMessagesLevel3 = [
+		{
+			incorrect1: "Automatically accepting all transfer courses can compromise standards.",
+			incorrect2: "Rejecting all courses from non-accredited schools may overlook valid credits."
+		},
+		{
+			incorrect1: "Dropping credits without informing the student is unprofessional.",
+			incorrect2: "Waiting until the semester starts causes unnecessary confusion."
+		},
+		{
+			incorrect1: "Reducing the workload isn’t a valid reason to keep catalogs updated.",
+			incorrect2: "Allowing students to interpret policies leads to inconsistencies."
+		},
+		{
+			incorrect1: "Prioritizing faculty preferences above all may ignore student needs.",
+			incorrect2: "Scheduling every class in the largest room wastes space."
+		},
+		{
+			incorrect1: "Assigning rooms on a first-come, first-served basis can create inequities.",
+			incorrect2: "Leaving it to the faculty may delay resolution."
+		},
+		{
+			incorrect1: "Releasing information without proper checks is a FERPA violation.",
+			incorrect2: "Verbal permissions do not comply with FERPA requirements."
+		},
+		{
+			incorrect1: "Avoiding upsetting specific groups undermines fairness.",
+			incorrect2: "Making exceptions based on personal judgment reduces consistency."
+		},
+		{
+			incorrect1: "Making exceptions compromises the validity of the degree.",
+			incorrect2: "Prioritizing high GPAs overlooks institutional requirements."
+		},
+		{
+			incorrect1: "Ignoring minor discrepancies can lead to larger issues later.",
+			incorrect2: "Adjusting data without verification risks inaccuracies."
+		},
+		{
+			incorrect1: "Waiving requirements undermines the integrity of the program.",
+			incorrect2: "Focusing only on the primary degree ignores dual-degree rules."
+		}
+	];
+
+	const complianceAuditQuiz = [
+		{
+			question: "Which is the most important factor in ensuring compliance with federal regulations?",
+			options: ["Regular staff training", "Using outdated policies", "Ignoring compliance audits"],
+			answer: 0 // Correct: "Regular staff training"
+		},
+		{
+			question: "What is required for FERPA compliance when sharing student data?",
+			options: ["Written consent from the student", "Verbal permission from the registrar", "Faculty approval"],
+			answer: 0 // Correct: "Written consent from the student"
+		},
+		{
+			question: "How often should compliance audits be conducted?",
+			options: ["Annually", "Every five years", "Only when issues arise"],
+			answer: 0 // Correct: "Annually"
+		}
+	];
+
+	const studentEngagementQuiz = [
+		{
+			question: "How can the Registrar's Office improve communication with students?",
+			options: ["Using targeted email campaigns", "Avoiding student interactions", "Sending generic notices"],
+			answer: 0 // Correct: "Using targeted email campaigns"
+		},
+		{
+			question: "What initiative can help students understand their degree requirements?",
+			options: ["Hosting degree planning workshops", "Assuming students know their requirements", "Providing no guidance"],
+			answer: 0 // Correct: "Hosting degree planning workshops"
+		},
+		{
+			question: "What is the best way to gather student feedback on registrar services?",
+			options: ["Conducting online surveys", "Ignoring student feedback", "Only accepting verbal suggestions"],
+			answer: 0 // Correct: "Conducting online surveys"
+		}
+	];
+
+	function setupLevel3() {
+		const gameArea = document.getElementById("gameArea");
+		gameArea.innerHTML = ""; // Clear Level 1 elements
+
+		deskLabelsLevel3.forEach((label, index) => {
+			const deskContainer = document.createElement("div");
+			deskContainer.className = "desk-container";
+			deskContainer.id = `deskContainer${index + 1}`;
+
+			const desk = document.createElement("div");
+			desk.className = "desk";
+			desk.id = `desk${index + 1}`;
+			desk.innerText = label;
+			desk.onclick = () => serveStudent(index + 1);
+
+			const worker = document.createElement("div");
+			worker.className = "worker";
+			worker.id = `worker${index + 1}`;
+
+			const progressBar = document.createElement("div");
+			progressBar.className = "progress-bar";
+			progressBar.id = `progressBar${index + 1}`;
+
+			const progressFill = document.createElement("div");
+			progressFill.className = "progress-bar-fill";
+			progressFill.id = `progressFill${index + 1}`;
+
+			progressBar.appendChild(progressFill);
+			deskContainer.appendChild(desk);
+			deskContainer.appendChild(worker);
+			deskContainer.appendChild(progressBar);
+			gameArea.appendChild(deskContainer);
+		});
+	}
+
+
+    function showNotification(message) {
+        const notification = document.getElementById("notification");
+        notification.innerText = message;
+        notification.style.opacity = 1;
+        setTimeout(() => { notification.style.opacity = 0; }, 3000);
+    }
+
+    function updateDisplay() {
+        document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+        document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+    }
+
+	function createFloatingPoints(points, deskNumber) {
+		const pointElement = document.createElement("div");
+		pointElement.className = "floating-points";
+		pointElement.innerText = `+${points} CSP`; // Removed the dollar sign and added "CSP" label
+
+		pointElement.style.color = '#33348c'; // Set the color to purple
+
+		// Position the element at the desk's location
+		const desk = document.getElementById(`deskContainer${deskNumber}`);
+		const deskRect = desk.getBoundingClientRect();
+		pointElement.style.left = `${deskRect.left + deskRect.width / 2}px`;
+		pointElement.style.top = `${deskRect.top + deskRect.height / 2}px`;
+
+		document.body.appendChild(pointElement);
+
+		// Animate the points floating away from the desk
+		setTimeout(() => {
+			pointElement.style.transform = 'translateY(-50px)'; // Adjust the value to change how far it floats
+			pointElement.style.opacity = 0; // Fade out effect
+		}, 0);
+
+		// Remove the element after the animation is complete
+		setTimeout(() => {
+			pointElement.remove();
+		}, 1050); // Adjust timing to match the animation duration
+	}
+
+    function buyNextDesk() {
+        const deskNumber = nextDeskToBuy;
+        const deskCost = baseDeskCost * deskNumber;
+        if (csp >= deskCost && !deskUnlocked[deskNumber]) {
+            csp -= deskCost;
+            deskUnlocked[deskNumber] = true;
+
+            // Show FERPA question before unlocking the desk
+            showFERPAPopup(deskNumber);
+        } else {
+            showNotification("Not enough CSP!");
+        }
+    }
+
+	function showFERPAPopup(deskNumber) {
+		const popup = document.createElement("div");
+		const question = advancedQuestionsLevel3[deskNumber - 1].question;
+		const options = advancedQuestionsLevel3[deskNumber - 1].options;
+		const correctAnswer = advancedQuestionsLevel3[deskNumber - 1].answer;
+
+		popup.id = "ferpaQuestionPopup";
+		popup.innerHTML = `
+			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
+				<h3>Customer Service Question</h3>
+				<p>${advancedQuestionsLevel3[deskNumber - 1].question}</p>
+				${advancedQuestionsLevel3[deskNumber - 1].options.map((option, index) => `
+					<label>
+						<input type="radio" name="ferpaOption" value="${index}"> ${option}
+					</label><br>
+				`).join('')}
+				<button onclick="checkFERPAAnswer(${deskNumber})">Submit</button>
+				<button onclick="closeFERPAPopup()">Cancel</button>
+			</div>
+		`;
+		document.body.appendChild(popup);
+	}
+
+    function closeFERPAPopup() {
+        const popup = document.getElementById("ferpaQuestionPopup");
+        if (popup) {
+            document.body.removeChild(popup);
+        }
+    }
+
+	function checkFERPAAnswer(deskNumber) {
+		const selectedOption = document.querySelector('input[name="ferpaOption"]:checked');
+		if (selectedOption) {
+			const selectedIndex = parseInt(selectedOption.value);
+			const correctAnswer = advancedQuestionsLevel3[deskNumber - 1].answer;
+			const feedback = advancedFeedbackMessagesLevel3[deskNumber - 1];
+
+			if (selectedIndex === correctAnswer) {
+				closeFERPAPopup();
+				unlockDesk(deskNumber); // Unlock the desk if the answer is correct
+			} else {
+				const feedbackMessage =
+					selectedIndex === 1 ? feedback.incorrect1 :
+					selectedIndex === 2 ? feedback.incorrect2 :
+					"Incorrect answer. Please try again.";
+				showNotification(`${feedbackMessage} You have a 30-second penalty before trying again.`);
+				closeFERPAPopup();
+				setTimeout(() => showFERPAPopup(deskNumber), penaltyTime);
+			}
+		} else {
+			showNotification("Please select an answer.");
+		}
+	}
+
+
+
+	function unlockDesk(deskNumber) {
+		const newDeskContainer = document.createElement("div");
+		newDeskContainer.className = "desk-container";
+		newDeskContainer.id = `deskContainer${deskNumber}`;
+
+		const newDesk = document.createElement("div");
+		newDesk.className = "desk";
+		newDesk.id = `desk${deskNumber}`;
+		newDesk.innerText = deskLabelsLevel3[deskNumber - 1];
+		newDesk.onclick = () => serveStudent(deskNumber);
+
+		const worker = document.createElement("div");
+		worker.className = "worker";
+		worker.id = `worker${deskNumber}`;
+
+		// Ensure progress bar and progress fill are created for every desk
+		const progressBar = document.createElement("div");
+		progressBar.className = "progress-bar";
+		progressBar.id = `progressBar${deskNumber}`;
+		progressBar.style.display = "block";
+
+		const progressFill = document.createElement("div");
+		progressFill.className = "progress-bar-fill";
+		progressFill.id = `progressFill${deskNumber}`;
+
+		progressBar.appendChild(progressFill);
+		newDeskContainer.appendChild(newDesk);
+		newDeskContainer.appendChild(worker);
+		newDeskContainer.appendChild(progressBar);
+		document.getElementById("gameArea").appendChild(newDeskContainer);
+
+		processingTimes[deskNumber] = processingTimes[deskNumber - 1] + 2000;
+		pointsPerDesk[deskNumber] = pointsPerDesk[deskNumber - 1] + 3;
+
+		const hireCost = baseHireCost * deskNumber;
+		const hireWorkerButton = document.createElement("button");
+		hireWorkerButton.id = `hireWorkerButton${deskNumber}`;
+		hireWorkerButton.innerText = `Hire Work-Study Student for ${deskLabelsLevel3[deskNumber - 1]} (${hireCost} CSP)`;
+		hireWorkerButton.onclick = () => hireWorker(deskNumber, hireCost);
+		document.getElementById("infoPanel").appendChild(hireWorkerButton);
+
+		nextDeskToBuy += 1;
+		if (nextDeskToBuy <= deskLabelsLevel3.length) {
+			document.getElementById("buyDeskButton").innerText = `Buy ${deskLabelsLevel3[nextDeskToBuy - 1]} (${baseDeskCost * nextDeskToBuy} CSP)`;
+		} else {
+			document.getElementById("buyDeskButton").style.display = "none";
+		}
+
+		updateDisplay();
+		showNotification(`${deskLabelsLevel3[deskNumber - 1]} unlocked!`);
+		
+		// Unlock special projects when specific desks are purchased in Level
+		if (deskNumber === 3) unlockSpecialProject('complianceAudit');
+		if (deskNumber === 6) unlockSpecialProject('studentEngagement');
+
+	}
+
+
+	function serveStudent(deskNumber) {
+		// When the desk is not automated
+		if (deskUnlocked[deskNumber] && !hasWorker[deskNumber]) {
+			if (!deskInProgress[deskNumber]) {
+				deskInProgress[deskNumber] = true;
+
+				// Get the progress bar and progress fill elements
+				const progressBar = document.getElementById(`progressBar${deskNumber}`);
+				const progressFill = document.getElementById(`progressFill${deskNumber}`);
+				
+				// Show the progress bar and reset it
+				progressBar.style.display = "block";
+				progressFill.style.transition = 'none';
+				progressFill.style.width = '0%';
+
+				// Start the smooth filling of the progress bar
+				setTimeout(() => {
+					progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
+					progressFill.style.width = '100%';
+				}, 50); // Small delay to ensure transition effect
+
+				// Complete the task after the specified time
+				setTimeout(() => {
+					csp += pointsPerDesk[deskNumber];
+					totalCspEarned += pointsPerDesk[deskNumber];
+					updateDisplay();
+					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+					showNotification(`Served a student at ${deskLabelsLevel3[deskNumber - 1]}`);
+
+					// Reset and hide the progress bar after filling
+					progressFill.style.transition = 'none';
+					progressFill.style.width = '0%';
+					deskInProgress[deskNumber] = false;
+					progressBar.style.display = "none";
+				}, processingTimes[deskNumber]);
+			}
+		} 
+		// When the desk is automated
+		else if (deskUnlocked[deskNumber] && hasWorker[deskNumber]) {
+			showNotification(`This desk is automated. Please wait for processing.`);
+			return;
+		}
+	}
+
+
+
+
+	 function hireWorker(deskNumber, hireCost) {
+		if (csp >= hireCost && !hasWorker[deskNumber]) {
+			csp -= hireCost;
+			hasWorker[deskNumber] = true;
+			document.getElementById(`worker${deskNumber}`).style.display = "none"; // Hide the worker
+			document.getElementById(`desk${deskNumber}`).classList.add("automated");
+			document.getElementById(`progressBar${deskNumber}`).style.display = "block";
+			document.getElementById(`hireWorkerButton${deskNumber}`).style.display = "none";
+			startAutoProcessing(deskNumber);
+			updateDisplay();
+
+			// Select a unique, unused image
+			let randomIndex;
+			do {
+				randomIndex = Math.floor(Math.random() * studentImages.length);
+			} while (usedImages.includes(randomIndex) && usedImages.length < studentImages.length);
+
+			// Add the selected image index to the used list
+			if (!usedImages.includes(randomIndex)) {
+				usedImages.push(randomIndex);
+			}
+
+
+			// Show the student image for the desk
+			const studentImage = document.createElement("img");
+			studentImage.className = "student-image";
+			studentImage.src = studentImages[randomIndex];
+			studentImage.style.display = "block";
+			studentImage.style.top = `${document.getElementById(`deskContainer${deskNumber}`).offsetTop - 15}px`;
+			studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`;
+			document.getElementById("gameArea").appendChild(studentImage);
+		} else {
+			showNotification("Not enough CSP or worker already hired for this desk!");
+		}
+	}
+
+
+	function startAutoProcessing(deskNumber) {
+		setInterval(() => {
+			if (!deskInProgress[deskNumber]) {
+				deskInProgress[deskNumber] = true;
+				const progressFill = document.getElementById(`progressFill${deskNumber}`);
+				progressFill.style.transition = 'none'; // Disable transitions for immediate action
+				progressFill.style.width = '0%'; // Reset to 0%
+
+				// Start filling the progress bar immediately
+				progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
+				progressFill.style.width = '100%'; // Fill the progress bar
+
+				setTimeout(() => {
+					// Update CSP and total CSP earned using the full points
+					csp += pointsPerDesk[deskNumber];
+					totalCspEarned += pointsPerDesk[deskNumber];
+					updateDisplay();
+
+					// Create the floating points effect
+					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+
+					// Immediately reset the progress bar without backtracking
+					progressFill.style.transition = 'none'; // Disable transition
+					progressFill.style.width = '0%'; // Clear the progress bar
+					deskInProgress[deskNumber] = false; // Mark the desk as not in progress
+				}, processingTimes[deskNumber]);
+			}
+		}, processingTimes[deskNumber]); // Control the interval timing based on processing time
+	}
+
+
+
+    function showStudentImage(deskNumber) {
+        const studentImage = document.createElement("img");
+        studentImage.className = "student-image"; // Add class for styling
+        const randomIndex = Math.floor(Math.random() * studentImages.length);
+        studentImage.src = studentImages[randomIndex]; // Use random image
+        studentImage.style.display = "block"; // Show the student image
+        // Position it at the desk
+        studentImage.style.top = `${document.getElementById(`deskContainer${deskNumber}`).offsetTop - 1000}px`; // Adjust positioning
+        studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`; // Adjust positioning
+        document.getElementById("gameArea").appendChild(studentImage); // Append new image to the game area
+    }
+
+    updateDisplay();
+	
+	function unlockSpecialProject(projectId) {
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'block'; // Show the button
+			showNotification(`Special Project Unlocked: ${projectButton.innerText}`);
+		} else {
+			console.error(`Special project button with ID "${projectId}" not found.`);
+		}
+	}
+			
+	function triggerSpecialProject(projectId) {
+		let quiz;
+		switch (projectId) {
+			case 'complianceAudit':
+				quiz = complianceAuditQuiz;
+				break;
+			case 'studentEngagement':
+				quiz = studentEngagementQuiz;
+				break;
+			default:
+				console.error(`Unknown project ID: ${projectId}`);
+				return;
+		}
+		showQuizPopup(quiz, projectId);
+	}
+
+
+			
+	function showQuizPopup(quiz, projectId) {
+		let quizPopup = document.getElementById('quizPopup');
+		if (!quizPopup) {
+			quizPopup = document.createElement('div');
+			quizPopup.id = 'quizPopup';
+			quizPopup.style = `
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background: white;
+				padding: 20px;
+				border: 2px solid #ccc;
+				z-index: 100;
+				max-width: 80%;
+			`;
+			document.body.appendChild(quizPopup); // Add to DOM
+		}
+		renderQuestion(projectId, quiz); // Pass quiz to renderQuestion
+	}
+
+
+
+	function renderQuestion(projectId, quiz) {
+		const quizPopup = document.getElementById('quizPopup');
+		const question = quiz[currentQuestionIndex];
+
+		quizPopup.innerHTML = `
+			<h3>Special Project Quiz</h3>
+			<p>${question.question}</p>
+			${question.options.map((option, index) => `
+				<label>
+					<input type="radio" name="quizOption" value="${index}"> ${option}
+				</label><br>
+			`).join('')}
+			<button id="submitAnswerButton">Submit</button>
+		`;
+
+		document.getElementById('submitAnswerButton').addEventListener('click', () => checkAnswer(projectId, quiz));
+	}
+
+
+
+
+
+	function checkAnswer(projectId, quiz) {
+		const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+		if (!selectedOption) {
+			alert('Please select an answer.');
+			return;
+		}
+
+		const isCorrect = parseInt(selectedOption.value) === quiz[currentQuestionIndex].answer;
+		if (isCorrect) {
+			currentQuestionIndex++;
+			if (currentQuestionIndex < quiz.length) {
+				renderQuestion(projectId, quiz); // Move to the next question
+			} else {
+				closeQuizPopup(projectId); // Close the quiz popup and hide the button
+				handleSpecialProjectRewards(true); // Reward the user for completing the quiz
+			}
+		} else {
+			handleSpecialProjectRewards(false); // Penalize the user for incorrect answers
+		}
+	}
+
+
+
+	function closeQuizPopup(projectId) {
+		const quizPopup = document.getElementById('quizPopup');
+		if (quizPopup) {
+			document.body.removeChild(quizPopup); // Remove the popup from the DOM
+		}
+
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'none'; // Hide the project button
+		} else {
+			console.error(`Project button with ID "${projectId}" not found.`);
+		}
+	}
+
+
+	function handleSpecialProjectRewards(isCorrect) {
+		if (isCorrect) {
+			csp += 50; // Reward for completing all questions correctly
+			showNotification("Congratulations! You earned 50 CSP for successfully completing the special project.");
+		} else {
+			csp -= 20; // Penalty for incorrect answer
+			showNotification("Incorrect answer. You lost 20 CSP.");
+		}
+		updateDisplay();
+	}
+	
+	
+		// Function to check if the end conditions are met
+	function checkEndGame() {
+		// Check if all desks are automated and CSP is 2,000 or more
+		const allDesksAutomated = Object.keys(hasWorker).length === 10;
+		if (allDesksAutomated && csp >= 2000) {
+			showEndScreen();
+		}
+	}
+
+
+
+
+	// Function to display the end screen
+	function showEndScreen() {
+		const endScreen = document.getElementById("endScreen");
+		const finalScore = document.getElementById("finalScore");
+
+		// Update the final score message
+		finalScore.innerText = `Congratulations! You earned a total of ${totalCspEarned} Customer Service Points (CSP)!`;
+
+		// Show the end screen with fade-in effect
+		endScreen.style.visibility = "visible";
+		endScreen.style.opacity = 1;
+	}
+
+	// Function for Replay Level button
+	function replayLevel() {
+		// Reset game variables and reload the page to restart the level
+		location.reload();
+	}
+
+	// Function for Next Level button
+	function nextLevel() {
+		alert("Transitioning to Level 2...");
+		location.href = "Level2.html"; // Link to a separate file or setup
+	}
+
+
+	// Call checkEndGame() after every CSP update
+	function updateDisplay() {
+		document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+		document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+		checkEndGame();
+	}
+
+		
+	
+	
+	
+</script>
+
+</body>
+</html>
