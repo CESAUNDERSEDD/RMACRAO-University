@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMACRAO University</title>
+    <style>
+        /* Basic styling */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
+        #welcomeMessage { font-size: 18px; font-weight: bold; margin: 10px; text-align: center; }
+		#gameArea {
+			display: none;
+			width: 500px;
+			height: 500px;
+			position: relative;
+			background-image: url('RMACRAOUniversity14.png');
+			background-size: cover;
+			background-position: center;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+        /* Desk container styling */
+        .desk-container { position: absolute; width: 80px; height: 70px; display: flex; flex-direction: column; align-items: center; }
+        .desk { background-color: #f5f5dc; border: 2px solid #ddd; border-radius: 8px; width: 80px; height: 40px; display: flex; justify-content: center; align-items: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); text-align: center; font-size: 12px; font-weight: bold; color: #333; cursor: pointer; }
+        .automated { box-shadow: 0 0 10px 2px #3c744c; border-color: #3c744c; cursor: not-allowed; }
+        .worker { width: 25px; height: 25px; border-radius: 50%; position: absolute; top: -10px; display: none; } /* This will be hidden when the desk is automated */
+        .progress-bar { width: 80%; height: 6px; background-color: #ddd; border-radius: 3px; overflow: hidden; margin-top: 5px; display: none; }
+        .progress-bar-fill { height: 100%; width: 0; background-color: #33348c; transition: width linear; }
+
+        /* Positioning each desk based on your numbered layout */
+        #deskContainer1 { top: 21%; left: 20%; }
+        #deskContainer2 { top: 21%; left: 64%; }
+        #deskContainer3 { top: 50%; left: 20%; }
+        #deskContainer4 { top: 50%; left: 64%; }
+        #deskContainer5 { top: 72%; left: 5%; }
+        #deskContainer6 { top: 72%; left: 79%; }
+        #deskContainer7 { top: 45%; left: 42%; }
+        #deskContainer8 { top: 83%; left: 20%; }
+        #deskContainer9 { top: 83%; left: 64%; }
+        #deskContainer10 { top: 78%; left: 42%; }
+
+        #infoPanel { margin-top: 20px; font-weight: bold; text-align: center; }
+        #notification { color: #3c744c; font-weight: bold; margin-top: 10px; min-height: 20px; transition: opacity 0.5s; opacity: 0; }
+        #totalPointsDisplay { font-size: 16px; margin-bottom: 10px; font-weight: bold; color: #333; }
+
+        /* Floating points styling */
+        .floating-points {
+            position: absolute;
+            font-size: 12px;
+            color: #33348c; /* Set the color to purple */
+            transition: transform 1s ease, opacity 1s ease; /* Smooth transition */
+            opacity: 1; /* Start fully visible */
+        }
+
+        /* Student image styling */
+        .student-image {
+            position: absolute;
+            width: 25px; /* Adjust size as needed */
+            height: 25px; /* Adjust size as needed */
+            display: none; /* Start hidden */
+            border-radius: 50%; /* Make it circular */
+        }
+		
+			#titleScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #f4f4f4;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			z-index: 10;
+		}
+
+		#titleImage {
+			max-width: 80%;
+			height: auto;
+			margin-bottom: 20px;
+		}
+
+		#startButton {
+			padding: 10px 20px;
+			font-size: 18px;
+			background-color: #33348c;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#startButton:hover {
+			background-color: #5555aa;
+		}
+
+		#gameArea {
+			display: block;
+		}
+
+
+
+	#specialProjectsPanel {
+		position: absolute; /* Anchors the panel to a fixed position */
+		top: 575px; /* Adjust to align just below the game area */
+		left: 50%; /* Center horizontally */
+		transform: translateX(-50%); /* Center alignment correction */
+		z-index: 10; /* Ensure it stays on top */
+		display: block; /* Ensure proper rendering */
+	}
+
+.text-container {
+    margin-left: 10px; /* Adjust to move closer to the image */
+    text-align: left; /* Optional: Align text to the left */
+    line-height: 1.8; /* Stretch lines (default is 1.0 or 1.2) */
+    max-width: 400px; /* Limit the width for better readability */
+}
+
+.text-container p {
+    margin: 10px 0; /* Add spacing between paragraphs */
+}
+
+
+/* Modal Container */
+.endmodal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%; /* Set width to cover the entire screen */
+    height: 100%; /* Set height to cover the entire screen */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Modal Content Box */
+.endmodal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px; /* Set your desired content width */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    z-index: 1001; /* Ensure it appears above the overlay */
+}
+
+/* Close Button */
+.endmodalclose-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Character Image */
+.endmodalcharacter-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+		
+
+
+		
+		
+		
+		
+    </style>
+</head>
+<body>
+
+
+<div id="welcomeMessage">Welcome to RMACRAO University: Admissions Level 2: This level will focus on application processing. Click on the desk to get started.</div>
+
+<div id="totalPointsDisplay">Total CSP Earned: 0</div>
+
+<div id="gameArea">
+    <!-- Initial Desk - Add/Drop Desk -->
+    <div class="desk-container" id="deskContainer1">
+        <div class="desk" id="desk1" onclick="serveStudent(1)">Application Submission</div>
+        <div class="worker" id="worker1"></div>
+        <div class="progress-bar" id="progressBar1"><div class="progress-bar-fill" id="progressFill1"></div></div>
+    </div>
+    <!-- Add the student image element -->
+    <img id="studentImage" src="Student1.png" alt="Student Worker" class="student-image" />
+</div>
+
+
+<div id="infoPanel">
+    <div id="notification"></div>
+    <p id="pointsDisplay">Customer Service Points (CSP): 0</p>
+	<p id="additionalText" style="margin-top: 10px; color: #333;">Special projects available this level: Document Validation, Follow-Up Initiative, and Conditional Admission Policy </p>		
+    <button id="buyDeskButton" onclick="buyNextDesk()">Document Collection (100 CSP)</button>
+    <button id="hireWorkerButton1" onclick="hireWorker(1, 30)">Hire Work-Study Student for Application Submission Desk (30 CSP)</button>
+</div>
+
+<div id="specialProjectsPanel">
+	<!-- Button for Document Validation Quiz -->
+	<button id="documentValidation" style="display: none;" onclick="triggerSpecialProject('documentValidation')">
+		Document Validation
+	</button>
+
+	<!-- Button for Follow-Up Initiative Quiz -->
+	<button id="followUpInitiative" style="display: none;" onclick="triggerSpecialProject('followUpInitiative')">
+		Follow-Up Initiative
+	</button>
+
+	<!-- Button for Conditional Admission Policy Quiz -->
+	<button id="conditionalAdmissionPolicy" style="display: none;" onclick="triggerSpecialProject('conditionalAdmissionPolicy')">
+		Conditional Admission Policy
+	</button>
+</div>
+
+<div class="endmodal" id="endModal">
+    <div class="endmodal-content">
+        <span class="endmodalclose-button" onclick="closeModal()">X</span>
+        <div class="endmodal-body">
+            <h2>Congratulations!</h2>
+            <p id="finalScoreModal">Final Score: 1000</p>
+            <button onclick="replayLevel()">Replay Level</button>
+            <button onclick="nextLevel()">Next Level</button>
+        </div>
+        <img src="RMACRAOUniversityPresenter3.png" alt="Character" class="endmodalcharacter-image">
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+	// Move the startGame function outside of the DOMContentLoaded event
+	function startGame() {
+		console.log("Game started"); // Debugging line
+		document.getElementById("titleScreen").style.display = "none";
+		document.getElementById("gameArea").style.display = "block";
+		updateDisplay();
+	}
+
+	document.addEventListener("DOMContentLoaded", () => {
+		console.log("DOM fully loaded and parsed");
+	});
+
+
+
+
+
+    let csp = 0;
+    let totalCspEarned = 0;
+    let deskUnlocked = { 1: true };
+    let hasWorker = {};
+    let processingTimes = { 1: 500 };
+    let pointsPerDesk = { 1: 2 };
+    let nextDeskToBuy = 2;
+    let baseDeskCost = 50;
+    let baseHireCost = 30;
+    let deskInProgress = {};
+	let usedImages = []; // Initialize an array to keep track of used images
+	let currentQuestionIndex = 0; // Declare globally at the top of your script
+	let finalCspAtCompletion = 0; // Holds the total CSP when the game ends
+	let gameEnded = false; // Prevents re-triggering end-game logic
+
+    const penaltyTime = 30000; // 30 seconds penalty time
+
+	const deskLabelsLevel2 = [
+		"Application Submission",
+		"Document Collection",
+		"Test Score Processing",
+		"Application Fees",
+		"Applicant Communications",
+		"Missing Materials Follow-Up",
+		"Application Review",
+		"Departmental Reviews",
+		"Conditional Admissions",
+		"Early Decisions"
+	];
+
+
+    // Array of student image paths
+    const studentImages = [
+        'Student1.png',
+        'Student2.png',
+        'Student3.png',
+        'Student4.png',
+        'Student5.png',
+        'Student6.png',
+        'Student7.png',
+        'Student8.png',
+        'Student9.png',
+        'Student10.png',
+    ];
+
+const advancedQuestions = [
+    {
+        question: "What is the first step after an application is submitted?",
+        options: [
+            "Send an automated acknowledgment email to the applicant",
+            "Start the departmental review immediately",
+            "Begin processing test scores"
+        ],
+        answer: 0 // Correct: "Send an automated acknowledgment email to the applicant"
+    },
+    {
+        question: "Why is it important to ensure all required documents are collected before review?",
+        options: [
+            "To reduce follow-up communications",
+            "To ensure a complete application for accurate evaluation",
+            "To expedite the fee processing"
+        ],
+        answer: 1 // Correct: "To ensure a complete application for accurate evaluation"
+    },
+    {
+        question: "When processing test scores, what is critical to verify?",
+        options: [
+            "That they meet the institution's minimum requirements",
+            "That they were submitted on time",
+            "That they include a signature from the testing agency"
+        ],
+        answer: 0 // Correct: "That they meet the institution's minimum requirements"
+    },
+    {
+        question: "What should be done if an applicant has not paid the application fee?",
+        options: [
+            "Place the application on hold and notify the applicant",
+            "Reject the application immediately",
+            "Continue processing without the fee"
+        ],
+        answer: 0 // Correct: "Place the application on hold and notify the applicant"
+    },
+    {
+        question: "Why is effective communication with applicants crucial during the application process?",
+        options: [
+            "To minimize the workload of admissions staff",
+            "To ensure applicants understand requirements and deadlines",
+            "To avoid providing updates until decisions are made"
+        ],
+        answer: 1 // Correct: "To ensure applicants understand requirements and deadlines"
+    },
+    {
+        question: "What is the best strategy for handling missing materials in an application?",
+        options: [
+            "Send a clear and concise follow-up request to the applicant",
+            "Ignore the issue and process the application as is",
+            "Wait until the review stage to address the issue"
+        ],
+        answer: 0 // Correct: "Send a clear and concise follow-up request to the applicant"
+    },
+    {
+        question: "What is the primary purpose of the initial application review stage?",
+        options: [
+            "To identify incomplete applications",
+            "To assess whether the applicant meets minimum qualifications",
+            "To make a final admissions decision"
+        ],
+        answer: 1 // Correct: "To assess whether the applicant meets minimum qualifications"
+    },
+    {
+        question: "Why is it important for departmental reviews to align with institutional policies?",
+        options: [
+            "To reduce the workload of the admissions office",
+            "To ensure consistency and fairness across all programs",
+            "To expedite the admissions process"
+        ],
+        answer: 1 // Correct: "To ensure consistency and fairness across all programs"
+    },
+    {
+        question: "How should conditional admissions offers be communicated to applicants?",
+        options: [
+            "Provide clear conditions and timelines for fulfillment",
+            "Include the conditions in the final acceptance letter only",
+            "Leave conditions open-ended for flexibility"
+        ],
+        answer: 0 // Correct: "Provide clear conditions and timelines for fulfillment"
+    },
+    {
+        question: "What is a key consideration when processing early decision applications?",
+        options: [
+            "Ensure the applicant understands the binding nature of the decision",
+            "Delay the decision to allow for regular decision comparisons",
+            "Focus only on applicants with the highest test scores"
+        ],
+        answer: 0 // Correct: "Ensure the applicant understands the binding nature of the decision"
+    }
+];
+
+	
+	const advancedFeedbackMessages = [
+		{
+			incorrect1: "Starting the departmental review immediately skips essential preliminary steps.",
+			incorrect2: "Processing test scores should happen after application acknowledgment."
+		},
+		{
+			incorrect1: "Reducing follow-up communications is beneficial but secondary to accurate evaluations.",
+			incorrect2: "Expediting fee processing does not ensure complete applications."
+		},
+		{
+			incorrect1: "Timely submission is important but not the only critical factor.",
+			incorrect2: "Signatures from the testing agency are not always required."
+		},
+		{
+			incorrect1: "Rejecting applications immediately could result in lost opportunities for applicants.",
+			incorrect2: "Processing without the fee violates application requirements."
+		},
+		{
+			incorrect1: "Minimizing staff workload is a by-product, not the primary goal.",
+			incorrect2: "Providing updates only after decisions are made may frustrate applicants."
+		},
+		{
+			incorrect1: "Ignoring the issue risks processing an incomplete application.",
+			incorrect2: "Waiting until the review stage may delay the decision-making process."
+		},
+		{
+			incorrect1: "Identifying incomplete applications is necessary but not the main goal of initial reviews.",
+			incorrect2: "Making final decisions at this stage skips critical steps."
+		},
+		{
+			incorrect1: "Reducing workload is not a justification for misaligned departmental reviews.",
+			incorrect2: "Expediting the process without alignment can compromise fairness."
+		},
+		{
+			incorrect1: "Leaving conditions open-ended creates confusion for applicants.",
+			incorrect2: "Only including conditions in the acceptance letter delays applicant understanding."
+		},
+		{
+			incorrect1: "Delaying early decisions undermines the program’s purpose of providing clarity.",
+			incorrect2: "Focusing solely on test scores neglects the holistic nature of admissions."
+		}
+	];
+
+
+	// Document Validation Quiz
+	const documentValidationQuiz = [
+		{
+			question: "What is the primary purpose of an Institutional Research (IR) report?",
+			options: ["Analyze institutional performance", "Recruit new students", "Approve faculty promotions"],
+			answer: 0 // Correct: "Analyze institutional performance"
+		},
+		{
+			question: "Which metric is most critical in assessing student retention?",
+			options: ["Graduation rates", "Student headcount", "Retention rates"],
+			answer: 2 // Correct: "Retention rates"
+		},
+		{
+			question: "What data format is best for large IR data sharing?",
+			options: ["PDF", "Excel spreadsheets", "Hard copies"],
+			answer: 1 // Correct: "Excel spreadsheets"
+		}
+	];
+
+	// Follow-up Initiative Quiz
+	const followUpInitiativeQuiz = [
+		{
+			question: "What is the primary goal of missing materials follow-up?",
+			options: ["Ensure application completeness", "Encourage quick decisions", "Reduce workload for staff"],
+			answer: 0 // Correct: "Ensure application completeness"
+		},
+		{
+			question: "How should you handle an applicant with incomplete materials?",
+			options: ["Send a reminder email", "Place the application on hold", "Reject the application immediately"],
+			answer: 0 // Correct: "Send a reminder email"
+		},
+		{
+			question: "What is the best way to track missing materials?",
+			options: ["Use an automated checklist system", "Rely on manual record-keeping", "Ask applicants to remind the office"],
+			answer: 0 // Correct: "Use an automated checklist system"
+		}
+	];
+
+	// Conditional Admissions Policy Quiz
+	const conditionalAdmissionPolicyQuiz = [
+		{
+			question: "What is the purpose of conditional admissions?",
+			options: ["To provide opportunities for applicants with potential", "To lower the admission criteria", "To simplify the application process"],
+			answer: 0 // Correct: "To provide opportunities for applicants with potential"
+		},
+		{
+			question: "Which condition is commonly tied to a conditional admission offer?",
+			options: ["Completing required coursework", "Paying a higher application fee", "Relocating to campus early"],
+			answer: 0 // Correct: "Completing required coursework"
+		},
+		{
+			question: "How should conditional admissions be monitored?",
+			options: ["By setting clear deadlines for meeting conditions", "By relying on applicants to report their progress", "By not following up until graduation"],
+			answer: 0 // Correct: "By setting clear deadlines for meeting conditions"
+		}
+	];
+
+	function setupLevel2() {
+		const gameArea = document.getElementById("gameArea");
+		gameArea.innerHTML = ""; // Clear Level 1 elements
+
+		deskLabelsLevel2.forEach((label, index) => {
+			const deskContainer = document.createElement("div");
+			deskContainer.className = "desk-container";
+			deskContainer.id = `deskContainer${index + 1}`;
+
+			const desk = document.createElement("div");
+			desk.className = "desk";
+			desk.id = `desk${index + 1}`;
+			desk.innerText = label;
+			desk.onclick = () => serveStudent(index + 1);
+
+			const worker = document.createElement("div");
+			worker.className = "worker";
+			worker.id = `worker${index + 1}`;
+
+			const progressBar = document.createElement("div");
+			progressBar.className = "progress-bar";
+			progressBar.id = `progressBar${index + 1}`;
+
+			const progressFill = document.createElement("div");
+			progressFill.className = "progress-bar-fill";
+			progressFill.id = `progressFill${index + 1}`;
+
+			progressBar.appendChild(progressFill);
+			deskContainer.appendChild(desk);
+			deskContainer.appendChild(worker);
+			deskContainer.appendChild(progressBar);
+			gameArea.appendChild(deskContainer);
+		});
+	}
+
+
+    function showNotification(message) {
+        const notification = document.getElementById("notification");
+        notification.innerText = message;
+        notification.style.opacity = 1;
+        setTimeout(() => { notification.style.opacity = 0; }, 3000);
+    }
+
+    function updateDisplay() {
+        document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+        document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+    }
+
+	function createFloatingPoints(points, deskNumber) {
+		const pointElement = document.createElement("div");
+		pointElement.className = "floating-points";
+		pointElement.innerText = `+${points} CSP`; // Removed the dollar sign and added "CSP" label
+
+		pointElement.style.color = '#33348c'; // Set the color to purple
+
+		// Position the element at the desk's location
+		const desk = document.getElementById(`deskContainer${deskNumber}`);
+		const deskRect = desk.getBoundingClientRect();
+		pointElement.style.left = `${deskRect.left + deskRect.width / 2}px`;
+		pointElement.style.top = `${deskRect.top + deskRect.height / 2}px`;
+
+		document.body.appendChild(pointElement);
+
+		// Animate the points floating away from the desk
+		setTimeout(() => {
+			pointElement.style.transform = 'translateY(-50px)'; // Adjust the value to change how far it floats
+			pointElement.style.opacity = 0; // Fade out effect
+		}, 0);
+
+		// Remove the element after the animation is complete
+		setTimeout(() => {
+			pointElement.remove();
+		}, 1050); // Adjust timing to match the animation duration
+	}
+
+    function buyNextDesk() {
+        const deskNumber = nextDeskToBuy;
+        const deskCost = baseDeskCost * deskNumber;
+        if (csp >= deskCost && !deskUnlocked[deskNumber]) {
+            csp -= deskCost;
+            deskUnlocked[deskNumber] = true;
+
+            // Show FERPA question before unlocking the desk
+            showFERPAPopup(deskNumber);
+        } else {
+            showNotification("Not enough CSP!");
+        }
+    }
+
+	function showFERPAPopup(deskNumber) {
+		const popup = document.createElement("div");
+		const question = advancedQuestions[deskNumber - 1].question;
+		const options = advancedQuestions[deskNumber - 1].options;
+		const correctAnswer = advancedQuestions[deskNumber - 1].answer;
+
+		popup.id = "ferpaQuestionPopup";
+		popup.innerHTML = `
+			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
+				<h3>Admissions Application Processing Question:</h3>
+				<p>${advancedQuestions[deskNumber - 1].question}</p>
+				${advancedQuestions[deskNumber - 1].options.map((option, index) => `
+					<label>
+						<input type="radio" name="ferpaOption" value="${index}"> ${option}
+					</label><br>
+				`).join('')}
+				<button onclick="checkFERPAAnswer(${deskNumber})">Submit</button>
+				<button onclick="closeFERPAPopup()">Cancel</button>
+			</div>
+		`;
+		document.body.appendChild(popup);
+	}
+
+    function closeFERPAPopup() {
+        const popup = document.getElementById("ferpaQuestionPopup");
+        if (popup) {
+            document.body.removeChild(popup);
+        }
+    }
+
+	function checkFERPAAnswer(deskNumber) {
+		const selectedOption = document.querySelector('input[name="ferpaOption"]:checked');
+		if (selectedOption) {
+			const selectedIndex = parseInt(selectedOption.value);
+			const correctAnswer = advancedQuestions[deskNumber - 1].answer;
+			const feedback = advancedFeedbackMessages[deskNumber - 1];
+
+			if (selectedIndex === correctAnswer) {
+				closeFERPAPopup();
+				unlockDesk(deskNumber); // Unlock the desk if the answer is correct
+			} else {
+				const feedbackMessage =
+					selectedIndex === 1 ? feedback.incorrect1 :
+					selectedIndex === 2 ? feedback.incorrect2 :
+					"Incorrect answer. Please try again.";
+				showNotification(`${feedbackMessage} You have a 30-second penalty before trying again.`);
+				closeFERPAPopup();
+				setTimeout(() => showFERPAPopup(deskNumber), penaltyTime);
+			}
+		} else {
+			showNotification("Please select an answer.");
+		}
+	}
+
+
+	function unlockDesk(deskNumber) {
+		const newDeskContainer = document.createElement("div");
+		newDeskContainer.className = "desk-container";
+		newDeskContainer.id = `deskContainer${deskNumber}`;
+
+		const newDesk = document.createElement("div");
+		newDesk.className = "desk";
+		newDesk.id = `desk${deskNumber}`;
+		newDesk.innerText = deskLabelsLevel2[deskNumber - 1];
+		newDesk.onclick = () => serveStudent(deskNumber);
+
+		const worker = document.createElement("div");
+		worker.className = "worker";
+		worker.id = `worker${deskNumber}`;
+
+		// Ensure progress bar and progress fill are created for every desk
+		const progressBar = document.createElement("div");
+		progressBar.className = "progress-bar";
+		progressBar.id = `progressBar${deskNumber}`;
+		progressBar.style.display = "block";
+
+		const progressFill = document.createElement("div");
+		progressFill.className = "progress-bar-fill";
+		progressFill.id = `progressFill${deskNumber}`;
+
+		progressBar.appendChild(progressFill);
+		newDeskContainer.appendChild(newDesk);
+		newDeskContainer.appendChild(worker);
+		newDeskContainer.appendChild(progressBar);
+		document.getElementById("gameArea").appendChild(newDeskContainer);
+
+		processingTimes[deskNumber] = processingTimes[deskNumber - 1] + 2000;
+		pointsPerDesk[deskNumber] = pointsPerDesk[deskNumber - 1] + 3;
+
+		const hireCost = baseHireCost * deskNumber;
+		const hireWorkerButton = document.createElement("button");
+		hireWorkerButton.id = `hireWorkerButton${deskNumber}`;
+		hireWorkerButton.innerText = `Hire Work-Study Student for ${deskLabelsLevel2[deskNumber - 1]} (${hireCost} CSP)`;
+		hireWorkerButton.onclick = () => hireWorker(deskNumber, hireCost);
+		document.getElementById("infoPanel").appendChild(hireWorkerButton);
+
+		nextDeskToBuy += 1;
+		if (nextDeskToBuy <= deskLabelsLevel2.length) {
+			document.getElementById("buyDeskButton").innerText = `Buy ${deskLabelsLevel2[nextDeskToBuy - 1]} (${baseDeskCost * nextDeskToBuy} CSP)`;
+		} else {
+			document.getElementById("buyDeskButton").style.display = "none";
+		}
+
+		updateDisplay();
+		showNotification(`${deskLabelsLevel2[deskNumber - 1]} unlocked!`);
+		
+
+		// Unlock special projects when specific desks are purchased in Level
+		if (deskNumber === 3) unlockSpecialProject('documentValidation');
+		if (deskNumber === 6) unlockSpecialProject('followUpInitiative');
+		if (deskNumber === 9) unlockSpecialProject('conditionalAdmissionPolicy');
+
+	}
+
+
+	function serveStudent(deskNumber) {
+		// When the desk is not automated
+		if (deskUnlocked[deskNumber] && !hasWorker[deskNumber]) {
+			if (!deskInProgress[deskNumber]) {
+				deskInProgress[deskNumber] = true;
+
+				// Get the progress bar and progress fill elements
+				const progressBar = document.getElementById(`progressBar${deskNumber}`);
+				const progressFill = document.getElementById(`progressFill${deskNumber}`);
+				
+				// Show the progress bar and reset it
+				progressBar.style.display = "block";
+				progressFill.style.transition = 'none';
+				progressFill.style.width = '0%';
+
+				// Start the smooth filling of the progress bar
+				setTimeout(() => {
+					progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
+					progressFill.style.width = '100%';
+				}, 50); // Small delay to ensure transition effect
+
+				// Complete the task after the specified time
+				setTimeout(() => {
+					csp += pointsPerDesk[deskNumber];
+					totalCspEarned += pointsPerDesk[deskNumber];
+					updateDisplay();
+					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+					showNotification(`Served a student at ${deskLabelsLevel2[deskNumber - 1]}`);
+
+					// Reset and hide the progress bar after filling
+					progressFill.style.transition = 'none';
+					progressFill.style.width = '0%';
+					deskInProgress[deskNumber] = false;
+					progressBar.style.display = "none";
+				}, processingTimes[deskNumber]);
+			}
+		} 
+		// When the desk is automated
+		else if (deskUnlocked[deskNumber] && hasWorker[deskNumber]) {
+			showNotification(`This desk is automated. Please wait for processing.`);
+			return;
+		}
+	}
+
+
+
+
+	 function hireWorker(deskNumber, hireCost) {
+		if (csp >= hireCost && !hasWorker[deskNumber]) {
+			csp -= hireCost;
+			hasWorker[deskNumber] = true;
+			document.getElementById(`worker${deskNumber}`).style.display = "none"; // Hide the worker
+			document.getElementById(`desk${deskNumber}`).classList.add("automated");
+			document.getElementById(`progressBar${deskNumber}`).style.display = "block";
+			document.getElementById(`hireWorkerButton${deskNumber}`).style.display = "none";
+			startAutoProcessing(deskNumber);
+			updateDisplay();
+
+			// Select a unique, unused image
+			let randomIndex;
+			do {
+				randomIndex = Math.floor(Math.random() * studentImages.length);
+			} while (usedImages.includes(randomIndex) && usedImages.length < studentImages.length);
+
+			// Add the selected image index to the used list
+			if (!usedImages.includes(randomIndex)) {
+				usedImages.push(randomIndex);
+			}
+
+
+			// Show the student image for the desk
+			const studentImage = document.createElement("img");
+			studentImage.className = "student-image";
+			studentImage.src = studentImages[randomIndex];
+			studentImage.style.display = "block";
+			studentImage.style.top = `${document.getElementById(`deskContainer${deskNumber}`).offsetTop - 15}px`;
+			studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`;
+			document.getElementById("gameArea").appendChild(studentImage);
+		} else {
+			showNotification("Not enough CSP!");
+		}
+	}
+
+
+		function startAutoProcessing(deskNumber) {
+			function processTask() {
+				if (!deskInProgress[deskNumber]) {
+					deskInProgress[deskNumber] = true;
+
+					const progressFill = document.getElementById(`progressFill${deskNumber}`);
+
+					// Reset progress bar
+					progressFill.style.transition = 'none'; // Disable animation for reset
+					progressFill.style.width = '0%'; // Reset width to 0%
+
+					// Start filling progress bar
+					setTimeout(() => {
+						progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`; // Smooth transition
+						progressFill.style.width = '100%'; // Fill the bar
+					}, 50); // Slight delay to visually reset the bar
+
+					// Complete the task after the bar fills
+					setTimeout(() => {
+						// Update CSP and total points
+						csp += pointsPerDesk[deskNumber];
+						totalCspEarned += pointsPerDesk[deskNumber];
+						updateDisplay();
+
+						// Create floating points effect
+						createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+
+						// Mark desk as ready for the next cycle
+						deskInProgress[deskNumber] = false;
+
+						// Immediately start the next task
+						processTask();
+					}, processingTimes[deskNumber]); // Matches the fill duration
+				}
+			}
+
+			// Start the first task
+			processTask();
+		}
+		
+
+
+
+    function showStudentImage(deskNumber) {
+        const studentImage = document.createElement("img");
+        studentImage.className = "student-image"; // Add class for styling
+        const randomIndex = Math.floor(Math.random() * studentImages.length);
+        studentImage.src = studentImages[randomIndex]; // Use random image
+        studentImage.style.display = "block"; // Show the student image
+        // Position it at the desk
+        studentImage.style.top = `${document.getElementById(`deskContainer${deskNumber}`).offsetTop - 1000}px`; // Adjust positioning
+        studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`; // Adjust positioning
+        document.getElementById("gameArea").appendChild(studentImage); // Append new image to the game area
+    }
+
+    updateDisplay();
+	
+	function unlockSpecialProject(projectId) {
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'block'; // Show the button
+			showNotification(`Special Project Unlocked: ${projectButton.innerText}`);
+		} else {
+			console.error(`Special project button with ID "${projectId}" not found.`);
+		}
+	}
+		
+	function triggerSpecialProject(projectId) {
+		let quiz;
+		switch (projectId) {
+			case 'documentValidation':
+				quiz = documentValidationQuiz;
+				break;
+			case 'followUpInitiative':
+				quiz = followUpInitiativeQuiz;
+				break;
+			case 'conditionalAdmissionPolicy':
+				quiz = conditionalAdmissionPolicyQuiz;
+				break;
+			default:
+				console.error(`Unknown project ID: ${projectId}`);
+				return;
+		}
+
+		showQuizPopup(quiz, projectId); // Pass the projectId and quiz to the popup
+	}
+
+
+
+
+		
+	function showQuizPopup(quiz, projectId) {
+		const quizPopup = document.createElement('div');
+		quizPopup.id = 'quizPopup';
+		quizPopup.style = `
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: white;
+			padding: 20px;
+			border: 2px solid #ccc;
+			z-index: 100;
+			max-width: 80%;
+		`;
+		document.body.appendChild(quizPopup);
+
+		currentQuestionIndex = 0; // Initialize the question index
+
+		renderQuestion(projectId, quiz); // Start rendering the first question
+	}
+
+	function renderQuestion(projectId, quiz) {
+		const quizPopup = document.getElementById('quizPopup');
+		const question = quiz[currentQuestionIndex];
+
+		quizPopup.innerHTML = `
+			<h3>Special Project Quiz</h3>
+			<p>${question.question}</p>
+			${question.options.map((option, index) => `
+				<label>
+					<input type="radio" name="quizOption" value="${index}"> ${option}
+				</label><br>
+			`).join('')}
+			<button id="submitAnswerButton">Submit</button>
+		`;
+
+		document.getElementById('submitAnswerButton').addEventListener('click', () => checkAnswer(projectId, quiz));
+	}
+
+
+
+
+	function checkAnswer(projectId, quiz) {
+		const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+		if (!selectedOption) {
+			alert('Please select an answer.');
+			return;
+		}
+
+		const isCorrect = parseInt(selectedOption.value) === quiz[currentQuestionIndex].answer;
+		if (isCorrect) {
+			currentQuestionIndex++;
+			if (currentQuestionIndex < quiz.length) {
+				renderQuestion(projectId, quiz); // Move to the next question
+			} else {
+				closeQuizPopup(projectId); // Close the quiz popup and hide the button
+				handleSpecialProjectRewards(true); // Reward for completion
+			}
+		} else {
+			handleSpecialProjectRewards(false); // Penalize for incorrect answers
+		}
+	}
+
+
+
+
+	function closeQuizPopup(projectId) {
+		const quizPopup = document.getElementById('quizPopup');
+		if (quizPopup) {
+			document.body.removeChild(quizPopup); // Remove the quiz popup
+		}
+
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'none'; // Hide the button
+		} else {
+			console.error(`Special project button with ID "${projectId}" not found.`);
+		}
+	}
+
+
+	function handleSpecialProjectRewards(isCorrect) {
+		if (isCorrect) {
+			csp += 50; // Reward for completing all questions correctly
+			showNotification("Congratulations! You earned 50 CSP for successfully completing the special project.");
+		} else {
+			csp -= 20; // Penalty for incorrect answer
+			showNotification("Incorrect answer. You lost 20 CSP.");
+		}
+		updateDisplay();
+	}
+	
+	
+	
+		// Function to check if the end conditions are met
+	function checkEndGame() {
+		// Check if all desks are automated and CSP is 2,000 or more
+		const allDesksAutomated = Object.keys(hasWorker).length === 10;
+		if (allDesksAutomated && csp >= 1000) {
+		        gameEnded = true; // Lock further updates
+				        console.log("End conditions met");
+			        console.log("Final CSP at completion:", finalCspAtCompletion); // Debugging log
+			showEndModal();
+		}
+	}
+
+	function loadNextLevel() {
+		window.location.href = "RegistrarStory_Level2.html"; // Update with the correct file path
+	}
+
+
+	// Function to show the ending modal
+	function showEndModal() {
+		const endModal = document.getElementById("endModal");
+		const finalScoreModal = document.getElementById("finalScoreModal");
+
+		// Update the final score dynamically
+		finalScoreModal.innerText = `Hey, congrats! You managed to get all of your stations automated and working at maximum efficiency! Level 3 will focus on operations. Let’s see if you can keep this going.`;
+
+		// Display the modal
+		endModal.style.display = "flex";
+	}
+
+	// Function to close the modal
+	function closeModal() {
+		const endModal = document.getElementById("endModal");
+		endModal.style.display = "none";
+	}
+
+	// Function for Replay Level button
+	function replayLevel() {
+		// Reset game variables and reload the page to restart the level
+		location.reload();
+	}
+
+	// Function for Next Level button
+	function nextLevel() {
+		alert("Transitioning to Level 3...");
+		location.href = "RegistrarStory_Level6.html"; // Link to a separate file or setup
+	}
+
+
+	// Call checkEndGame() after every CSP update
+	function updateDisplay() {
+		document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+		document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+		checkEndGame();
+	}
+
+		
+		
+	
+	
+	
+</script>
+
+</body>
+</html>
