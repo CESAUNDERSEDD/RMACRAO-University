@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Office Story</title>
+    <title>RMACRAO University</title>
     <style>
         /* Basic styling */
         body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
@@ -33,12 +33,12 @@
         #deskContainer2 { top: 10%; left: 20%; }
         #deskContainer3 { top: 10%; left: 65%; }
         #deskContainer4 { top: 40%; left: 23%; }
-        #deskContainer5 { top: 40%; left: 65%; }
-        #deskContainer6 { top: 68%; left: 25%; }
-        #deskContainer7 { top: 68%; left: 79%; }
-        #deskContainer8 { top: 68%; left: 5%; }
-        #deskContainer9 { top: 80%; left: 60%; }
-        #deskContainer10 { top: 80%; left: 30%; }
+        #deskContainer5 { top: 40%; left: 66%; }
+        #deskContainer6 { top: 67%; left: 20%; }
+        #deskContainer7 { top: 82%; left: 47%; }
+        #deskContainer8 { top: 67%; left: 73%; }
+        #deskContainer9 { top: 82%; left: 18%; }
+        #deskContainer10 { top: 82%; left: 75%; }
 
         #infoPanel { margin-top: 20px; font-weight: bold; text-align: center; }
         #notification { color: #3c744c; font-weight: bold; margin-top: 10px; min-height: 20px; transition: opacity 0.5s; opacity: 0; }
@@ -149,6 +149,7 @@
 		display: block; /* Ensure proper rendering */
 	}
 
+
 		
 		
 		
@@ -158,7 +159,7 @@
 <body>
 
 
-<div id="welcomeMessage">Welcome to RMACRAO University. Process some forms to gain points. Click the desk to process a form.</div>
+<div id="welcomeMessage">Welcome to RMACRAO University: Registrar Level 3!. This level will focus on operations. Click the desk to get started.</div>
 
 <div id="totalPointsDisplay">Total CSP Earned: 0</div>
 
@@ -189,6 +190,7 @@
 <div id="infoPanel">
     <div id="notification"></div>
     <p id="pointsDisplay">Customer Service Points (CSP): 0</p>
+	<p id="additionalText" style="margin-top: 10px; color: #333;">Special projects available this level: Compliance Audit and Student Engagement </p>
     <button id="buyDeskButton" onclick="buyNextDesk()">Schedule Building (100 CSP)</button>
     <button id="hireWorkerButton1" onclick="hireWorker(1, 30)">Hire Work-Study Student for Catalog Updates Desk (30 CSP)</button>
 </div>
@@ -197,6 +199,7 @@
 	<button id="complianceAudit" style="display: none;" onclick="triggerSpecialProject('complianceAudit')">Compliance Audit</button>
 	<button id="studentEngagement" style="display: none;" onclick="triggerSpecialProject('studentEngagement')">Student Engagement</button>
 </div>
+
 
 
 
@@ -242,13 +245,13 @@
 	const deskLabelsLevel3 = [
 		"Catalog Updates",
 		"Schedule Building",
-		"Room Assignments",
+		"Advisor Assignments",
 		"FERPA Queries",
 		"Academic Policies",
 		"Alumni Records",
 		"Data Verification",
 		"Dual Degrees",
-		"Emergency Services",
+		"Registration Services",
 		"Registrar Operations"
 	];
 
@@ -269,174 +272,174 @@
 
 const advancedQuestionsLevel3 = [
     {
-        question: "What is the primary purpose of the transfer credit evaluation process?",
+        question: "What’s the first step in updating the academic catalog?",
         options: [
-            "Ensure coursework meets institutional standards",
-            "Automatically accept all transfer courses",
-            "Reject all courses from non-accredited schools"
+            "Verify all program and policy changes with academic departments.",
+            "Publish updates directly to the catalog website.",
+            "Notify students about upcoming catalog changes."
         ],
-        answer: 0 // Correct: "Ensure coursework meets institutional standards"
+        answer: 0 // Correct: "Verify all program and policy changes with academic departments."
     },
     {
-        question: "What should you do if a student is over-enrolled in credits for a semester?",
+        question: "What’s the most important consideration when building the course schedule?",
         options: [
-            "Contact the student to discuss and adjust their schedule",
-            "Drop the extra credits without informing the student",
-            "Wait until the semester starts to address the issue"
+            "Aligning course offerings with student demand.",
+            "Scheduling classes evenly across all time slots.",
+            "Prioritizing faculty preferences for class times."
         ],
-        answer: 0 // Correct: "Contact the student to discuss and adjust their schedule"
+        answer: 0 // Correct: "Aligning course offerings with student demand."
     },
     {
-        question: "Why is it important to keep the academic catalog updated?",
+        question: "What should you prioritize when assigning advisors to students?",
         options: [
-            "Ensure students and faculty have accurate program information",
-            "Reduce the workload of the registrar's office",
-            "Allow students to create their own interpretations"
+            "Assigning advisors based on availability alone.",
+            "Matching advisors with relevant expertise in the student’s program.",
+            "Letting students select their advisors without oversight."
         ],
-        answer: 0 // Correct: "Ensure students and faculty have accurate program information"
+        answer: 1 // Correct: "Matching advisors with relevant expertise in the student’s program."
     },
     {
-        question: "What is a key consideration when building a class schedule?",
+        question: "How should you respond to a FERPA-related inquiry from a third party?",
         options: [
-            "Balance class availability with student needs",
-            "Prioritize faculty preferences above all",
-            "Schedule every class in the largest room available"
+            "Provide the requested information as long as it is directory information.",
+            "Refuse to share any information under FERPA rules.",
+            "Verify the third party’s authority before sharing information. "
         ],
-        answer: 0 // Correct: "Balance class availability with student needs"
+        answer: 2 // Correct: "Verify the third party’s authority before sharing information. "
     },
     {
-        question: "How do you handle conflicts in room assignments?",
+        question: "What’s the key to ensuring academic policies are effectively implemented?",
         options: [
-            "Work with faculty and departments to find an alternative solution",
-            "Assign rooms on a first-come, first-served basis",
-            "Leave it to the faculty to resolve the conflict"
+            "Posting the policies on the registrar’s website.",
+            "Relying on faculty to explain policies to students.",
+            "Clear communication to all stakeholders."
         ],
-        answer: 0 // Correct: "Work with faculty and departments to find an alternative solution"
+        answer: 2 // Correct: "Clear communication to all stakeholders."
     },
     {
-        question: "When responding to FERPA-related queries, what is a primary consideration?",
+        question: "How should you handle a request for alumni records?",
         options: [
-            "Protect student privacy and comply with the law",
-            "Release information if the request seems reasonable",
-            "Ask the student for verbal permission and proceed"
+            "Verify the request aligns with FERPA and institutional policies.",
+            "Share the records if the alumni provided them to the institution.",
+            "Redirect the request to the alumni office without verifying its validity."
         ],
-        answer: 0 // Correct: "Protect student privacy and comply with the law"
+        answer: 0 // Correct: "Verify the request aligns with FERPA and institutional policies."
     },
     {
-        question: "Why is it important to enforce academic policies consistently?",
+        question: "What’s the first step in verifying academic data for reporting purposes?",
         options: [
-            "Ensure fairness and maintain institutional integrity",
-            "Avoid upsetting specific students or faculty",
-            "Allow exceptions based on personal judgment"
+            "Cross-check data against official records.",
+            "Rely on automated systems to identify errors.",
+            "Submit the data for reporting without verification."
         ],
-        answer: 0 // Correct: "Ensure fairness and maintain institutional integrity"
+        answer: 0 // Correct: "Cross-check data against official records."
     },
     {
-        question: "What is the primary goal of graduation audits?",
+        question: "What is critical when auditing dual-degree progress?",
         options: [
-            "Confirm that students meet all degree requirements",
-            "Make exceptions to allow more students to graduate",
-            "Prioritize students with the highest GPAs"
+            "Confirm the student’s intent to complete both programs.",
+            "Focus on the requirements for the student’s primary degree.",
+            "Ensure both degrees meet all institutional and program requirements."
         ],
-        answer: 0 // Correct: "Confirm that students meet all degree requirements"
+        answer: 2 // Correct: "Ensure both degrees meet all institutional and program requirements."
     },
     {
-        question: "How should discrepancies in enrollment data be handled?",
+        question: "What’s the best way to assist a student with a registration hold?",
         options: [
-            "Investigate and correct the issue promptly",
-            "Ignore them if they seem minor",
-            "Adjust the data without verifying accuracy"
+            "Advise the student to contact the financial aid office.",
+            "Explain the reason for the hold and how to resolve it.",
+            "Remove the hold without investigating the cause."
         ],
-        answer: 0 // Correct: "Investigate and correct the issue promptly"
+        answer: 1 // Correct: "Explain the reason for the hold and how to resolve it."
     },
     {
-        question: "What is a key consideration for dual-degree programs?",
+        question: "What’s the key to improving registrar office efficiency?",
         options: [
-            "Ensure both degrees meet all institutional requirements",
-            "Allow students to waive requirements for one degree",
-            "Focus only on the major requirements for the primary degree"
+            "Reducing the workload by limiting service hours.",
+            "Streamlining processes and training staff effectively.",
+            "Outsourcing responsibilities to other departments."
         ],
-        answer: 0 // Correct: "Ensure both degrees meet all institutional requirements"
+        answer: 1 // Correct: "Streamlining processes and training staff effectively."
     }
 ];
 
 	
 	const advancedFeedbackMessagesLevel3 = [
 		{
-			incorrect1: "Automatically accepting all transfer courses can compromise standards.",
-			incorrect2: "Rejecting all courses from non-accredited schools may overlook valid credits."
+			incorrect1: "Publishing without verification risks inaccuracies.",
+			incorrect2: "Notifying students is secondary to verifying updates with departments."
 		},
 		{
-			incorrect1: "Dropping credits without informing the student is unprofessional.",
-			incorrect2: "Waiting until the semester starts causes unnecessary confusion."
+			incorrect1: "Balancing time slots is important but secondary to meeting student needs.",
+			incorrect2: "Faculty preferences should be considered but not at the expense of student demand."
 		},
 		{
-			incorrect1: "Reducing the workload isn’t a valid reason to keep catalogs updated.",
-			incorrect2: "Allowing students to interpret policies leads to inconsistencies."
+			incorrect1: "Availability matters but should not outweigh expertise.",
+			incorrect2: "Unsupervised advisor selection can lead to mismatches and confusion."
 		},
 		{
-			incorrect1: "Prioritizing faculty preferences above all may ignore student needs.",
-			incorrect2: "Scheduling every class in the largest room wastes space."
+			incorrect1: "Directory information can only be shared if the student has not opted out.",
+			incorrect2: "Refusing outright may not be appropriate if FERPA allows sharing under specific conditions."
 		},
 		{
-			incorrect1: "Assigning rooms on a first-come, first-served basis can create inequities.",
-			incorrect2: "Leaving it to the faculty may delay resolution."
+			incorrect1: "Posting policies is useful but not sufficient to ensure understanding.",
+			incorrect2: "Relying solely on faculty may lead to inconsistent communication."
 		},
 		{
-			incorrect1: "Releasing information without proper checks is a FERPA violation.",
-			incorrect2: "Verbal permissions do not comply with FERPA requirements."
+			incorrect1: "FERPA requires ongoing protection of student records, even for alumni.",
+			incorrect2: "Redirecting requests without validation risks mishandling sensitive data."
 		},
 		{
-			incorrect1: "Avoiding upsetting specific groups undermines fairness.",
-			incorrect2: "Making exceptions based on personal judgment reduces consistency."
+			incorrect1: "Automated systems assist but should not replace manual verification.",
+			incorrect2: "Submitting unverified data risks significant errors."
 		},
 		{
-			incorrect1: "Making exceptions compromises the validity of the degree.",
-			incorrect2: "Prioritizing high GPAs overlooks institutional requirements."
+			incorrect1: "Student intent is important but secondary to meeting requirements.",
+			incorrect2: "Both degrees must meet standards, not just the primary program."
 		},
 		{
-			incorrect1: "Ignoring minor discrepancies can lead to larger issues later.",
-			incorrect2: "Adjusting data without verification risks inaccuracies."
+			incorrect1: "Referring students elsewhere without clarification may cause frustration.",
+			incorrect2: "Removing holds without understanding the reason violates policy."
 		},
 		{
-			incorrect1: "Waiving requirements undermines the integrity of the program.",
-			incorrect2: "Focusing only on the primary degree ignores dual-degree rules."
+			incorrect1: "Limiting service hours inconveniences students and doesn’t improve efficiency.",
+			incorrect2: "Outsourcing responsibilities reduces accountability and may create bottlenecks."
 		}
 	];
 
 	const complianceAuditQuiz = [
 		{
-			question: "Which is the most important factor in ensuring compliance with federal regulations?",
-			options: ["Regular staff training", "Using outdated policies", "Ignoring compliance audits"],
-			answer: 0 // Correct: "Regular staff training"
+			question: "A faculty member asks for access to a student’s disciplinary records to address a classroom behavior issue. What is your first step to ensure FERPA compliance?",
+			options: ["Verify the faculty member’s legitimate educational interest before sharing any information. ", "Provide the disciplinary records immediately, as the faculty member is directly involved with the student.", "Deny the request because disciplinary records are not accessible under FERPA."],
+			answer: 0 // Correct: "Verify the faculty member’s legitimate educational interest before sharing any information. "
 		},
 		{
-			question: "What is required for FERPA compliance when sharing student data?",
-			options: ["Written consent from the student", "Verbal permission from the registrar", "Faculty approval"],
-			answer: 0 // Correct: "Written consent from the student"
+			question: "The compliance audit reveals inconsistencies in how FERPA training is conducted across departments. What is the best way to address this issue?",
+			options: ["Focus only on departments with reported FERPA violations to prioritize resources.", "Allow departments to continue using their own training methods to avoid resistance to changes.", "Standardize training materials and implement regular, mandatory training sessions for all staff."],
+			answer: 2 // Correct: "Standardize training materials and implement regular, mandatory training sessions for all staff."
 		},
 		{
-			question: "How often should compliance audits be conducted?",
-			options: ["Annually", "Every five years", "Only when issues arise"],
-			answer: 0 // Correct: "Annually"
+			question: "During the audit, you discover a professor has been saving student grades on a personal cloud account. What steps should you take to resolve this compliance issue?",
+			options: ["Notify the professor of the violation and provide them with secure storage options for student data. ", "Report the professor to the compliance office and recommend disciplinary action.", "Allow the professor to continue using the account if they password-protect the data."],
+			answer: 0 // Correct: "Notify the professor of the violation and provide them with secure storage options for student data. "
 		}
 	];
 
 	const studentEngagementQuiz = [
 		{
-			question: "How can the Registrar's Office improve communication with students?",
-			options: ["Using targeted email campaigns", "Avoiding student interactions", "Sending generic notices"],
-			answer: 0 // Correct: "Using targeted email campaigns"
+			question: "Student engagement data reveals that a large number of students are delaying registration until the final week of the registration period. How can you use registrar data to address this trend",
+			options: ["Extend the registration period to give students more time to make decisions.", "Analyze historical registration trends to identify bottlenecks and develop targeted communication strategies encouraging earlier registration.", "Send out reminder emails every day during the registration period to prompt earlier action."],
+			answer: 1 // Correct: "Analyze historical registration trends to identify bottlenecks and develop targeted communication strategies encouraging earlier registration."
 		},
 		{
-			question: "What initiative can help students understand their degree requirements?",
-			options: ["Hosting degree planning workshops", "Assuming students know their requirements", "Providing no guidance"],
-			answer: 0 // Correct: "Hosting degree planning workshops"
+			question: "Student satisfaction surveys show low engagement with registrar services, but the feedback is vague. How should you use data verification to improve these services?",
+			options: ["Focus only on issues explicitly mentioned in the survey responses to save time.", "Conduct focus groups to collect qualitative data and cross-check survey responses for patterns and actionable insights.", "Redesign the survey to collect better responses in the next cycle and ignore the current feedback."],
+			answer: 1 // Correct: "Conduct focus groups to collect qualitative data and cross-check survey responses for patterns and actionable insights."
 		},
 		{
-			question: "What is the best way to gather student feedback on registrar services?",
-			options: ["Conducting online surveys", "Ignoring student feedback", "Only accepting verbal suggestions"],
-			answer: 0 // Correct: "Conducting online surveys"
+			question: "The registrar’s office wants to launch an initiative to improve communication with students. What’s the most effective way to verify that the communication methods are working?",
+			options: ["Increase the frequency of messages sent to students and assume higher volume will lead to better results.", "Rely on anecdotal feedback from staff to assess whether communication efforts are improving.", "Track response rates to communications and compare engagement levels before and after implementing new methods."],
+			answer: 2 // Correct: "Track response rates to communications and compare engagement levels before and after implementing new methods."
 		}
 	];
 
@@ -722,40 +725,51 @@ const advancedQuestionsLevel3 = [
 			studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`;
 			document.getElementById("gameArea").appendChild(studentImage);
 		} else {
-			showNotification("Not enough CSP or worker already hired for this desk!");
+			showNotification("Not enough CSP!");
 		}
 	}
 
 
 	function startAutoProcessing(deskNumber) {
-		setInterval(() => {
+		function processTask() {
 			if (!deskInProgress[deskNumber]) {
 				deskInProgress[deskNumber] = true;
+
 				const progressFill = document.getElementById(`progressFill${deskNumber}`);
-				progressFill.style.transition = 'none'; // Disable transitions for immediate action
-				progressFill.style.width = '0%'; // Reset to 0%
 
-				// Start filling the progress bar immediately
-				progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
-				progressFill.style.width = '100%'; // Fill the progress bar
+				// Reset progress bar
+				progressFill.style.transition = 'none'; // Disable animation for reset
+				progressFill.style.width = '0%'; // Reset width to 0%
 
+				// Start filling progress bar
 				setTimeout(() => {
-					// Update CSP and total CSP earned using the full points
+					progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`; // Smooth transition
+					progressFill.style.width = '100%'; // Fill the bar
+				}, 50); // Slight delay to visually reset the bar
+
+				// Complete the task after the bar fills
+				setTimeout(() => {
+					// Update CSP and total points
 					csp += pointsPerDesk[deskNumber];
 					totalCspEarned += pointsPerDesk[deskNumber];
 					updateDisplay();
 
-					// Create the floating points effect
+					// Create floating points effect
 					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
 
-					// Immediately reset the progress bar without backtracking
-					progressFill.style.transition = 'none'; // Disable transition
-					progressFill.style.width = '0%'; // Clear the progress bar
-					deskInProgress[deskNumber] = false; // Mark the desk as not in progress
-				}, processingTimes[deskNumber]);
+					// Mark desk as ready for the next cycle
+					deskInProgress[deskNumber] = false;
+
+					// Immediately start the next task
+					processTask();
+				}, processingTimes[deskNumber]); // Matches the fill duration
 			}
-		}, processingTimes[deskNumber]); // Control the interval timing based on processing time
+		}
+
+		// Start the first task
+		processTask();
 	}
+	
 
 
 
@@ -785,6 +799,7 @@ const advancedQuestionsLevel3 = [
 			
 	function triggerSpecialProject(projectId) {
 		let quiz;
+		currentQuestionIndex = 0;
 		switch (projectId) {
 			case 'complianceAudit':
 				quiz = complianceAuditQuiz;
@@ -900,7 +915,7 @@ const advancedQuestionsLevel3 = [
 	function checkEndGame() {
 		// Check if all desks are automated and CSP is 2,000 or more
 		const allDesksAutomated = Object.keys(hasWorker).length === 10;
-		if (allDesksAutomated && csp >= 2000) {
+		if (allDesksAutomated && csp >= 1000) {
 			showEndScreen();
 		}
 	}
