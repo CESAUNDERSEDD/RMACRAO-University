@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Office Story</title>
+    <title>RMACRAO University</title>
     <style>
         /* Basic styling */
         body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
@@ -18,6 +18,7 @@
 			background-position: center;
 			border: 1px solid #ddd;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			z-index: 1; 
 		}
 
         /* Desk container styling */
@@ -101,44 +102,7 @@
 		}
 
 
-		/* End Screen Styling */
-		#endScreen {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			visibility: hidden; /* Hidden by default */
-			opacity: 0;
-			transition: opacity 0.3s ease;
-		}
 
-		#endScreenContent {
-			background: rgba(255, 255, 255, 0.9) url('RMACRAOUniversityTransition.png') center/cover no-repeat;
-			padding: 20px;
-			border-radius: 10px;
-			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-			text-align: center;
-		}
-
-		#replayButton, #nextLevelButton {
-			padding: 10px 20px;
-			margin: 10px;
-			font-size: 16px;
-			background-color: #33348c;
-			color: #fff;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-
-		#replayButton:hover, #nextLevelButton:hover {
-			background-color: #5555aa;
-		}
 
 	#specialProjectsPanel {
 		position: absolute; /* Anchors the panel to a fixed position */
@@ -149,8 +113,62 @@
 		display: block; /* Ensure proper rendering */
 	}
 
+.text-container {
+    margin-left: 10px; /* Adjust to move closer to the image */
+    text-align: left; /* Optional: Align text to the left */
+    line-height: 1.8; /* Stretch lines (default is 1.0 or 1.2) */
+    max-width: 400px; /* Limit the width for better readability */
+}
+
+.text-container p {
+    margin: 10px 0; /* Add spacing between paragraphs */
+}
 
 
+/* Modal Container */
+.endmodal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%; /* Set width to cover the entire screen */
+    height: 100%; /* Set height to cover the entire screen */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Modal Content Box */
+.endmodal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px; /* Set your desired content width */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    z-index: 1001; /* Ensure it appears above the overlay */
+}
+
+/* Close Button */
+.endmodalclose-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Character Image */
+.endmodalcharacter-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+		
 
 		
 		
@@ -161,14 +179,14 @@
 <body>
 
 
-<div id="welcomeMessage">Welcome to RMACRAO University. Process some forms to gain points. Click the desk to process a form.</div>
+<div id="welcomeMessage">Welcome to RMACRAO University: Registrar Level 2!. This level will focus on customer service. Click the desk to get started.</div>
 
 <div id="totalPointsDisplay">Total CSP Earned: 0</div>
 
 <div id="gameArea">
     <!-- Initial Desk - Add/Drop Desk -->
     <div class="desk-container" id="deskContainer1">
-        <div class="desk" id="desk1" onclick="serveStudent(1)">Graduation Review</div>
+        <div class="desk" id="desk1" onclick="serveStudent(1)">Graduation Application</div>
         <div class="worker" id="worker1"></div>
         <div class="progress-bar" id="progressBar1"><div class="progress-bar-fill" id="progressFill1"></div></div>
     </div>
@@ -176,29 +194,35 @@
     <img id="studentImage" src="Student1.png" alt="Student Worker" class="student-image" />
 </div>
 
-<!-- End Screen Popup -->
-<div id="endScreen">
-    <div id="endScreenContent">
-        <h2>Office Successfully Managed!</h2>
-        <p id="finalScore"></p>
-        <button id="replayButton" onclick="replayLevel()">Replay Level</button>
-		<button id="nextLevelButton" onclick="loadNextLevel()">Next Level</button>
-    </div>
-</div>
+
 
 
 
 <div id="infoPanel">
     <div id="notification"></div>
     <p id="pointsDisplay">Customer Service Points (CSP): 0</p>
+	<p id="additionalText" style="margin-top: 10px; color: #333;">Special projects available this level: Institutional Research, Administrative Strategic Project, and Data Inquiries </p>
     <button id="buyDeskButton" onclick="buyNextDesk()">Transfer Equivalency (100 CSP)</button>
-    <button id="hireWorkerButton1" onclick="hireWorker(1, 30)">Hire Work-Study Student for Graduation Review Desk (30 CSP)</button>
+    <button id="hireWorkerButton1" onclick="hireWorker(1, 30)">Hire Work-Study Student for Graduation Application Desk (30 CSP)</button>
 </div>
 
 <div id="specialProjectsPanel">
 	<button id="irRequest" style="display: none;" onclick="triggerSpecialProject('irRequest')">IR Request</button>
-	<button id="strategicProject" style="display: none;" onclick="triggerSpecialProject('strategic')">Strategic Project</button>
+	<button id="administrativeStrategic" style="display: none;" onclick="triggerSpecialProject('administrativeStrategic')"> Administrative Strategic Project</button>
 	<button id="dataInquiry" style="display: none;" onclick="triggerSpecialProject('dataInquiry')">Data Inquiry</button>
+</div>
+
+<div class="endmodal" id="endModal">
+    <div class="endmodal-content">
+        <span class="endmodalclose-button" onclick="closeModal()">X</span>
+        <div class="endmodal-body">
+            <h2>Congratulations!</h2>
+            <p id="finalScoreModal">Final Score: 1000</p>
+            <button onclick="replayLevel()">Replay Level</button>
+            <button onclick="nextLevel()">Next Level</button>
+        </div>
+        <img src="RMACRAOUniversityPresenter3.png" alt="Character" class="endmodalcharacter-image">
+    </div>
 </div>
 
 
@@ -239,21 +263,22 @@
     let deskInProgress = {};
 	let usedImages = []; // Initialize an array to keep track of used images
 	let currentQuestionIndex = 0; // Declare globally at the top of your script
-
+	let finalCspAtCompletion = 0; // Holds the total CSP when the game ends
+	let gameEnded = false; // Prevents re-triggering end-game logic
 
     const penaltyTime = 30000; // 30 seconds penalty time
 
 	const deskLabelsLevel2 = [
-		"Graduation Review",
+		"Graduation Application",
 		"Transfer Equivalency",
-		"Transcript Audit",
-		"Degree Progress Checks",
-		"Schedule Optimization",
+		"Transcript Processing",
+		"Classroom Scheduling",
+		"Continuing Education",
 		"Data Integrity Desk",
 		"Faculty Liaison",
-		"Student Success Support",
-		"Registrar Training",
-		"Policy Compliance Office"
+		"Student Support",
+		"Internal Training",
+		"Policy Compliance"
 	];
 
 
@@ -273,154 +298,154 @@
 
 	const advancedQuestions = [
 		{
-			question: "What is the most important part of customer service?",
-			options: ["Listening to the customer", "Solving the problem immediately", "Minimizing costs"],
-			answer: 0 // Correct: "Listening to the customer"
+			question: "What should you do if a student submits an incomplete graduation application?",
+			options: ["Request the missing information and hold the application.", "Reject the application immediately.", "Approve the application and note the missing details."],
+			answer: 0 // Correct: "Request the missing information and hold the application."
 		},
 		{
-			question: "How can you best handle a frustrated customer?",
-			options: ["Interrupt to defend your position", "Listen actively and acknowledge their feelings", "Ignore them until they calm down"],
-			answer: 1 // Correct: "Listen actively and acknowledge their feelings"
+			question: "How should you explain why a transfer credit was denied?",
+			options: ["Tell the student it was decided by a system and cannot be appealed.", "Provide clear reasons based on institutional policies.", "Say it was the department's decision and offer no further explanation."],
+			answer: 1 // Correct: "Provide clear reasons based on institutional policies."
 		},
 		{
-			question: "What should you do if you don't know the answer to a customer's question?",
-			options: ["Guess the answer", "Tell them you’ll find out and follow up promptly", "Ignore the question"],
-			answer: 1 // Correct: "Tell them you’ll find out and follow up promptly"
+			question: "What’s the best way to prioritize a student’s urgent transcript request?",
+			options: ["Expedite it if they provide valid reasons for urgency.", "Process all requests in the order they were received, no exceptions.", "Ask the student to pay extra to expedite."],
+			answer: 0 // Correct: "Expedite it if they provide valid reasons for urgency."
 		},
 		{
-			question: "What is the primary goal of a customer feedback survey?",
-			options: ["Criticize employees", "Gather insights to improve service", "Meet reporting requirements"],
-			answer: 1 // Correct: "Gather insights to improve service"
+			question: "What’s the best response to a faculty member unhappy with their classroom assignment?",
+			options: ["Listen to their concerns and explore alternative options.", "Tell them assignments cannot be changed once finalized.", "Explain that classroom assignments are handled by another office."],
+			answer: 0 // Correct: "Listen to their concerns and explore alternative options."
 		},
 		{
-			question: "How can you make a customer feel valued?",
-			options: ["Ignore their complaints", "Show appreciation and empathy", "Explain why their request is unreasonable"],
-			answer: 1 // Correct: "Show appreciation and empathy"
+			question: "How do you assist a continuing education student struggling with enrollment?",
+			options: ["Refer them to the admissions office and let them follow up.", "Provide a general FAQ link and ask them to read it.", "Guide them through the enrollment process step by step."],
+			answer: 2 // Correct: "Guide them through the enrollment process step by step."
 		},
 		{
-			question: "What is an example of proactive customer service?",
-			options: ["Waiting for the customer to complain", "Anticipating customer needs and addressing them", "Offering discounts after poor service"],
-			answer: 1 // Correct: "Anticipating customer needs and addressing them"
+			question: "What’s your first step when a student reports an error in their academic record?",
+			options: ["Advise the student to contact their department for help.", "Verify the error and initiate corrections.", "Inform them that errors cannot be corrected once posted."],
+			answer: 1 // Correct: "Verify the error and initiate corrections."
 		},
 		{
-			question: "What is the best way to communicate with an unhappy customer?",
-			options: ["Use a calm and understanding tone", "Match their anger to show you care", "Dismiss their concerns as invalid"],
-			answer: 0 // Correct: "Use a calm and understanding tone"
+			question: "What’s the best way to handle a faculty member’s request for student data?",
+			options: ["Provide the data as requested.", "Ask them to submit their request in writing without further questions.", "Verify their educational interest before providing data."],
+			answer: 2 // Correct: "Verify their educational interest before providing data."
 		},
 		{
-			question: "What is the most effective way to improve customer satisfaction?",
-			options: ["Focus solely on cost-cutting measures", "Train employees in communication and problem-solving skills", "Eliminate customer feedback channels"],
-			answer: 1 // Correct: "Train employees in communication and problem-solving skills"
+			question: "What’s the best approach to help a student navigate academic probation?",
+			options: ["Connect them with advising and offer supportive resources.", "Notify them of their probation and let them handle it independently.", "Refer them to the university website for probation policies."],
+			answer: 0 // Correct: "Connect them with advising and offer supportive resources."
 		},
 		{
-			question: "Why is it important to personalize customer interactions?",
-			options: ["It builds trust and strengthens relationships", "It wastes time on small details", "It ensures compliance with regulations"],
-			answer: 0 // Correct: "It builds trust and strengthens relationships"
+			question: "How can you improve staff knowledge about FERPA?",
+			options: ["Organize regular FERPA training sessions.", "Provide staff with a FERPA handbook and ask them to review it.", "Assume staff already know FERPA basics and focus on other topics."],
+			answer: 0 // Correct: "Organize regular FERPA training sessions."
 		},
 		{
-			question: "How should you handle a customer request you cannot fulfill?",
-			options: ["Apologize and offer alternative solutions", "Dismiss their request as unreasonable", "Tell them to escalate the issue themselves"],
-			answer: 0 // Correct: "Apologize and offer alternative solutions"
+			question: "What’s the first step in handling a potential FERPA violation?",
+			options: ["Inform the student that the violation will be reviewed internally.", "Investigate the claim and report findings to the compliance office.", "Dismiss the claim unless evidence is provided by the student."],
+			answer: 1 // Correct: "Investigate the claim and report findings to the compliance office."
 		}
 	];
 	
 	const advancedFeedbackMessages = [
 		{
-			incorrect1: "Solving the problem immediately is important, but listening ensures you address the real issue.",
-			incorrect2: "Minimizing costs is not the primary goal of customer service."
+			incorrect1: "Rejecting the application without allowing corrections could negatively impact the student.",
+			incorrect2: "Approving an incomplete application could result in delays or errors in graduation processing."
 		},
 		{
-			incorrect1: "Interrupting the customer can escalate their frustration.",
-			incorrect2: "Ignoring a frustrated customer will only make the situation worse."
+			incorrect1: "Students deserve transparency and the ability to appeal transfer decisions.",
+			incorrect2: "Referring to the decision of the department without explanation does not provide adequate customer service."
 		},
 		{
-			incorrect1: "Guessing the answer can lead to misinformation.",
-			incorrect2: "Ignoring the question shows poor customer service."
+			incorrect1: "Strictly processing in order without exceptions may harm students with valid urgent needs.",
+			incorrect2: "Charging additional fees without an official expedited process could violate policies."
 		},
 		{
-			incorrect1: "Customer feedback surveys aim to improve service, not to criticize employees.",
-			incorrect2: "Meeting reporting requirements is secondary to gathering insights."
+			incorrect1: "Rigidly refusing to address concerns may damage faculty relationships.",
+			incorrect2: "Deflecting responsibility to another office does not resolve the issue or build trust."
 		},
 		{
-			incorrect1: "Ignoring complaints makes the customer feel undervalued.",
-			incorrect2: "Explaining why their request is unreasonable does not foster a positive experience."
+			incorrect1: "Simply referring the student elsewhere without guidance can cause frustration.",
+			incorrect2: "Providing an FAQ link alone does not address specific enrollment struggles."
 		},
 		{
-			incorrect1: "Waiting for complaints is reactive, not proactive.",
-			incorrect2: "Offering discounts after poor service is reactive and doesn’t address the root cause."
+			incorrect1: "Deflecting responsibility to another department does not resolve the issue promptly.",
+			incorrect2: "Stating that records cannot be corrected is inaccurate and fails to meet customer service expectations."
 		},
 		{
-			incorrect1: "Matching the customer's anger can escalate the situation.",
-			incorrect2: "Dismissing concerns invalidates the customer’s feelings."
+			incorrect1: "Sharing student data without verifying legitimate interest violates FERPA.",
+			incorrect2: "Requiring written requests without clarifying FERPA standards may delay legitimate needs."
 		},
 		{
-			incorrect1: "Cost-cutting measures can compromise service quality.",
-			incorrect2: "Eliminating feedback channels hinders continuous improvement."
+			incorrect1: "Simply notifying the student without guidance risks their success.",
+			incorrect2: "Directing them to a policy page without support does not foster success."
 		},
 		{
-			incorrect1: "Personalizing interactions builds trust, not wastes time.",
-			incorrect2: "Regulations are important, but personalization strengthens customer relationships."
+			incorrect1: "Handbooks alone are insufficient for comprehensive understanding.",
+			incorrect2: "Assuming knowledge without training can lead to compliance issues."
 		},
 		{
-			incorrect1: "Dismissing requests alienates customers.",
-			incorrect2: "Telling customers to escalate themselves shows a lack of ownership."
+			incorrect1: "Informing the student without follow-through undermines the complaint process.",
+			incorrect2: "Dismissing claims without review may lead to compliance risks."
 		}
 	];
 
 	// IR Request Quiz
 	const irRequestQuiz = [
 		{
-			question: "What is the primary purpose of an Institutional Research (IR) report?",
-			options: ["Analyze institutional performance", "Recruit new students", "Approve faculty promotions"],
-			answer: 0 // Correct: "Analyze institutional performance"
+			question: "The Institutional Research office has requested data on the frequency of transcript requests by alumni. What is the best way to prepare this report while maintaining compliance with institutional policies?",
+			options: ["Use de-identified data grouped by graduation year and reason for request.", "Share raw data showing individual alumni names and the details of their requests.", "Provide only the total number of transcript requests to save time."],
+			answer: 0 // Correct: "Use de-identified data grouped by graduation year and reason for request."
 		},
 		{
-			question: "Which metric is most critical in assessing student retention?",
-			options: ["Graduation rates", "Student headcount", "Retention rates"],
-			answer: 2 // Correct: "Retention rates"
+			question: "The IR office is studying the relationship between transcript requests and alumni engagement. What data should you analyze to support this research?",
+			options: ["A survey of current students about their future transcript needs to anticipate alumni patterns.", "The total number of transcript requests made by alumni over the past five years.", "Trends in transcript requests by alumni, categorized by graduation year, program of study, and the stated purpose of the request. "],
+			answer: 2 // Correct: "Trends in transcript requests by alumni, categorized by graduation year, program of study, and the stated purpose of the request. "
 		},
 		{
-			question: "What data format is best for large IR data sharing?",
-			options: ["PDF", "Excel spreadsheets", "Hard copies"],
-			answer: 1 // Correct: "Excel spreadsheets"
+			question: "The Institutional Research office has requested suggestions to streamline transcript processing based on your analysis. What recommendation would you make",
+			options: ["Increase the processing fees to limit the number of transcript requests.", "Implement an automated transcript request system to reduce processing times.", "Restrict transcript requests to only current students to reduce demand."],
+			answer: 1 // Correct: "Implement an automated transcript request system to reduce processing times."
 		}
 	];
 
 	// Strategic Project Quiz
-	const strategicProjectQuiz = [
+	const administrativeStrategicQuiz = [
 		{
-			question: "What is the best way to align registrar operations with institutional goals?",
-			options: ["Regularly review policies", "Focus solely on enrollment", "Ignore strategic plans"],
-			answer: 0 // Correct: "Regularly review policies"
+			question: "The strategic initiative includes improving the accuracy of academic records. What is the first step in identifying discrepancies in data?",
+			options: ["Focus only on data submitted by faculty, as they are the primary contributors.", "Conduct a data audit by cross-referencing academic records with the source systems.", "Notify students to report any errors they identify in their records."],
+			answer: 1 // Correct: "Conduct a data audit by cross-referencing academic records with the source systems. "
 		},
 		{
-			question: "How can the Registrar's Office contribute to institutional success?",
-			options: ["By improving data accuracy", "By avoiding change", "By outsourcing all operations"],
-			answer: 0 // Correct: "By improving data accuracy"
+			question: "During the initiative, you discover that some courses are incorrectly coded in the system, impacting degree audits. What should you do next?",
+			options: ["Correct the errors in collaboration with the academic departments.", "Ignore the errors, as they are unlikely to affect most students.", "Notify students affected by the error without making system changes."],
+			answer: 0 // Correct: "Correct the errors in collaboration with the academic departments."
 		},
 		{
-			question: "Which strategy can streamline the graduation process?",
-			options: ["Create proactive degree audits", "Require manual graduation checks", "Delay audits until the final semester"],
-			answer: 0 // Correct: "Create proactive degree audits"
+			question: "The initiative includes identifying patterns in data entry errors. What should your report focus on?",
+			options: ["A detailed list of every error discovered during the audit.", "The individuals responsible for the most data entry errors.", "Common sources of errors and recommendations for process improvements."],
+			answer: 2 // Correct: "Common sources of errors and recommendations for process improvements."
 		}
 	];
 
 	// Data Inquiry Quiz
 	const dataInquiryQuiz = [
 		{
-			question: "What is the most efficient way to manage student enrollment data?",
-			options: ["Use a centralized database", "Track data manually", "Avoid regular updates"],
-			answer: 0 // Correct: "Use a centralized database"
+			question: "The registrar’s office is implementing a new data reporting tool. How should staff training be designed to ensure effective use of the tool?",
+			options: ["Rely on existing staff knowledge and provide training only for new employees.", "Provide staff with an instruction manual and encourage self-paced learning.", "Focus on hands-on workshops where staff practice real-world scenarios with the tool."],
+			answer: 2 // Correct: "Focus on hands-on workshops where staff practice real-world scenarios with the tool."
 		},
 		{
-			question: "Which system feature is critical for reporting on student progress?",
-			options: ["Automated reporting tools", "Handwritten logs", "Basic spreadsheets"],
-			answer: 0 // Correct: "Automated reporting tools"
+			question: "An internal training session reveals that staff are making consistent mistakes in data validation. What is the most effective next step?",
+			options: ["Send an email reminder to staff outlining the correct procedures.", "Provide follow-up training with a focus on the specific data validation process.", "Automate data validation entirely to remove the need for staff involvement."],
+			answer: 1 // Correct: "Provide follow-up training with a focus on the specific data validation process."
 		},
 		{
-			question: "How can errors in enrollment data be minimized?",
-			options: ["Regular data validation", "Assume data is accurate", "Delay reviews until errors are reported"],
-			answer: 0 // Correct: "Regular data validation"
+			question: "The provost has requested a report on the effectiveness of internal training programs for data reporting. What should your report include?",
+			options: ["Improvements in data accuracy and staff performance metrics since the training.", "The total number of staff who attended training sessions.", "Feedback forms from staff outlining their satisfaction with the training."],
+			answer: 0 // Correct: "Improvements in data accuracy and staff performance metrics since the training."
 		}
 	];
 
@@ -621,7 +646,7 @@
 		
 		// Unlock special projects when specific desks are purchased in Level
 			if (deskNumber === 3) unlockSpecialProject('irRequest');
-			if (deskNumber === 6) unlockSpecialProject('strategicProject');
+			if (deskNumber === 6) unlockSpecialProject('administrativeStrategic');
 			if (deskNumber === 9) unlockSpecialProject('dataInquiry');
 	}
 
@@ -705,40 +730,51 @@
 			studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`;
 			document.getElementById("gameArea").appendChild(studentImage);
 		} else {
-			showNotification("Not enough CSP or worker already hired for this desk!");
+			showNotification("Not enough CSP!");
 		}
 	}
 
 
-	function startAutoProcessing(deskNumber) {
-		setInterval(() => {
-			if (!deskInProgress[deskNumber]) {
-				deskInProgress[deskNumber] = true;
-				const progressFill = document.getElementById(`progressFill${deskNumber}`);
-				progressFill.style.transition = 'none'; // Disable transitions for immediate action
-				progressFill.style.width = '0%'; // Reset to 0%
+		function startAutoProcessing(deskNumber) {
+			function processTask() {
+				if (!deskInProgress[deskNumber]) {
+					deskInProgress[deskNumber] = true;
 
-				// Start filling the progress bar immediately
-				progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
-				progressFill.style.width = '100%'; // Fill the progress bar
+					const progressFill = document.getElementById(`progressFill${deskNumber}`);
 
-				setTimeout(() => {
-					// Update CSP and total CSP earned using the full points
-					csp += pointsPerDesk[deskNumber];
-					totalCspEarned += pointsPerDesk[deskNumber];
-					updateDisplay();
+					// Reset progress bar
+					progressFill.style.transition = 'none'; // Disable animation for reset
+					progressFill.style.width = '0%'; // Reset width to 0%
 
-					// Create the floating points effect
-					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+					// Start filling progress bar
+					setTimeout(() => {
+						progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`; // Smooth transition
+						progressFill.style.width = '100%'; // Fill the bar
+					}, 50); // Slight delay to visually reset the bar
 
-					// Immediately reset the progress bar without backtracking
-					progressFill.style.transition = 'none'; // Disable transition
-					progressFill.style.width = '0%'; // Clear the progress bar
-					deskInProgress[deskNumber] = false; // Mark the desk as not in progress
-				}, processingTimes[deskNumber]);
+					// Complete the task after the bar fills
+					setTimeout(() => {
+						// Update CSP and total points
+						csp += pointsPerDesk[deskNumber];
+						totalCspEarned += pointsPerDesk[deskNumber];
+						updateDisplay();
+
+						// Create floating points effect
+						createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+
+						// Mark desk as ready for the next cycle
+						deskInProgress[deskNumber] = false;
+
+						// Immediately start the next task
+						processTask();
+					}, processingTimes[deskNumber]); // Matches the fill duration
+				}
 			}
-		}, processingTimes[deskNumber]); // Control the interval timing based on processing time
-	}
+
+			// Start the first task
+			processTask();
+		}
+		
 
 
 
@@ -772,8 +808,8 @@
 			case 'irRequest':
 				quiz = irRequestQuiz;
 				break;
-			case 'strategicProject':
-				quiz = strategicProjectQuiz;
+			case 'administrativeStrategic':
+				quiz = administrativeStrategicQuiz;
 				break;
 			case 'dataInquiry':
 				quiz = dataInquiryQuiz;
@@ -886,28 +922,35 @@
 	function checkEndGame() {
 		// Check if all desks are automated and CSP is 2,000 or more
 		const allDesksAutomated = Object.keys(hasWorker).length === 10;
-		if (allDesksAutomated && csp >= 2000) {
-			showEndScreen();
+		if (allDesksAutomated && csp >= 1000) {
+		        gameEnded = true; // Lock further updates
+				        console.log("End conditions met");
+			        console.log("Final CSP at completion:", finalCspAtCompletion); // Debugging log
+			showEndModal();
 		}
 	}
 
 	function loadNextLevel() {
-		window.location.href = "RegistrarStory_Level3.html"; // Update with the correct file path
+		window.location.href = "RegistrarStory_Level2.html"; // Update with the correct file path
 	}
 
 
+	// Function to show the ending modal
+	function showEndModal() {
+		const endModal = document.getElementById("endModal");
+		const finalScoreModal = document.getElementById("finalScoreModal");
 
-	// Function to display the end screen
-	function showEndScreen() {
-		const endScreen = document.getElementById("endScreen");
-		const finalScore = document.getElementById("finalScore");
+		// Update the final score dynamically
+		finalScoreModal.innerText = `Hey, congrats! You managed to get all of your stations automated and working at maximum efficiency! Level 3 will focus on operations. Let’s see if you can keep this going.`;
 
-		// Update the final score message
-		finalScore.innerText = `Congratulations! You earned a total of ${totalCspEarned} Customer Service Points (CSP)!`;
+		// Display the modal
+		endModal.style.display = "flex";
+	}
 
-		// Show the end screen with fade-in effect
-		endScreen.style.visibility = "visible";
-		endScreen.style.opacity = 1;
+	// Function to close the modal
+	function closeModal() {
+		const endModal = document.getElementById("endModal");
+		endModal.style.display = "none";
 	}
 
 	// Function for Replay Level button
@@ -918,8 +961,8 @@
 
 	// Function for Next Level button
 	function nextLevel() {
-		alert("Transitioning to Level 2...");
-		location.href = "Level2.html"; // Link to a separate file or setup
+		alert("Transitioning to Level 3...");
+		location.href = "RegistrarStory_Level3.html"; // Link to a separate file or setup
 	}
 
 
