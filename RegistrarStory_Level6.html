@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMACRAO University</title>
+    <style>
+        /* Basic styling */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; height: 100vh; overflow: hidden; }
+        #welcomeMessage { font-size: 18px; font-weight: bold; margin: 10px; text-align: center; }
+		#gameArea {
+			display: none;
+			width: 500px;
+			height: 500px;
+			position: relative;
+			background-image: url('RMACRAOUniversity13.png');
+			background-size: cover;
+			background-position: center;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+        /* Desk container styling */
+        .desk-container { position: absolute; width: 80px; height: 70px; display: flex; flex-direction: column; align-items: center; }
+        .desk { background-color: #f5f5dc; border: 2px solid #ddd; border-radius: 8px; width: 80px; height: 40px; display: flex; justify-content: center; align-items: center; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); text-align: center; font-size: 12px; font-weight: bold; color: #333; cursor: pointer; }
+        .automated { box-shadow: 0 0 10px 2px #3c744c; border-color: #3c744c; cursor: not-allowed; }
+        .worker { width: 25px; height: 25px; border-radius: 50%; position: absolute; top: -10px; display: none; } /* This will be hidden when the desk is automated */
+        .progress-bar { width: 80%; height: 6px; background-color: #ddd; border-radius: 3px; overflow: hidden; margin-top: 5px; display: none; }
+        .progress-bar-fill { height: 100%; width: 0; background-color: #33348c; transition: width linear; }
+
+        /* Positioning each desk based on your numbered layout */
+        #deskContainer1 { top: 80%; left: 76%; }
+        #deskContainer2 { top: 60%; left: 10%; }
+        #deskContainer3 { top: 60%; left: 73%; }
+        #deskContainer4 { top: 28%; left: 42%; }
+        #deskContainer5 { top: 80%; left: 9%; }
+        #deskContainer6 { top: 35%; left: 67%; }
+        #deskContainer7 { top: 35%; left: 17%; }
+        #deskContainer8 { top: 76%; left: 42%; }
+        #deskContainer9 { top: 8%; left: 62%; }
+        #deskContainer10 { top: 8%; left: 22%; }
+
+        #infoPanel { margin-top: 20px; font-weight: bold; text-align: center; }
+        #notification { color: #3c744c; font-weight: bold; margin-top: 10px; min-height: 20px; transition: opacity 0.5s; opacity: 0; }
+        #totalPointsDisplay { font-size: 16px; margin-bottom: 10px; font-weight: bold; color: #333; }
+
+        /* Floating points styling */
+        .floating-points {
+            position: absolute;
+            font-size: 12px;
+            color: #33348c; /* Set the color to purple */
+            transition: transform 1s ease, opacity 1s ease; /* Smooth transition */
+            opacity: 1; /* Start fully visible */
+        }
+
+        /* Student image styling */
+        .student-image {
+            position: absolute;
+            width: 25px; /* Adjust size as needed */
+            height: 25px; /* Adjust size as needed */
+            display: none; /* Start hidden */
+            border-radius: 50%; /* Make it circular */
+        }
+		
+			#titleScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #f4f4f4;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			z-index: 10;
+		}
+
+		#titleImage {
+			max-width: 80%;
+			height: auto;
+			margin-bottom: 20px;
+		}
+
+		#startButton {
+			padding: 10px 20px;
+			font-size: 18px;
+			background-color: #33348c;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#startButton:hover {
+			background-color: #5555aa;
+		}
+
+		#gameArea {
+			display: block;
+		}
+
+
+		/* End Screen Styling */
+		#endScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw; /* Full viewport width */
+			height: 100vh; /* Full viewport height */
+			background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			visibility: hidden; /* Hidden by default */
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			z-index: 1000; /* Ensure it's above other content */
+		}
+
+		#endScreenContent {
+			width: 500px;
+			height: 500px;
+			background: rgba(255, 255, 255, 0.9) url('RMACRAOUniversityEnding2.png') center/cover no-repeat;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 20px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+			text-align: center;
+			z-index: 1001; /* Ensure content is above the overlay */
+		}
+
+		#replayButton, #nextLevelButton {
+			padding: 10px 20px;
+			margin: 10px;
+			font-size: 16px;
+			background-color: #33348c;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#replayButton:hover, #nextLevelButton:hover {
+			background-color: #5555aa;
+		}
+
+	#specialProjectsPanel {
+		position: absolute; /* Anchors the panel to a fixed position */
+		top: 575px; /* Adjust to align just below the game area */
+		left: 50%; /* Center horizontally */
+		transform: translateX(-50%); /* Center alignment correction */
+		z-index: 10; /* Ensure it stays on top */
+		display: block; /* Ensure proper rendering */
+	}
+
+		
+		
+		
+		
+    </style>
+</head>
+<body>
+
+
+<div id="welcomeMessage">Welcome to RMACRAO University: Admissions Level 3! This level will focus on operations. Click on the desk to get started. </div>
+
+<div id="totalPointsDisplay">Total CSP Earned: 0</div>
+
+<div id="gameArea">
+    <!-- Initial Desk - Add/Drop Desk -->
+    <div class="desk-container" id="deskContainer1">
+        <div class="desk" id="desk1" onclick="serveStudent(1)">Decision Notifications</div>
+        <div class="worker" id="worker1"></div>
+        <div class="progress-bar" id="progressBar1"><div class="progress-bar-fill" id="progressFill1"></div></div>
+    </div>
+
+    <!-- Add the student image element -->
+    <img id="studentImage" src="Student1.png" alt="Student Worker" class="student-image" />
+</div>
+
+<!-- End Screen Popup -->
+<div id="endScreen">
+    <div id="endScreenContent">
+        <h2>Office Successfully Managed!</h2>
+        <p id="finalScore"></p>
+        <button id="replayButton" onclick="replayLevel()">Replay Level</button>
+        <button id="nextLevelButton" onclick="nextLevel()">Next Level</button>
+    </div>
+</div>
+
+
+
+<div id="infoPanel">
+    <div id="notification"></div>
+    <p id="pointsDisplay">Customer Service Points (CSP): 0</p>
+	<p id="additionalText" style="margin-top: 10px; color: #333;">Special projects available this level: Deferred Enrollment Inquiry and Orientation Coordination Review </p>		
+    <button id="buyDeskButton" onclick="buyNextDesk()">Merit-Based Reviews (100 CSP)</button>
+    <button id="hireWorkerButton1" onclick="hireWorker(1, 30)">Hire Work-Study Student for Decision Notification Desk (30 CSP)</button>
+</div>
+
+<div id="specialProjectsPanel">
+	<button id="deferredEnrollmentQuiz" style="display: none;" onclick="triggerSpecialProject('deferredEnrollmentQuiz')">
+		Deferred Enrollment Inquiry
+	</button>
+	<button id="orientationCoordinationQuiz" style="display: none;" onclick="triggerSpecialProject('orientationCoordinationQuiz')">
+		Orientation Coordination Review
+	</button>
+</div>
+
+
+<script>
+
+
+	// Move the startGame function outside of the DOMContentLoaded event
+	function startGame() {
+		console.log("Game started"); // Debugging line
+		document.getElementById("titleScreen").style.display = "none";
+		document.getElementById("gameArea").style.display = "block";
+		updateDisplay();
+	}
+
+	document.addEventListener("DOMContentLoaded", () => {
+		console.log("DOM fully loaded and parsed");
+	});
+
+    let csp = 0;
+    let totalCspEarned = 0;
+    let deskUnlocked = { 1: true };
+    let hasWorker = {};
+    let processingTimes = { 1: 500 };
+    let pointsPerDesk = { 1: 2 };
+    let nextDeskToBuy = 2;
+    let baseDeskCost = 50;
+    let baseHireCost = 30;
+    let deskInProgress = {};
+	let usedImages = []; // Initialize an array to keep track of used images
+	let currentQuestionIndex = 0; // Declare at the global scope
+
+    const penaltyTime = 30000; // 30 seconds penalty time
+
+	const deskLabelsLevel3 = [
+		"Decision notification",
+		"Merit-Based Reviews",
+		"Deferred Enrollment",		
+		"Deposit Tracking",
+		"Application Audits",
+		"Orientation Coordination",
+		"international Admissions",
+		"Residency Classification",
+		"Appeals Processing",
+		"Matriculation Reporting"
+	];
+
+
+    // Array of student image paths
+    const studentImages = [
+        'Student1.png',
+        'Student2.png',
+        'Student3.png',
+        'Student4.png',
+        'Student5.png',
+        'Student6.png',
+        'Student7.png',
+        'Student8.png',
+        'Student9.png',
+        'Student10.png',
+    ];
+
+	const advancedQuestionsLevel3 = [
+		{
+			question: "What is the primary consideration when notifying applicants of admissions decisions?",
+			options: [
+				"Ensuring notifications are sent promptly and securely",
+				"Using a generic email template for all notifications",
+				"Including all applicant data in the email for clarity"
+			],
+			answer: 0 // Correct: "Ensuring notifications are sent promptly and securely"
+		},
+		{
+			question: "What is a critical step in managing merit-based reviews?",
+			options: [
+				"Ensuring funds are allocated based on scholarship criteria",
+				"Assigning scholarships randomly to applicants",
+				"Notifying applicants after the academic year begins"
+			],
+			answer: 0 // Correct: "Ensuring funds are allocated based on scholarship criteria"
+		},
+		{
+			question: "What is an important step in processing deferred enrollments?",
+			options: [
+				"Accurately updating student records to reflect the new term",
+				"Closing the original application without creating a new record",
+				"Allowing students to defer multiple times without tracking"
+			],
+			answer: 0 // Correct: "Accurately updating student records to reflect the new term"
+		},
+		{
+			question: "How can admissions offices effectively track enrollment deposits?",
+			options: [
+				"Allowing students to submit deposits without confirmation",
+				"Using a centralized system to monitor deposit submissions",
+				"Manually recording each deposit in a paper ledger"
+			],
+			answer: 1 // Correct: "Using a centralized system to monitor deposit submissions"
+		},
+		{
+			question: "What is the goal of conducting application audits?",
+			options: [
+				"Ensuring all applicant information complies with institutional requirements",
+				"Randomly selecting applications to review for fun",
+				"Focusing only on applicants who raise concerns"
+			],
+			answer: 0 // Correct: "Ensuring all applicant information complies with institutional requirements"
+		},
+		{
+			question: "What is the primary objective of orientation coordination?",
+			options: [
+				"Preparing students for a smooth transition into the institution",
+				"Focusing exclusively on on-campus students",
+				"Skipping preparation to save time"
+			],
+			answer: 0 // Correct: "Preparing students for a smooth transition into the institution"
+		},
+		{
+			question: "What is a unique challenge in managing international admissions?",
+			options: [
+				"Using the same process as domestic admissions",
+				"Ensuring visa requirements and deadlines are met",
+				"Prioritizing international applicants over domestic ones"
+			],
+			answer: 1 // Correct: "Ensuring visa requirements and deadlines are met"
+		},
+		{
+			question: "What is the primary challenge in residency classification?",
+			options: [
+				"Avoiding communication with applicants during the process",
+				"Creating unique residency classifications for every applicant",
+				"Accurately determining in-state versus out-of-state tuition eligibility"
+			],
+			answer: 2 // Correct: "Accurately determining in-state versus out-of-state tuition eligibility"
+		},
+		{
+			question: "How should appeals processing be handled to ensure fairness?",
+			options: [
+				"Making decisions based solely on staff intuition",
+				"Following institutional policies and documenting decisions",
+				"Rejecting appeals to minimize workload"
+			],
+			answer: 1 // Correct: "Following institutional policies and documenting decisions"
+		},
+		{
+			question: "What is the purpose of matriculation reporting?",
+			options: [
+				"Providing accurate data on student enrollment for institutional planning",
+				"Notifying students of tuition payment deadlines",
+				"Sending general reminders about registration"
+			],
+			answer: 0 // Correct: "Providing accurate data on student enrollment for institutional planning"
+		}
+	];
+
+	const advancedFeedbackMessagesLevel3 = [
+		{
+			incorrect1: "Generic templates may overlook personalized details important to applicants.",
+			incorrect2: "Including all data in notifications could breach data privacy."
+		},
+		{
+			incorrect1: "Randomly assigning scholarships ignores merit and need-based criteria.",
+			incorrect2: "Notifying applicants late causes unnecessary delays."
+		},
+		{
+			incorrect1: "Closing the original record without creating a new one may lead to missing data.",
+			incorrect2: "Allowing multiple deferrals without tracking creates record inconsistencies."
+		},
+		{
+			incorrect1: "Allowing unconfirmed deposits leads to inaccurate records.",
+			incorrect2: "Manual tracking is prone to errors and inefficiencies."
+		},
+		{
+			incorrect1: "Random audits do not ensure institutional compliance.",
+			incorrect2: "Focusing only on concerns misses broader compliance issues."
+		},
+		{
+			incorrect1: "Excluding off-campus students from orientation neglects inclusivity.",
+			incorrect2: "Skipping preparation compromises the student experience."
+		},
+		{
+			incorrect1: "Using the same process ignores unique international requirements.",
+			incorrect2: "Prioritizing international over domestic applicants creates inequity."
+		},
+		{
+			incorrect1: "Avoiding communication creates confusion for applicants.",
+			incorrect2: "Unique classifications for every applicant would be inefficient."
+		},
+		{
+			incorrect1: "Decisions based solely on intuition lack transparency and fairness.",
+			incorrect2: "Rejecting appeals outright contradicts institutional values."
+		},
+		{
+			incorrect1: "Matriculation reporting is not for tuition deadlines.",
+			incorrect2: "General reminders about registration do not fulfill reporting requirements."
+		}
+	];
+
+
+	const deferredEnrollmentQuiz = [
+    {
+        question: "The Admissions Office wants to understand the impact of deferred enrollment on class sizes. What data should you provide?",
+        options: [
+            "A breakdown of deferred enrollment requests and their effect on seat availability for upcoming terms.",
+            "A summary of total enrollment numbers for the current academic year.",
+            "A list of students who deferred enrollment, sorted by program and term."
+        ],
+        answer: 0 // Correct: "A breakdown of deferred enrollment requests and their effect on seat availability for upcoming terms."
+    },
+    {
+        question: "What operational challenge does deferred enrollment create for tracking student records?",
+        options: [
+            "It may result in duplicate student records across different terms.",
+            "It delays the tuition payment process for the institution.",
+            "It increases the workload for admissions counselors handling appeals."
+        ],
+        answer: 0 // Correct: "It may result in duplicate student records across different terms."
+    },
+    {
+        question: "How can the deferred enrollment process be streamlined to improve efficiency?",
+        options: [
+            "Implement an automated tracking system that flags and consolidates duplicate records.",
+            "Require students to reapply for admission if they choose to defer.",
+            "Limit the deferral option to specific academic programs with available seats."
+        ],
+        answer: 0 // Correct: "Implement an automated tracking system that flags and consolidates duplicate records."
+    }
+	];
+
+	const orientationCoordinationQuiz = [
+    {
+        question: "The Dean asks: How can session overcrowding during orientation be minimized?",
+        options: [
+            "Implement a registration system with capped session limits.",
+            "Allow all students to attend any session without restrictions.",
+            "Schedule multiple sessions at the same time to reduce attendance."
+        ],
+        answer: 0 // Correct: "Implement a registration system with capped session limits."
+    },
+    {
+        question: "The Dean wants to improve student engagement during orientation. What approach should you recommend?",
+        options: [
+            "Incorporate hands-on workshops and peer-led discussions into the sessions.",
+            "Focus solely on administrative tasks to keep sessions brief.",
+            "Require attendance for all sessions without considering student feedback."
+        ],
+        answer: 0 // Correct: "Incorporate hands-on workshops and peer-led discussions into the sessions."
+    },
+    {
+        question: "How can the orientation process better accommodate international students?",
+        options: [
+            "Offer tailored sessions covering visa requirements and cultural acclimation.",
+            "Focus orientation entirely on general topics to ensure consistency.",
+            "Schedule separate sessions for all non-local students, including out-of-state attendees."
+        ],
+        answer: 0 // Correct: "Offer tailored sessions covering visa requirements and cultural acclimation."
+    }
+	];
+
+	function setupLevel3() {
+		const gameArea = document.getElementById("gameArea");
+		gameArea.innerHTML = ""; // Clear Level 1 elements
+
+		deskLabelsLevel3.forEach((label, index) => {
+			const deskContainer = document.createElement("div");
+			deskContainer.className = "desk-container";
+			deskContainer.id = `deskContainer${index + 1}`;
+
+			const desk = document.createElement("div");
+			desk.className = "desk";
+			desk.id = `desk${index + 1}`;
+			desk.innerText = label;
+			desk.onclick = () => serveStudent(index + 1);
+
+			const worker = document.createElement("div");
+			worker.className = "worker";
+			worker.id = `worker${index + 1}`;
+
+			const progressBar = document.createElement("div");
+			progressBar.className = "progress-bar";
+			progressBar.id = `progressBar${index + 1}`;
+
+			const progressFill = document.createElement("div");
+			progressFill.className = "progress-bar-fill";
+			progressFill.id = `progressFill${index + 1}`;
+
+			progressBar.appendChild(progressFill);
+			deskContainer.appendChild(desk);
+			deskContainer.appendChild(worker);
+			deskContainer.appendChild(progressBar);
+			gameArea.appendChild(deskContainer);
+		});
+	}
+
+
+    function showNotification(message) {
+        const notification = document.getElementById("notification");
+        notification.innerText = message;
+        notification.style.opacity = 1;
+        setTimeout(() => { notification.style.opacity = 0; }, 3000);
+    }
+
+    function updateDisplay() {
+        document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+        document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+    }
+
+	function createFloatingPoints(points, deskNumber) {
+		const pointElement = document.createElement("div");
+		pointElement.className = "floating-points";
+		pointElement.innerText = `+${points} CSP`; // Removed the dollar sign and added "CSP" label
+
+		pointElement.style.color = '#33348c'; // Set the color to purple
+
+		// Position the element at the desk's location
+		const desk = document.getElementById(`deskContainer${deskNumber}`);
+		const deskRect = desk.getBoundingClientRect();
+		pointElement.style.left = `${deskRect.left + deskRect.width / 2}px`;
+		pointElement.style.top = `${deskRect.top + deskRect.height / 2}px`;
+
+		document.body.appendChild(pointElement);
+
+		// Animate the points floating away from the desk
+		setTimeout(() => {
+			pointElement.style.transform = 'translateY(-50px)'; // Adjust the value to change how far it floats
+			pointElement.style.opacity = 0; // Fade out effect
+		}, 0);
+
+		// Remove the element after the animation is complete
+		setTimeout(() => {
+			pointElement.remove();
+		}, 1050); // Adjust timing to match the animation duration
+	}
+
+    function buyNextDesk() {
+        const deskNumber = nextDeskToBuy;
+        const deskCost = baseDeskCost * deskNumber;
+        if (csp >= deskCost && !deskUnlocked[deskNumber]) {
+            csp -= deskCost;
+            deskUnlocked[deskNumber] = true;
+
+            // Show FERPA question before unlocking the desk
+            showFERPAPopup(deskNumber);
+        } else {
+            showNotification("Not enough CSP!");
+        }
+    }
+
+	function showFERPAPopup(deskNumber) {
+		const popup = document.createElement("div");
+		const question = advancedQuestionsLevel3[deskNumber - 1].question;
+		const options = advancedQuestionsLevel3[deskNumber - 1].options;
+		const correctAnswer = advancedQuestionsLevel3[deskNumber - 1].answer;
+
+		popup.id = "ferpaQuestionPopup";
+		popup.innerHTML = `
+			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
+				<h3>Admissions Operations Question:</h3>
+				<p>${advancedQuestionsLevel3[deskNumber - 1].question}</p>
+				${advancedQuestionsLevel3[deskNumber - 1].options.map((option, index) => `
+					<label>
+						<input type="radio" name="ferpaOption" value="${index}"> ${option}
+					</label><br>
+				`).join('')}
+				<button onclick="checkFERPAAnswer(${deskNumber})">Submit</button>
+				<button onclick="closeFERPAPopup()">Cancel</button>
+			</div>
+		`;
+		document.body.appendChild(popup);
+	}
+
+    function closeFERPAPopup() {
+        const popup = document.getElementById("ferpaQuestionPopup");
+        if (popup) {
+            document.body.removeChild(popup);
+        }
+    }
+
+	function checkFERPAAnswer(deskNumber) {
+		const selectedOption = document.querySelector('input[name="ferpaOption"]:checked');
+		if (selectedOption) {
+			const selectedIndex = parseInt(selectedOption.value);
+			const correctAnswer = advancedQuestionsLevel3[deskNumber - 1].answer;
+			const feedback = advancedFeedbackMessagesLevel3[deskNumber - 1];
+
+			if (selectedIndex === correctAnswer) {
+				closeFERPAPopup();
+				unlockDesk(deskNumber); // Unlock the desk if the answer is correct
+			} else {
+				const feedbackMessage =
+					selectedIndex === 1 ? feedback.incorrect1 :
+					selectedIndex === 2 ? feedback.incorrect2 :
+					"Incorrect answer. Please try again.";
+				showNotification(`${feedbackMessage} You have a 30-second penalty before trying again.`);
+				closeFERPAPopup();
+				setTimeout(() => showFERPAPopup(deskNumber), penaltyTime);
+			}
+		} else {
+			showNotification("Please select an answer.");
+		}
+	}
+
+
+
+	function unlockDesk(deskNumber) {
+		const newDeskContainer = document.createElement("div");
+		newDeskContainer.className = "desk-container";
+		newDeskContainer.id = `deskContainer${deskNumber}`;
+
+		const newDesk = document.createElement("div");
+		newDesk.className = "desk";
+		newDesk.id = `desk${deskNumber}`;
+		newDesk.innerText = deskLabelsLevel3[deskNumber - 1];
+		newDesk.onclick = () => serveStudent(deskNumber);
+
+		const worker = document.createElement("div");
+		worker.className = "worker";
+		worker.id = `worker${deskNumber}`;
+
+		// Ensure progress bar and progress fill are created for every desk
+		const progressBar = document.createElement("div");
+		progressBar.className = "progress-bar";
+		progressBar.id = `progressBar${deskNumber}`;
+		progressBar.style.display = "block";
+
+		const progressFill = document.createElement("div");
+		progressFill.className = "progress-bar-fill";
+		progressFill.id = `progressFill${deskNumber}`;
+
+		progressBar.appendChild(progressFill);
+		newDeskContainer.appendChild(newDesk);
+		newDeskContainer.appendChild(worker);
+		newDeskContainer.appendChild(progressBar);
+		document.getElementById("gameArea").appendChild(newDeskContainer);
+
+		processingTimes[deskNumber] = processingTimes[deskNumber - 1] + 2000;
+		pointsPerDesk[deskNumber] = pointsPerDesk[deskNumber - 1] + 3;
+
+		const hireCost = baseHireCost * deskNumber;
+		const hireWorkerButton = document.createElement("button");
+		hireWorkerButton.id = `hireWorkerButton${deskNumber}`;
+		hireWorkerButton.innerText = `Hire Work-Study Student for ${deskLabelsLevel3[deskNumber - 1]} (${hireCost} CSP)`;
+		hireWorkerButton.onclick = () => hireWorker(deskNumber, hireCost);
+		document.getElementById("infoPanel").appendChild(hireWorkerButton);
+
+		nextDeskToBuy += 1;
+		if (nextDeskToBuy <= deskLabelsLevel3.length) {
+			document.getElementById("buyDeskButton").innerText = `Buy ${deskLabelsLevel3[nextDeskToBuy - 1]} (${baseDeskCost * nextDeskToBuy} CSP)`;
+		} else {
+			document.getElementById("buyDeskButton").style.display = "none";
+		}
+
+		updateDisplay();
+		showNotification(`${deskLabelsLevel3[deskNumber - 1]} unlocked!`);
+		
+		// Unlock special projects when specific desks are purchased in Level
+		if (deskNumber === 3) unlockSpecialProject('deferredEnrollmentQuiz');
+		if (deskNumber === 6) unlockSpecialProject('orientationCoordinationQuiz');
+
+	}
+
+
+	function serveStudent(deskNumber) {
+		// When the desk is not automated
+		if (deskUnlocked[deskNumber] && !hasWorker[deskNumber]) {
+			if (!deskInProgress[deskNumber]) {
+				deskInProgress[deskNumber] = true;
+
+				// Get the progress bar and progress fill elements
+				const progressBar = document.getElementById(`progressBar${deskNumber}`);
+				const progressFill = document.getElementById(`progressFill${deskNumber}`);
+				
+				// Show the progress bar and reset it
+				progressBar.style.display = "block";
+				progressFill.style.transition = 'none';
+				progressFill.style.width = '0%';
+
+				// Start the smooth filling of the progress bar
+				setTimeout(() => {
+					progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
+					progressFill.style.width = '100%';
+				}, 50); // Small delay to ensure transition effect
+
+				// Complete the task after the specified time
+				setTimeout(() => {
+					csp += pointsPerDesk[deskNumber];
+					totalCspEarned += pointsPerDesk[deskNumber];
+					updateDisplay();
+					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+					showNotification(`Served a student at ${deskLabelsLevel3[deskNumber - 1]}`);
+
+					// Reset and hide the progress bar after filling
+					progressFill.style.transition = 'none';
+					progressFill.style.width = '0%';
+					deskInProgress[deskNumber] = false;
+					progressBar.style.display = "none";
+				}, processingTimes[deskNumber]);
+			}
+		} 
+		// When the desk is automated
+		else if (deskUnlocked[deskNumber] && hasWorker[deskNumber]) {
+			showNotification(`This desk is automated. Please wait for processing.`);
+			return;
+		}
+	}
+
+
+
+
+	 function hireWorker(deskNumber, hireCost) {
+		if (csp >= hireCost && !hasWorker[deskNumber]) {
+			csp -= hireCost;
+			hasWorker[deskNumber] = true;
+			document.getElementById(`worker${deskNumber}`).style.display = "none"; // Hide the worker
+			document.getElementById(`desk${deskNumber}`).classList.add("automated");
+			document.getElementById(`progressBar${deskNumber}`).style.display = "block";
+			document.getElementById(`hireWorkerButton${deskNumber}`).style.display = "none";
+			startAutoProcessing(deskNumber);
+			updateDisplay();
+
+			// Select a unique, unused image
+			let randomIndex;
+			do {
+				randomIndex = Math.floor(Math.random() * studentImages.length);
+			} while (usedImages.includes(randomIndex) && usedImages.length < studentImages.length);
+
+			// Add the selected image index to the used list
+			if (!usedImages.includes(randomIndex)) {
+				usedImages.push(randomIndex);
+			}
+
+
+			// Show the student image for the desk
+			const studentImage = document.createElement("img");
+			studentImage.className = "student-image";
+			studentImage.src = studentImages[randomIndex];
+			studentImage.style.display = "block";
+			studentImage.style.top = `${document.getElementById(`deskContainer${deskNumber}`).offsetTop - 15}px`;
+			studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`;
+			document.getElementById("gameArea").appendChild(studentImage);
+		} else {
+			showNotification("Not enough CSP!");
+		}
+	}
+
+
+	function startAutoProcessing(deskNumber) {
+		function processTask() {
+			if (!deskInProgress[deskNumber]) {
+				deskInProgress[deskNumber] = true;
+
+				const progressFill = document.getElementById(`progressFill${deskNumber}`);
+
+				// Reset progress bar
+				progressFill.style.transition = 'none'; // Disable animation for reset
+				progressFill.style.width = '0%'; // Reset width to 0%
+
+				// Start filling progress bar
+				setTimeout(() => {
+					progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`; // Smooth transition
+					progressFill.style.width = '100%'; // Fill the bar
+				}, 50); // Slight delay to visually reset the bar
+
+				// Complete the task after the bar fills
+				setTimeout(() => {
+					// Update CSP and total points
+					csp += pointsPerDesk[deskNumber];
+					totalCspEarned += pointsPerDesk[deskNumber];
+					updateDisplay();
+
+					// Create floating points effect
+					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+
+					// Mark desk as ready for the next cycle
+					deskInProgress[deskNumber] = false;
+
+					// Immediately start the next task
+					processTask();
+				}, processingTimes[deskNumber]); // Matches the fill duration
+			}
+		}
+
+		// Start the first task
+		processTask();
+	}
+	
+
+
+
+    function showStudentImage(deskNumber) {
+        const studentImage = document.createElement("img");
+        studentImage.className = "student-image"; // Add class for styling
+        const randomIndex = Math.floor(Math.random() * studentImages.length);
+        studentImage.src = studentImages[randomIndex]; // Use random image
+        studentImage.style.display = "block"; // Show the student image
+        // Position it at the desk
+        studentImage.style.top = `${document.getElementById(`deskContainer${deskNumber}`).offsetTop - 1000}px`; // Adjust positioning
+        studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`; // Adjust positioning
+        document.getElementById("gameArea").appendChild(studentImage); // Append new image to the game area
+    }
+
+    updateDisplay();
+	
+	function unlockSpecialProject(projectId) {
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'block'; // Show the button
+			showNotification(`Special Project Unlocked: ${projectButton.innerText}`);
+		} else {
+			console.error(`Special project button with ID "${projectId}" not found.`);
+		}
+	}
+			
+	function triggerSpecialProject(projectId) {
+		let quiz;
+		switch (projectId) {
+			case 'deferredEnrollment':
+				quiz = deferredEnrollmentQuiz;
+				break;
+			case 'orientationCoordination':
+				quiz = orientationCoordinationQuiz;
+				break;
+			default:
+				console.error(`Unknown project ID: ${projectId}`);
+				return;
+		}
+		showQuizPopup(quiz, projectId);
+	}
+
+
+			
+	function showQuizPopup(quiz, projectId) {
+		let quizPopup = document.getElementById('quizPopup');
+		if (!quizPopup) {
+			quizPopup = document.createElement('div');
+			quizPopup.id = 'quizPopup';
+			quizPopup.style = `
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background: white;
+				padding: 20px;
+				border: 2px solid #ccc;
+				z-index: 100;
+				max-width: 80%;
+			`;
+			document.body.appendChild(quizPopup); // Add to DOM
+		}
+		renderQuestion(projectId, quiz); // Pass quiz to renderQuestion
+	}
+
+
+
+	function renderQuestion(projectId, quiz) {
+		const quizPopup = document.getElementById('quizPopup');
+		const question = quiz[currentQuestionIndex];
+
+		quizPopup.innerHTML = `
+			<h3>Special Project Quiz</h3>
+			<p>${question.question}</p>
+			${question.options.map((option, index) => `
+				<label>
+					<input type="radio" name="quizOption" value="${index}"> ${option}
+				</label><br>
+			`).join('')}
+			<button id="submitAnswerButton">Submit</button>
+		`;
+
+		document.getElementById('submitAnswerButton').addEventListener('click', () => checkAnswer(projectId, quiz));
+	}
+
+
+
+
+
+	function checkAnswer(projectId, quiz) {
+		const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+		if (!selectedOption) {
+			alert('Please select an answer.');
+			return;
+		}
+
+		const isCorrect = parseInt(selectedOption.value) === quiz[currentQuestionIndex].answer;
+		if (isCorrect) {
+			currentQuestionIndex++;
+			if (currentQuestionIndex < quiz.length) {
+				renderQuestion(projectId, quiz); // Move to the next question
+			} else {
+				closeQuizPopup(projectId); // Close the quiz popup and hide the button
+				handleSpecialProjectRewards(true); // Reward the user for completing the quiz
+			}
+		} else {
+			handleSpecialProjectRewards(false); // Penalize the user for incorrect answers
+		}
+	}
+
+
+
+	function closeQuizPopup(projectId) {
+		const quizPopup = document.getElementById('quizPopup');
+		if (quizPopup) {
+			document.body.removeChild(quizPopup); // Remove the popup from the DOM
+		}
+
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'none'; // Hide the project button
+		} else {
+			console.error(`Project button with ID "${projectId}" not found.`);
+		}
+	}
+
+
+	function handleSpecialProjectRewards(isCorrect) {
+		if (isCorrect) {
+			csp += 50; // Reward for completing all questions correctly
+			showNotification("Congratulations! You earned 50 CSP for successfully completing the special project.");
+		} else {
+			csp -= 20; // Penalty for incorrect answer
+			showNotification("Incorrect answer. You lost 20 CSP.");
+		}
+		updateDisplay();
+	}
+	
+	
+		// Function to check if the end conditions are met
+	function checkEndGame() {
+		// Check if all desks are automated and CSP is 2,000 or more
+		const allDesksAutomated = Object.keys(hasWorker).length === 10;
+		if (allDesksAutomated && csp >= 1000) {
+			showEndScreen();
+		}
+	}
+
+
+
+
+	// Function to display the end screen
+	function showEndScreen() {
+		const endScreen = document.getElementById("endScreen");
+		const finalScore = document.getElementById("finalScore");
+
+		// Update the final score message
+		finalScore.innerText = `Congratulations! You earned a total of ${totalCspEarned} Customer Service Points (CSP)!`;
+
+		// Show the end screen with fade-in effect
+		endScreen.style.visibility = "visible";
+		endScreen.style.opacity = 1;
+	}
+
+	// Function for Replay Level button
+	function replayLevel() {
+		// Reset game variables and reload the page to restart the level
+		location.reload();
+	}
+
+	// Function for Next Level button
+	function nextLevel() {
+		alert("Transitioning to Level 2...");
+		location.href = "Level2.html"; // Link to a separate file or setup
+	}
+
+
+	// Call checkEndGame() after every CSP update
+	function updateDisplay() {
+		document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+		document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+		checkEndGame();
+	}
+
+		
+	
+	
+	
+</script>
+
+</body>
+</html>
