@@ -82,7 +82,7 @@
 			margin-bottom: 20px;
 		}
 
-		#homeStartButton {
+		#startButton {
 			padding: 10px 20px;
 			font-size: 18px;
 			background-color: #33348c;
@@ -92,48 +92,38 @@
 			cursor: pointer;
 		}
 
-		#homeStartButton:hover {
+		#startButton:hover {
 			background-color: #5555aa;
 		}
 
 		#gameArea {
-			display: none;
+			display: block;
 		}
 
 
 		/* End Screen Styling */
-	#endScreen {
-		position: absolute;
-		top: 0; /* Adjust relative to the game area */
-		left: 0;
-		width: 100%; /* Match #gameArea dimensions */
-		height: 100%; /* Match #gameArea dimensions */
-		background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		visibility: hidden; /* Hidden by default */
-		opacity: 0;
-		transition: opacity 0.3s ease;
-		z-index: 1000; /* Ensures it's on top */
-	}
+		#endScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			visibility: hidden; /* Hidden by default */
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
 
-
-
-	#endScreenContent {
-		width: 80%; /* Adjust as necessary */
-		height: auto; /* Maintain aspect ratio */
-		background: white;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		padding: 20px;
-		border-radius: 10px;
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	}
-
+		#endScreenContent {
+			background: rgba(255, 255, 255, 0.9) url('RMACRAOUniversityTransition.png') center/cover no-repeat;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+			text-align: center;
+		}
 
 		#replayButton, #nextLevelButton {
 			padding: 10px 20px;
@@ -157,116 +147,149 @@
 		transform: translateX(-50%); /* Center alignment correction */
 		z-index: 10; /* Ensure it stays on top */
 		display: block; /* Ensure proper rendering */
-	}		
+	}
+
+		.modal {
+			display: none; /* Hidden by default */
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 500px;
+			height: auto;
+			background-color: white;
+			z-index: 1000;
+			justify-content: center;
+			align-items: center;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+			text-align: center;
+		}
+
+
+		.modal-content {
+			display: flex;
+			z-index: 2;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			width: 500px;
+			height: 100%;
+			padding: 0;
+			background-color: white;
+			border-radius: 10px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+		}
+		#startGameButton:hover {
+			background-color: #6B28A6;
+			color: white;
+		}
+
+		.chapter-option {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-bottom: 25px; /* Adjust spacing between options */
+			margin-left: -80px; /* Move closer to the character (adjust as needed) */
+		}
+
+		.chapter-preview {
+			width: 155px; /* Adjust size as needed */
+			height: auto;
+			margin: 0 auto; /* Centers the image horizontally */			
+			margin-bottom: 5px; /* Adjust spacing between image and text */
+			border-radius: 5px; /* Optional: rounded corners for images */
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow */
+			cursor: pointer; /* Make it clickable */
+			transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover animations */
+		}
+
+		.chapter-preview:hover {
+			transform: scale(1.05); /* Slight zoom effect */
+			box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+		}
+
+		.chapter-option p {
+			margin: 0; /* Removes extra space around the text */
+			font-size: 16px; /* Adjust font size if needed */
+			font-weight: bold; /* Makes the text bold */
+			color: #4B0082; /* RMACRAO purple */
+			text-align: center;
+			margin-left: 0px; /* Moves text closer to the character */
+		}
+
+
+		chapterbutton {
+			padding: 10px 10px;
+			font-size: 16px;
+			background-color: #33348c;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		chapterbutton:hover {
+			background-color: #5555aa;
+		}
+
+.text-container {
+    margin-left: 10px; /* Adjust to move closer to the image */
+    text-align: left; /* Optional: Align text to the left */
+    line-height: 1.8; /* Stretch lines (default is 1.0 or 1.2) */
+    max-width: 400px; /* Limit the width for better readability */
+}
+
+.text-container p {
+    margin: 10px 0; /* Add spacing between paragraphs */
+}
+
+
+/* Modal Container */
+.endmodal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 500px;
+    height: auto;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+}
+
+/* Modal Content Box */
+.endmodal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+}
+
+/* Close Button */
+.endmodalclose-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Character Image */
+.endmodalcharacter-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
 		
-	/* Modal Styling */
-	.modal {
-	  display: none; /* Hidden by default */
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100%;
-	  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-	  z-index: 1000;
-	  justify-content: center;
-	  align-items: center;
-	}
-
-	/* Modal Content */
-	.modal-content {
-	  background: white;
-	  padding: 20px;
-	  border-radius: 10px;
-	  text-align: center;
-	  max-width: 500px;
-	  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	  animation: slideDown 0.5s ease-out;
-	}
-
-	/* Animation for Modal Appearance */
-	@keyframes slideDown {
-	  from {
-		transform: translateY(-50%);
-		opacity: 0;
-	  }
-	  to {
-		transform: translateY(0);
-		opacity: 1;
-	  }
-	}
-
-	/* Presenter Image Styling */
-	#presenterImage {
-	  max-width: 150px;
-	  height: auto;
-	  margin-bottom: 20px;
-	}
-
-	/* Modal Content Styling */
-	.modal-content {
-	  background: white;
-	  padding: 20px;
-	  border-radius: 10px;
-	  text-align: left;
-	  max-width: 800px;
-	  display: flex; /* Use flexbox for side-by-side layout */
-	  align-items: center;
-	  gap: 20px; /* Space between the image and text */
-	  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	}
-
-	/* Presenter Container */
-	.presenter-container {
-	  flex: 1; /* Allow the presenter to take up one part of the space */
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	}
-
-	#presenterImage {
-	  max-width: 200px; /* Control the size of the image */
-	  height: auto;
-	}
-
-	/* Text Container */
-	.text-container {
-	  flex: 2; /* Allow the text area to take up more space */
-	  background-color: #4B0082; /* RMACRAO purple */
-	  color: white;
-	  padding: 20px;
-	  border-radius: 10px;
-	  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-	}
-
-	.text-container p,
-	.text-container ul {
-	  margin: 0;
-	  padding: 0;
-	}
-
-	.text-container ul {
-	  list-style-type: disc;
-	  margin-left: 20px;
-	}
-
-	#startGameButton {
-	  background-color: white;
-	  color: #4B0082; /* Purple text for branding */
-	  border: 2px solid #4B0082;
-	  border-radius: 5px;
-	  padding: 10px 20px;
-	  font-size: 16px;
-	  margin-top: 20px;
-	  cursor: pointer;
-	  display: block; /* Ensures it spans the width inside the container */
-	}
-
-	#startGameButton:hover {
-	  background-color: #6B28A6; /* Darker purple on hover */
-	  color: white;
-	}
-
+		
+		
 		
 		
     </style>
@@ -274,30 +297,7 @@
 <body>
 
 
-
-	<div id="titleScreen">
-		<img src="RMACRAOUniversityTitle.png" alt="RMACRAO University: From Admissions to Graduation" id="titleImage">
-		<button id="homeStartButton">Start Game</button>
-	</div>
-
-	<div id="welcomeModal" class="modal">
-		<div class="modal-content">
-			<div class="presenter-container">
-				<img src="RMACRAOUniversityPresenter1.png" alt="Presenter" id="presenterImage">
-			</div>
-			<div class="text-container">
-				<p>Welcome to RMACRAO University! Here’s how to play:</p>
-				<ul>
-					<li>Click on desks to process forms and earn CSP points.</li>
-					<li>Complete the Provost Quiz to activate multipliers!</li>
-					<li>Manage your time wisely to maximize points.</li>
-				</ul>
-				<button id="modalStartButton">Let's Go!</button>
-			</div>
-		</div>
-	</div>
-
-<div id="welcomeMessage">Welcome to RMACRAO University. Process some forms to gain points. Click the desk to process a form.</div>
+<div id="welcomeMessage">Welcome to RMACRAO University: Registrar Level 1! This level will focus on FERPA. Click the desk to get started.</div>
 
 <div id="totalPointsDisplay">Total CSP Earned: 0</div>
 
@@ -308,7 +308,6 @@
         <div class="worker" id="worker1"></div>
         <div class="progress-bar" id="progressBar1"><div class="progress-bar-fill" id="progressFill1"></div></div>
     </div>
-
     <!-- Add the student image element -->
     <img id="studentImage" src="Student1.png" alt="Student Worker" class="student-image" />
 </div>
@@ -323,23 +322,120 @@
     </div>
 </div>
 
-<div id="specialProjectsPanel">
-	<button id="provostProject" style="display: none;" onclick="triggerSpecialProject('provost')">Provost's Directive</button>
-	<button id="strategicProject" style="display: none;" onclick="triggerSpecialProject('strategic')">Strategic Initiative</button>
-	<button id="studentProject" style="display: none;" onclick="triggerSpecialProject('student')">Student Success Drive</button>
+<div id="titleScreen">
+    <img src="RMACRAOUniversityTitle.png" alt="RMACRAO University: From Admissions to Graduation" id="titleImage">
+    <button id="homeStartButton">Start Game</button>
 </div>
-
-
-
 
 <div id="infoPanel">
     <div id="notification"></div>
     <p id="pointsDisplay">Customer Service Points (CSP): 0</p>
-    <button id="buyDeskButton" onclick="buyNextDesk()">Buy Degree Audit (100 CSP)</button>
+	<p id="additionalText" style="margin-top: 10px; color: #333;">Special projects available this level: Provost Project, Strateic Initiative, and Student Success </p>
+    <button id="buyDeskButton" onclick="buyNextDesk()">Degree Audit (100 CSP)</button>
     <button id="hireWorkerButton1" onclick="hireWorker(1, 30)">Hire Work-Study Student for Add/Drop Desk (30 CSP)</button>
 </div>
 
-<!-- <div id="levelIndicator">Level 2</div> -->
+<div id="specialProjectsPanel">
+    <button id="provostProject" style="display: none;" onclick="triggerSpecialProject('provostProject')">Provost Project</button>
+    <button id="strategicProject" style="display: none;" onclick="triggerSpecialProject('strategicProject')">Strategic Project</button>
+    <button id="studentProject" style="display: none;" onclick="triggerSpecialProject('studentProject')">Student Project</button>
+</div>
+
+<div id="welcomeModal" class="modal">
+    <div class="modal-content">
+        <!-- Character Image -->
+        <div class="presenter-container">
+            <img id="presenterImage" src="RMACRAOUniversityPresenter1.png" alt="Presenter" style="width: 255px; height: auto;">
+        </div>
+
+        <!-- Text Content -->
+        <div class="text-container" style="text-align: left; line-height: 1.8; max-width: 500px;">
+            <!-- Welcome Text -->
+            <p style="text-align: Center; margin-bottom: 20px;">
+               <!--  <span style="font-size: 1.5em;">Welcome to </span> -->
+                <span style="font-size: 1.5em;">Welcome to <strong>RMACRAO University!</strong></span>
+            </p>
+
+            <!-- "Here is how to play" Section -->
+            <p style="text-align: left; margin-left: 0px; font-size: 1.2em; margin-bottom: 10px;">
+                Here is how to play:
+            </p>
+
+            <!-- Instructions Section -->
+            <div style="margin-left: -50px;"> <!-- Adjusted to move closer to the character -->
+                <p style="margin: 5px 0;">🖱️ <strong>Click on desks</strong> to process student requests and earn Customer Service Points (CSP).</p>
+                <p style="margin: 5px 0;">👩‍🎓 <strong>Hire Work-Study Students</strong> to automate desks and boost productivity.</p>
+                <p style="margin: 5px 0;">⭐ <strong>Complete special projects</strong> to unlock exciting multipliers and bonuses!</p>
+                <p style="margin: 5px 0;">⏰ <strong>Manage your time wisely</strong> to maximize your points and efficiency.</p>
+            </div>
+
+            <!-- Button Section -->
+            <div style="margin-left: 25px; margin-top: 20px;">
+                <button id="modalStartButton" style="padding: 10px 20px; font-size: 16px;">Let's Go!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="chapterSelectionModal" class="modal">
+    <div class="modal-content">
+        <div class="presenter-container">
+            <img src="RMACRAOUniversityPresenter2.png" alt="Presenter" style="width: 150px; height: auto; margin-left: 10;">
+        </div>
+        <div class="text-container">
+            <p style="margin-left: -60px; text-align: left; font-size: 18px; font-weight: bold; color: #4B0082;">
+                Please select a chapter to begin:
+            </p>
+            <div class="chapter-option">
+                <a href="#" id="admissionsChapterButton" onclick="startAdmissionsChapter()" class="chapter-link">
+                    <img src="RMACRAOUniversity16.png" alt="Admissions Preview" class="chapter-preview">
+                </a>
+                <p>Admissions Chapter</p>
+            </div>
+
+            <div class="chapter-option">
+                <a href="#" id="registrarChapterButton" onclick="startRegistrarChapter()" class="chapter-link">
+                    <img src="RMACRAOUniversity1.png" alt="Registrar Preview" class="chapter-preview">
+                </a>
+                <p>Registrar Chapter</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="endModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">×</span>
+        <div class="modal-body">
+            <div class="modal-text">
+                <h2>Congratulations!</h2>
+                <p><strong id="finalScoreModal"></strong></p>
+                <button onclick="replayLevel()">Replay Level</button>
+                <button onclick="nextLevel()">Next Level</button>
+            </div>
+            <img id="characterImage" src="RMACRAOUniversityPresenter3.png" alt="Character" class="character-image">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -347,6 +443,74 @@
 
 
 <script>
+
+		document.addEventListener("DOMContentLoaded", () => {
+			const homeStartButton = document.getElementById("homeStartButton");
+			const modalStartButton = document.getElementById("modalStartButton");
+
+			// When Start Game button is clicked
+			homeStartButton.addEventListener("click", () => {
+				console.log("Home Start Button clicked"); // Debugging line
+				document.getElementById("titleScreen").style.display = "none"; // Hide title screen
+				document.getElementById("welcomeModal").style.display = "flex"; // Show intro modal
+			});
+
+			// When Let's Go! button is clicked
+			modalStartButton.addEventListener("click", () => {
+				document.getElementById("welcomeModal").style.display = "none"; // Hide intro modal
+				document.getElementById("chapterSelectionModal").style.display = "flex"; // Show chapter selection modal
+			});
+		});
+
+		function startRegistrarChapter() {
+			document.getElementById("chapterSelectionModal").style.display = "none"; // Hide the modal
+			document.getElementById("gameArea").style.display = "block"; // Show game area
+
+				// Show relevant sections
+			//document.getElementById("tipsSection").style.display = "block";
+			//document.getElementById("projectsSection").style.display = "block";
+
+			// Reset game state
+			csp = 0;
+			totalCspEarned = 0;
+			deskUnlocked = { 1: true }; // Only unlock the first desk
+			hasWorker = {};
+			deskInProgress = {};
+			nextDeskToBuy = 2; // Reset to the first purchasable desk
+
+			updateDisplay(); // Ensure the display is consistent with the reset state
+
+			setupLevel1(); // Initialize Level 1 desks
+			startGame();
+		}
+
+
+		function startAdmissionsChapter() {
+			window.location.href = "RegistrarStory_Level4.html"; // Replace with the actual file name
+		}
+
+
+
+	// Move the startGame function outside of the DOMContentLoaded event
+	function startGame() {
+		console.log("Game started"); // Debugging line
+		document.getElementById("titleScreen").style.display = "none";
+		document.getElementById("welcomeModal").style.display = "none";
+		document.getElementById("gameArea").style.display = "block";
+
+		// Reset game state
+		csp = 0;
+		totalCspEarned = 0;
+		deskUnlocked = { 1: true }; // Only unlock the first desk
+		hasWorker = {}; // Clear worker assignments
+		deskInProgress = {}; // Reset desks in progress
+		nextDeskToBuy = 2; // Reset the next desk to buy
+
+		setupLevel1(); // Initialize desks for Level 1
+		updateDisplay(); // Update the UI to reflect the reset state
+	}
+
+
 
 
 
@@ -362,45 +526,24 @@
     let baseHireCost = 30;
     let deskInProgress = {};
 	let usedImages = []; // Initialize an array to keep track of used images
-	let gameEnded = false; // Flag to avoid retriggering
-	let levelCompleted = false; // Initially, the level is not completed
-	let multiplierActive = false;
-	let gameStarted = false; // Flag to prevent double game starts
-
-	//Level 2 //
-	let isLevel2 = false; // Initially set to false for Level 1
-	let cspLevel2 = 0;
-	let totalCspEarnedLevel2 = 0;
-	let deskUnlockedLevel2 = { 1: true }; // Reset for Level 2 desks
-	let hasWorkerLevel2 = {};
-	let nextDeskToBuyLevel2 = 2; // Reset to start fresh for Level 2
-	let pointsPerDeskLevel2 = { 1: 3 }; // Adjust point values for Level 2
+	let currentQuestionIndex = 0; // Declare globally at the top of your script
+	let finalCspAtCompletion = 0; // Holds the total CSP when the game ends
+	let gameEnded = false; // Prevents re-triggering end-game logic
 
     const penaltyTime = 30000; // 30 seconds penalty time
 
     const deskLabels = [
-        "Add/Drop", "Degree Audit", "Transcript Processing",
-        "Enrollment Verification", "Graduation Clearance", "Change of Major",
-        "Course Substitution", "Transfer Evals", "Course Overrides",
-        "Special Accom."
+        "Add/Drop", 
+		"Degree Audit", 
+		"Transcript Request",
+        "Enrollment Verification", 
+		"Graduation Clearance", 
+		"Academic Appeals",
+        "Health and Safety", 
+		"Major Changes", 
+		"Registrar Reporting",
+        "Course Overrides"
     ];
-
-	document.addEventListener("DOMContentLoaded", () => {
-		const homeStartButton = document.getElementById("homeStartButton");
-		const modalStartButton = document.getElementById("modalStartButton");
-
-		homeStartButton.addEventListener("click", () => {
-			document.getElementById("welcomeModal").style.display = "flex";
-		});
-
-		modalStartButton.addEventListener("click", () => {
-			startGame();
-		});
-	});
-
-
-
-
 
 
     // Array of student image paths
@@ -417,209 +560,246 @@
         'Student10.png',
     ];
 
-    const ferpaQuestions = [
-        {
-            question: "What does FERPA stand for?",
-            options: ["Family Educational Rights and Privacy Act", "Federal Educational Rights and Privacy Act", "Family Education Rights Privacy Act"],
-            answer: 0 // Index of the correct answer
-        },
-        {
-            question: "What is one right that FERPA grants to students?",
-            options: ["Access to their educational records", "Control of their academic schedule", "Eligibility for financial aid"],
-            answer: 0
-        },
-        {
-            question: "Which type of information is considered directory information under FERPA?",
-            options: ["Grades", "Student's name, address, and telephone number", "Disciplinary records"],
-            answer: 1
-        },
-        {
-            question: "How long does a school have to comply with a student’s request to inspect their records under FERPA?",
-            options: ["30 days", "60 days", "45 days"],
-            answer: 2
-        },
-        {
-            question: "Can a school disclose a student's information to parents without consent?",
-            options: ["Yes, always", "Only if the student is a dependent", "No, never"],
-            answer: 1
-        },
-        {
-            question: "What is the penalty for violating FERPA regulations?",
-            options: ["Fines", "Loss of federal funding", "Both of the above"],
-            answer: 1
-        },
-        {
-            question: "Are there exceptions to the consent requirement for disclosing educational records?",
-            options: ["Yes, for school officials with legitimate interests", "No, consent is always required", "Only for law enforcement"],
-            answer: 0
-        },
-        {
-            question: "What must a school provide to students regarding their educational records?",
-            options: ["A copy of FERPA", "Notification of their rights under FERPA", "Access to their grades"],
-            answer: 1
-        },
-        {
-            question: "How can students file a complaint if they believe their rights under FERPA have been violated?",
-            options: ["By sending an email to the registrar", "By filing a complaint with the Family Policy Compliance Office", "By contacting their professors"],
-            answer: 1
-        },
-        {
-            question: "What is one example of information that is not protected under FERPA?",
-            options: ["Publicly available information", "Grades", "Student ID numbers"],
-            answer: 0
-        }
-    ];
-
-	const feedbackMessages = [
+	const ferpaQuestions = [
 		{
-			incorrect1: "FERPA grants access to educational records, not control over the schedule.",
-			incorrect2: "Eligibility for financial aid is not a FERPA right."
+			question: "Under FERPA, when can a parent request to add or drop a course on behalf of their child?",
+			options: [
+				"Always, as long as they are the parent.",
+				"Only if the student is a dependent and the parent provides proof.",
+				"Never, course changes must always be requested by the student."
+			],
+			answer: 1 // Correct: "Only if the student is a dependent and the parent provides proof."
 		},
 		{
-			incorrect1: "FERPA does not grant control over the schedule; it grants access to records.",
-			incorrect2: "Eligibility for financial aid is not covered under FERPA."
+			question: "When can a degree audit be shared with a student’s employer under FERPA regulations?",
+			options: [
+				"Only if the student provides explicit, written consent.",
+				"Never, as degree audits are strictly internal documents.",
+				"Only verbally, to maintain confidentiality of detailed records."
+			],
+			answer: 0 // Correct: "Only if the student provides explicit, written consent."
 		},
 		{
-			incorrect1: "Grades are not considered directory information.",
-			incorrect2: "Disciplinary records are not directory information."
+			question: "What is required to issue a student’s transcript to a third party under FERPA?",
+			options: [
+				"Payment of a fee by the third party.",
+				"Written authorization from the student.",
+				"A clear academic purpose stated by the third party."
+			],
+			answer: 1 // Correct: "Written authorization from the student."
 		},
 		{
-			incorrect1: "The school has up to 45 days, not 30.",
-			incorrect2: "The school has up to 45 days, not 60."
+			question: "Can a school share a student’s enrollment status with external agencies without consent?",
+			options: [
+				"Yes, if it is directory information as defined by the institution.",
+				"No, enrollment status can never be shared externally.",
+				"Yes, but only for government agency requests."
+			],
+			answer: 0 // Correct: "Yes, if it is directory information as defined by the institution."
 		},
 		{
-			incorrect1: "Consent is needed unless the student is a dependent.",
-			incorrect2: "FERPA allows exceptions, especially if the student is a dependent."
+			question: "When is it permissible to share a student’s graduation status with media outlets?",
+			options: [
+				"If the status is classified as directory information under FERPA.",
+				"Never, media outlets cannot receive student information.",
+				"Only with explicit written consent from the student."
+			],
+			answer: 0 // Correct: "If the status is classified as directory information under FERPA."
 		},
 		{
-			incorrect1: "FERPA violations result in loss of federal funding, not fines.",
-			incorrect2: "Both fines and loss of funding are potential penalties."
+			question: "Under what circumstances can an academic appeals board access a student’s disciplinary records?",
+			options: [
+				"Automatically, as part of the appeals process.",
+				"Only if the student provides written consent.",
+				"Never, disciplinary records are strictly confidential."
+			],
+			answer: 1 // Correct: "Only if the student provides written consent."
 		},
 		{
-			incorrect1: "FERPA does not allow disclosure to law enforcement without consent.",
-			incorrect2: "FERPA has exceptions, but not always for law enforcement."
+			question: "Does FERPA allow the disclosure of student information during a health or safety emergency?",
+			options: [
+				"Yes, if necessary to protect the health or safety of individuals.",
+				"No, FERPA prohibits disclosure even in emergencies.",
+				"Yes, but only to the student’s parents."
+			],
+			answer: 0 // Correct: "Yes, if necessary to protect the health or safety of individuals."
 		},
 		{
-			incorrect1: "A copy of FERPA is not required to be provided to students.",
-			incorrect2: "Access to grades is not guaranteed by FERPA."
+			question: "When can a parent access information about their child’s change of major under FERPA?",
+			options: [
+				"Always, as parents are entitled to this information.",
+				"Only if the student provides explicit consent.",
+				"Never, only the student can access their academic records."
+			],
+			answer: 1 // Correct: "Only if the student provides explicit consent."
 		},
 		{
-			incorrect1: "Complaints are filed with the Family Policy Compliance Office, not the registrar.",
-			incorrect2: "Professors are not the correct contact for FERPA complaints."
+			question: "Can the registrar’s office share a student’s academic performance with their academic advisor?",
+			options: [
+				"Yes, if the information is relevant to the advisor's role in supporting the student.",
+				"No, academic performance can only be disclosed with written consent from the student.",
+				"No, FERPA prohibits this type of internal communication."
+			],
+			answer: 0 // Correct: "Yes, if the information is relevant to the advisor's role in supporting the student."
 		},
 		{
-			incorrect1: "Grades and ID numbers are protected under FERPA.",
-			incorrect2: "Publicly available information is not protected by FERPA."
+			question: "Can a professor request a course override for a student without the student’s consent?",
+			options: [
+				"No, overrides must involve student consent or knowledge.",
+				"Yes, if the professor deems it necessary for academic progress.",
+				"Yes, as long as the request aligns with institutional policy."
+			],
+			answer: 0 // Correct: "No, overrides must involve student consent or knowledge."
 		}
 	];
 
-	const specialProjects = {
-		provost: {
-			unlocked: false,
-			message: "Provost's Directive unlocked! Complete the task to gain a CSP multiplier!",
-			reward: () => applyCSPMultiplier(2, 30), // Example: 2x multiplier for 30 seconds
-			penalty: () => showNotification("Provost's Directive failed. Better luck next time!"),
+
+	const feedbackMessages = [
+		{
+			incorrect1: "FERPA only allows parental access if the student is a dependent for tax purposes.",
+			incorrect2: "FERPA allows parental access in some cases, such as dependency."
 		},
-		strategic: {
-			unlocked: false,
-			message: "Strategic Initiative unlocked! Complete the task for extra points!",
-			reward: () => { csp += 50; updateDisplay(); },
-			penalty: () => showNotification("Strategic Initiative failed. No bonus points this time."),
+		{
+			incorrect1: "FERPA requires explicit written consent for sharing educational records externally.",
+			incorrect2: "FERPA mandates written consent, even for verbal disclosures."
 		},
-		student: {
-			unlocked: false,
-			message: "Student Success Drive unlocked! Complete the task to boost all desk speeds!",
-			reward: () => {
-				for (const desk in processingTimes) {
-					processingTimes[desk] = Math.max(500, processingTimes[desk] - 1000); // Speed up by 1 second
-				}
-				showNotification("Student Success Drive completed! All desks are now faster!");
-			},
-			penalty: () => showNotification("Student Success Drive failed. No speed boost."),
+		{
+			incorrect1: "FERPA requires written consent for transcripts, regardless of fees.",
+			incorrect2: "FERPA does not allow transcript release without authorization."
+		},
+		{
+			incorrect1: "FERPA allows directory information, such as enrollment status, to be shared unless the student opts out.",
+			incorrect2: "FERPA permits disclosure of directory information without special restrictions."
+		},
+		{
+			incorrect1: "FERPA considers graduation status as directory information unless the student opts out.",
+			incorrect2: "Media disclosures do not require written consent for directory information."
+		},
+		{
+			incorrect1: "FERPA requires student consent to share disciplinary records.",
+			incorrect2: "Disciplinary records are protected and require authorization."
+		},
+		{
+			incorrect1: "FERPA makes exceptions for emergencies to protect health and safety.",
+			incorrect2: "FERPA allows disclosure to relevant authorities, not just parents."
+		},
+		{
+			incorrect1: "FERPA requires explicit student consent for sharing major changes.",
+			incorrect2: "Parents do not have automatic access under FERPA."
+		},
+		{
+			incorrect1: "FERPA allows sharing with school officials if they have legitimate educational interest.",
+			incorrect2: "Advisors are considered school officials under FERPA."
+		},
+		{
+			incorrect1: "FERPA ensures students are involved in decisions affecting their records.",
+			incorrect2: "Overrides require student awareness and often their consent."
 		}
-	};
+	];
+
 
 	const provostQuiz = [
 		{
-			question: "What innovative technology can we implement to improve degree audit efficiency?",
-			options: ["Blockchain", "Artificial Intelligence", "Cloud Storage"],
-			answer: 1 // AI is the correct answer
+			question: "The provost requests a report on how transcript request patterns can inform student retention strategies. How should you approach this request?",
+			options: ["Provide the total number of transcript requests from the past semester, grouped by academic program.", "Analyze transcript request patterns alongside student demographics and reasons for requests to identify potential retention risks.", "Focus on students with high numbers of transcript requests, as they are most likely to transfer or leave the institution."],
+			answer: 1 // Analyze transcript request patterns alongside student demographics and reasons for requests to identify potential retention risks.
 		},
 		{
-			question: "How can we increase student satisfaction with registrar services?",
-			options: ["Faster response times", "More human interaction", "Automated chat support"],
-			answer: 0 // Faster response times is the correct answer
+			question: "The provost has requested a breakdown of transcript requests by department, sorted by volume and reason for the request. What steps should you take to create this report while ensuring FERPA compliance?",
+			options: ["Aggregate and anonymize the data, ensuring no personally identifiable information is included.", "Provide raw transcript logs for analysis and include student IDs for accuracy.", "Only report on departments with a significant number of requests to save time."],
+			answer: 0 // Aggregate and anonymize the data, ensuring no personally identifiable information is included.
 		},
 		{
-			question: "What would be a cost-effective way to reduce transcript processing delays?",
-			options: ["Outsourcing tasks", "Implementing digital transcripts", "Hiring more staff"],
-			answer: 1 // Digital transcripts is the correct answer
+			question: "The provost wants to evaluate whether the current transcript request process meets the needs of both students and external stakeholders. What should you include in your evaluation?",
+			options: ["Summarize the transcript fee structure to demonstrate alignment with institutional budgeting.", "Review the number of transcripts processed over the past year to show volume trends.", "Analyze processing times, common issues reported by students, and satisfaction survey results from both students and recipients."],
+			answer: 2 // Analyze processing times, common issues reported by students, and satisfaction survey results from both students and recipients.
 		}
 	];
 
 	const strategicQuiz = [
 		{
-			question: "What should the Registrar's Office focus on to improve operational efficiency?",
-			options: ["Implement cross-training", "Increase manual processes", "Add more paperwork"],
-			answer: 0
+			question: "The academic appeals committee has noted a high number of appeals related to grade disputes in a specific department. The provost has asked you to recommend strategies for addressing this issue. What is the best course of action?",
+			options: ["Collaborate with the department to review grading practices and provide training or guidelines for faculty to ensure consistency and transparency.", "Recommend that all grade disputes in the department be automatically approved to reduce the number of appeals.", "Suggest revising the appeals policy to make it harder for students to file appeals in this department."],
+			answer: 0 //Collaborate with the department to review grading practices and provide training or guidelines for faculty to ensure consistency and transparency.
 		},
 		{
-			question: "What is a good method to engage students in the graduation process?",
-			options: ["Send email reminders", "Host a graduation workshop", "Both of the above"],
-			answer: 2
+			question: "A student appeals their dismissal after failing three required courses, citing extenuating circumstances, including medical issues. They provide some documentation but omit critical details. What is your next step?",
+			options: ["Approve the appeal to avoid complications and ensure the student remains enrolled.", "Deny the appeal, as failing three courses indicates poor academic performance regardless of extenuating circumstances.", "Request additional documentation to clarify their medical circumstances and ensure the committee has all relevant information before making a decision."],
+			answer: 2 //Request additional documentation to clarify their medical circumstances and ensure the committee has all relevant information before making a decision.
 		},
 		{
-			question: "What technology can improve advising appointments?",
-			options: ["Online scheduling systems", "Paper sign-up sheets", "Manual call lists"],
-			answer: 0
+			question: "The strategic initiative aims to reduce repeat appeals by identifying patterns and improving policies. How should you approach this task?",
+			options: ["Implement stricter criteria for accepting appeals to reduce the volume of submissions.", "Analyze appeal data to identify common reasons for appeals, work with departments to address recurring issues, and recommend policy adjustments.", "Recommend a centralized appeals process where all decisions are final and not subject to review."],
+			answer: 1 //Analyze appeal data to identify common reasons for appeals, work with departments to address recurring issues, and recommend policy adjustments.
 		}
 	];
 
 	const studentQuiz = [
 		{
-			question: "What is the primary goal of Student Success initiatives?",
-			options: ["Boost retention rates", "Add more courses", "Lower tuition"],
-			answer: 0
+			question: "The director of student success has requested a report identifying trends among students who withdraw from multiple courses each semester. How should you approach creating this report?",
+			options: ["Focus on students in specific programs with high withdrawal rates and suggest they receive academic warnings.", "Provide a list of students who have withdrawn from three or more courses, grouped by their GPA and major.", "Analyze withdrawal data to identify patterns by demographics, course type, and timing, and include insights into potential underlying issues like scheduling conflicts or academic challenges."],
+			answer: 2 //Analyze withdrawal data to identify patterns by demographics, course type, and timing, and include insights into potential underlying issues like scheduling conflicts or academic challenges.
 		},
 		{
-			question: "Which of the following promotes student success?",
-			options: ["Timely access to transcripts", "Larger class sizes", "Longer wait times"],
-			answer: 0
+			question: "The Student Success Drive requires outreach to students flagged as at risk due to low GPA. What is the best approach for using registrar data to inform this outreach?",
+			options: ["Use historical GPA trends, credit completion rates, and enrollment patterns to identify at-risk students and share the data with advisors for targeted intervention. ", "Compile a list of all students with GPAs below 2.0 and send them a mass email with general support resources.", "Provide advisors with demographic data and let them decide how to approach at-risk students individually."],
+			answer: 0 //Use historical GPA trends, credit completion rates, and enrollment patterns to identify at-risk students and share the data with advisors for targeted intervention. 
 		},
 		{
-			question: "What is a key factor in improving transfer evaluations?",
-			options: ["Efficient communication with other schools", "Delaying evaluations", "Manually typing reports"],
-			answer: 0
+			question: "The provost has asked you to evaluate the success of the Student Success Drive by assessing its impact on retention rates. How should you structure your evaluation?",
+			options: ["Report on the number of emails sent and meetings held with at-risk students to show outreach volume.", "Compare retention rates before and after the initiative, and include student feedback on the effectiveness of the interventions provided.", "Focus on analyzing the GPAs of students who participated in the initiative to assess their academic improvement."],
+			answer: 1 //Compare retention rates before and after the initiative, and include student feedback on the effectiveness of the interventions provided.
 		}
 	];
 
+	function setupLevel1() {
+		const gameArea = document.getElementById("gameArea");
+		gameArea.innerHTML = ""; // Clear existing desks
 
-	let currentProvostQuestion = 0;
-	let correctAnswers = 0;
+		deskLabels.forEach((label, index) => {
+			const deskNumber = index + 1;
 
-	function startGame() {
-		console.log("Game started");
-		document.getElementById("titleScreen").style.display = "none";
-		document.getElementById("welcomeModal").style.display = "none";
-		document.getElementById("gameArea").style.display = "block";
-		updateDisplay();
+			// Only add desks that are unlocked
+			if (deskUnlocked[deskNumber]) {
+				const deskContainer = document.createElement("div");
+				deskContainer.className = "desk-container";
+				deskContainer.id = `deskContainer${deskNumber}`;
+
+				const desk = document.createElement("div");
+				desk.className = "desk";
+				desk.id = `desk${deskNumber}`;
+				desk.innerText = label;
+				desk.onclick = () => serveStudent(deskNumber);
+
+				const worker = document.createElement("div");
+				worker.className = "worker";
+				worker.id = `worker${deskNumber}`;
+
+				const progressBar = document.createElement("div");
+				progressBar.className = "progress-bar";
+				progressBar.id = `progressBar${deskNumber}`;
+
+				const progressFill = document.createElement("div");
+				progressFill.className = "progress-bar-fill";
+				progressFill.id = `progressFill${deskNumber}`;
+
+				progressBar.appendChild(progressFill);
+				deskContainer.appendChild(desk);
+				deskContainer.appendChild(worker);
+				deskContainer.appendChild(progressBar);
+				gameArea.appendChild(deskContainer);
+			}
+		});
 	}
 
 
 
-	function showNotification(message) {
-		const notification = document.getElementById("notification");
-		notification.innerText = message;
-		notification.style.opacity = 1;
-
-		// Clear any existing timeout before setting a new one
-		if (notification.timeout) clearTimeout(notification.timeout);
-
-		notification.timeout = setTimeout(() => {
-			notification.style.opacity = 0;
-		}, 5000); // Keep the notification visible for 5 seconds
-	}
-
+    function showNotification(message) {
+        const notification = document.getElementById("notification");
+        notification.innerText = message;
+        notification.style.opacity = 1;
+        setTimeout(() => { notification.style.opacity = 0; }, 3000);
+    }
 
     function updateDisplay() {
         document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
@@ -653,9 +833,6 @@
 		}, 1050); // Adjust timing to match the animation duration
 	}
 
-
-
-
     function buyNextDesk() {
         const deskNumber = nextDeskToBuy;
         const deskCost = baseDeskCost * deskNumber;
@@ -665,31 +842,34 @@
 
             // Show FERPA question before unlocking the desk
             showFERPAPopup(deskNumber);
-			checkEndGame();
         } else {
             showNotification("Not enough CSP!");
         }
     }
 
-    function showFERPAPopup(deskNumber) {
-        const popup = document.createElement("div");
-        popup.id = "ferpaQuestionPopup";
-        popup.innerHTML = `
+	function showFERPAPopup(deskNumber) {
+		const popup = document.createElement("div");
+		const question = ferpaQuestions[deskNumber - 1].question;
+		const options = ferpaQuestions[deskNumber - 1].options;
+		const correctAnswer = ferpaQuestions[deskNumber - 1].answer;
 
-            <div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-                <h3>FERPA Question</h3>
-                <p>${ferpaQuestions[deskNumber - 1].question}</p>
-                ${ferpaQuestions[deskNumber - 1].options.map((option, index) => `
-                    <label>
-                        <input type="radio" name="ferpaOption" value="${index}"> ${option}
-                    </label><br>
-                `).join('')}
-                <button onclick="checkFERPAAnswer(${deskNumber})">Submit</button>
-                <button onclick="closeFERPAPopup()">Cancel</button>
-            </div>
-        `;
-        document.body.appendChild(popup);
-    }
+
+		popup.id = "ferpaQuestionPopup";
+		popup.innerHTML = `
+			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
+				<h3>Customer Service Question</h3>
+				<p>${ferpaQuestions[deskNumber - 1].question}</p>
+				${ferpaQuestions[deskNumber - 1].options.map((option, index) => `
+					<label>
+						<input type="radio" name="ferpaOption" value="${index}"> ${option}
+					</label><br>
+				`).join('')}
+				<button onclick="checkFERPAAnswer(${deskNumber})">Submit</button>
+				<button onclick="closeFERPAPopup()">Cancel</button>
+			</div>
+		`;
+		document.body.appendChild(popup);
+	}
 
     function closeFERPAPopup() {
         const popup = document.getElementById("ferpaQuestionPopup");
@@ -703,30 +883,19 @@
 		if (selectedOption) {
 			const selectedIndex = parseInt(selectedOption.value);
 			const correctAnswer = ferpaQuestions[deskNumber - 1].answer;
+			const feedback = feedbackMessages[deskNumber - 1];
 
 			if (selectedIndex === correctAnswer) {
 				closeFERPAPopup();
-				unlockDesk(deskNumber);
+				unlockDesk(deskNumber); // Unlock the desk if the answer is correct
 			} else {
-				// Determine which feedback message to show based on the selected incorrect option
-				let feedback;
-				if (selectedIndex === 1) {
-					feedback = feedbackMessages[deskNumber - 1].incorrect1;
-				} else if (selectedIndex === 2) {
-					feedback = feedbackMessages[deskNumber - 1].incorrect2;
-				} else {
-					feedback = "Incorrect answer. Please review FERPA guidelines and try again.";
-				}
-
-				// Display the feedback message along with the penalty notification
-				showNotification(`${feedback} You have a 30-second penalty before you can try again.`);
+				const feedbackMessage =
+					selectedIndex === 1 ? feedback.incorrect1 :
+					selectedIndex === 2 ? feedback.incorrect2 :
+					"Incorrect answer. Please try again.";
+				showNotification(`${feedbackMessage} You have a 30-second penalty before trying again.`);
 				closeFERPAPopup();
-
-				// Apply the penalty and allow retry after 30 seconds
-				setTimeout(() => {
-					showNotification("You can try answering again now.");
-					showFERPAPopup(deskNumber);
-				}, penaltyTime);
+				setTimeout(() => showFERPAPopup(deskNumber), penaltyTime);
 			}
 		} else {
 			showNotification("Please select an answer.");
@@ -734,272 +903,6 @@
 	}
 
 
-	function unlockSpecialProject(project) {
-		if (!specialProjects[project].unlocked) {
-			specialProjects[project].unlocked = true;
-			document.getElementById(`${project}Project`).style.display = "block"; // Show the button
-			alert(specialProjects[project].message); // Notify the player
-		}
-	}
-
-	
-	function triggerSpecialProject(project) {
-		if (project === 'provost') {
-			currentProvostQuestion = 0;
-			correctAnswers = 0;
-			showProvostQuestion();
-		} else if (project === 'strategic') {
-			currentStrategicQuestion = 0;
-			correctStrategicAnswers = 0;
-			showStrategicQuestion();
-		} else if (project === 'student') {
-			currentStudentQuestion = 0;
-			correctStudentAnswers = 0;
-			showStudentQuestion();
-		}
-	}
-
-
-		function showStrategicQuestion() {
-		const questionData = strategicQuiz[currentStrategicQuestion];
-		const popup = document.createElement("div");
-		popup.id = "strategicQuizPopup";
-		popup.innerHTML = `
-			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-				<h3>Strategic Initiative</h3>
-				<p>${questionData.question}</p>
-				${questionData.options.map((option, index) => `
-					<label>
-						<input type="radio" name="strategicOption" value="${index}"> ${option}
-					</label><br>
-				`).join('')}
-				<button onclick="checkStrategicAnswer()">Submit</button>
-			</div>
-		`;
-		document.body.appendChild(popup);
-	}
-	
-	
-		function showStudentQuestion() {
-		const questionData = studentQuiz[currentStudentQuestion];
-		const popup = document.createElement("div");
-		popup.id = "studentQuizPopup";
-		popup.innerHTML = `
-			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-				<h3>Student Success Drive</h3>
-				<p>${questionData.question}</p>
-				${questionData.options.map((option, index) => `
-					<label>
-						<input type="radio" name="studentOption" value="${index}"> ${option}
-					</label><br>
-				`).join('')}
-				<button onclick="checkStudentAnswer()">Submit</button>
-			</div>
-		`;
-		document.body.appendChild(popup);
-	}
-	
-
-		function showProvostQuestion() {
-		const questionData = provostQuiz[currentProvostQuestion];
-
-		const popup = document.createElement("div");
-		popup.id = "provostQuizPopup";
-		popup.innerHTML = `
-			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-				<h3>Provost's Directive</h3>
-				<p>${questionData.question}</p>
-				${questionData.options.map((option, index) => `
-					<label>
-						<input type="radio" name="provostOption" value="${index}"> ${option}
-					</label><br>
-				`).join('')}
-				<button onclick="checkProvostAnswer()">Submit</button>
-			</div>
-		`;
-		document.body.appendChild(popup);
-	}
-
-	function checkProvostAnswer() {
-		const selectedOption = document.querySelector('input[name="provostOption"]:checked');
-		if (selectedOption) {
-			const selectedIndex = parseInt(selectedOption.value);
-			const correctAnswer = provostQuiz[currentProvostQuestion].answer;
-
-			if (selectedIndex === correctAnswer) {
-				correctAnswers++;
-				showNotification("Correct! Great job!");
-			} else {
-				showNotification("Incorrect. Think about what the Provost would prioritize!");
-			}
-
-			// Move to the next question or finish the quiz
-			document.getElementById("provostQuizPopup").remove();
-			currentProvostQuestion++;
-
-			if (currentProvostQuestion < provostQuiz.length) {
-				showProvostQuestion();
-			} else {
-				finishProvostQuiz();
-			}
-		} else {
-			showNotification("Please select an answer.");
-		}
-	}
-	
-	
-	function checkStrategicAnswer() {
-		const selectedOption = document.querySelector('input[name="strategicOption"]:checked');
-		if (selectedOption) {
-			const selectedIndex = parseInt(selectedOption.value);
-			const correctAnswer = strategicQuiz[currentStrategicQuestion].answer;
-
-			if (selectedIndex === correctAnswer) {
-				correctStrategicAnswers++;
-				showNotification("Correct! Great job!");
-			} else {
-				showNotification("Incorrect. Please think about strategic goals!");
-			}
-
-			// Move to the next question or finish the quiz
-			document.getElementById("strategicQuizPopup").remove();
-			currentStrategicQuestion++;
-
-			if (currentStrategicQuestion < strategicQuiz.length) {
-				showStrategicQuestion();
-			} else {
-				finishStrategicQuiz();
-			}
-		} else {
-			showNotification("Please select an answer.");
-		}
-	}
-
-	function checkStudentAnswer() {
-		const selectedOption = document.querySelector('input[name="studentOption"]:checked');
-		if (selectedOption) {
-			const selectedIndex = parseInt(selectedOption.value);
-			const correctAnswer = studentQuiz[currentStudentQuestion].answer;
-
-			if (selectedIndex === correctAnswer) {
-				correctStudentAnswers++;
-				showNotification("Correct! Great job!");
-			} else {
-				showNotification("Incorrect. Focus on student success!");
-			}
-
-			// Move to the next question or finish the quiz
-			document.getElementById("studentQuizPopup").remove();
-			currentStudentQuestion++;
-
-			if (currentStudentQuestion < studentQuiz.length) {
-				showStudentQuestion();
-			} else {
-				finishStudentQuiz();
-			}
-		} else {
-			showNotification("Please select an answer.");
-		}
-	}
-
-		function finishStrategicQuiz() {
-			if (correctStrategicAnswers === strategicQuiz.length) {
-				specialProjects.strategic.reward();
-				showNotification("Strategic Initiative successfully completed! +50 CSP!");
-			} else {
-				specialProjects.strategic.penalty();
-			}
-			document.getElementById("strategicProject").style.display = "none";
-		}
-
-		function finishStudentQuiz() {
-			if (correctStudentAnswers === studentQuiz.length) {
-				specialProjects.student.reward();
-				showNotification("Student Success Drive completed! All desks are faster!");
-			} else {
-				specialProjects.student.penalty();
-			}
-			document.getElementById("studentProject").style.display = "none";
-		}
-			
-			
-
-	function finishProvostQuiz() {
-		if (correctAnswers === provostQuiz.length) {
-			specialProjects.provost.reward();
-			applyCSPMultiplier(2, 60); // Apply a 2x multiplier for 60 seconds
-			showNotification("You completed the Provost's Directive successfully! CSP multiplier activated.");
-		} else {
-			specialProjects.provost.penalty();
-			showNotification("You didn't complete the Provost's Directive. Better luck next time!");
-		}
-
-		// Hide the Provost Project button
-		document.getElementById("provostProject").style.display = "none";
-
-		// Reset quiz state
-		correctAnswers = 0;
-		currentProvostQuestion = 0;
-	}
-
-
-	function applyCSPMultiplier(multiplier, duration = 30) {
-		if (multiplierActive) return; // Prevent multiple activations
-		multiplierActive = true;
-
-		const originalPoints = JSON.parse(JSON.stringify(pointsPerDesk)); // Deep clone
-
-		for (const desk in pointsPerDesk) {
-			pointsPerDesk[desk] *= multiplier;
-		}
-
-		showNotification(`CSP multiplier activated! All points are multiplied by ${multiplier} for ${duration} seconds.`);
-		showMultiplierVisual(duration);
-
-		setTimeout(() => {
-			pointsPerDesk = originalPoints; // Restore original points
-			multiplierActive = false; // Reset the flag
-			showNotification("CSP multiplier ended.");
-		}, duration * 1000);
-	}
-
-
-	function showMultiplierVisual(duration) {
-		const multiplierBadge = document.createElement("div");
-		multiplierBadge.id = "multiplierBadge";
-		multiplierBadge.style.position = "fixed";
-		multiplierBadge.style.top = "20px";
-		multiplierBadge.style.right = "20px";
-		multiplierBadge.style.padding = "10px";
-		multiplierBadge.style.backgroundColor = "#33348c"; // Purple color
-		multiplierBadge.style.color = "white"; // White font color
-		multiplierBadge.style.borderRadius = "5px";
-		multiplierBadge.style.fontWeight = "bold";
-		multiplierBadge.innerText = `2x CSP Multiplier Active! (${duration}s remaining)`;
-
-		document.body.appendChild(multiplierBadge);
-
-		let remainingTime = duration;
-		const interval = setInterval(() => {
-			remainingTime--;
-			multiplierBadge.innerText = `2x CSP Multiplier Active! (${remainingTime}s remaining)`;
-			if (remainingTime <= 0) {
-				clearInterval(interval);
-			}
-		}, 1000); // Update every second
-
-		setTimeout(() => {
-			multiplierBadge.remove();
-		}, duration * 1000);
-	}
-
-		
-		
-	
-	
-	
-
-	// Update unlockDesk to include special project unlocking
 	function unlockDesk(deskNumber) {
 		const newDeskContainer = document.createElement("div");
 		newDeskContainer.className = "desk-container";
@@ -1008,13 +911,14 @@
 		const newDesk = document.createElement("div");
 		newDesk.className = "desk";
 		newDesk.id = `desk${deskNumber}`;
-		newDesk.innerText = isLevel2 ? deskLabelsLevel2[deskNumber - 1] : deskLabels[deskNumber - 1];
+		newDesk.innerText = deskLabels[deskNumber - 1];
 		newDesk.onclick = () => serveStudent(deskNumber);
 
 		const worker = document.createElement("div");
 		worker.className = "worker";
 		worker.id = `worker${deskNumber}`;
 
+		// Ensure progress bar and progress fill are created for every desk
 		const progressBar = document.createElement("div");
 		progressBar.className = "progress-bar";
 		progressBar.id = `progressBar${deskNumber}`;
@@ -1049,17 +953,15 @@
 
 		updateDisplay();
 		showNotification(`${deskLabels[deskNumber - 1]} unlocked!`);
-
-		// Unlock special projects when specific desks are purchased
-		if (deskNumber === 3) unlockSpecialProject('provost');
-		if (deskNumber === 6) unlockSpecialProject('strategic');
-		if (deskNumber === 9) unlockSpecialProject('student');
+		
+		// Unlock special projects when specific desks are purchased in Level
+		if (deskNumber === 3) unlockSpecialProject('provostProject'); // Provost Project should unlock first
+		if (deskNumber === 6) unlockSpecialProject('strategicProject');
+		if (deskNumber === 9) unlockSpecialProject('studentProject');
 	}
 
 
-
 	function serveStudent(deskNumber) {
-		if (levelCompleted) return; // Stop processing if level is completed	
 		// When the desk is not automated
 		if (deskUnlocked[deskNumber] && !hasWorker[deskNumber]) {
 			if (!deskInProgress[deskNumber]) {
@@ -1093,7 +995,6 @@
 					progressFill.style.width = '0%';
 					deskInProgress[deskNumber] = false;
 					progressBar.style.display = "none";
-					checkEndGame();
 				}, processingTimes[deskNumber]);
 			}
 		} 
@@ -1139,42 +1040,51 @@
 			studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`;
 			document.getElementById("gameArea").appendChild(studentImage);
 		} else {
-			showNotification("Not enough CSP or worker already hired for this desk!");
+			showNotification("Not enough CSP!");
 		}
 	}
 
 
 	function startAutoProcessing(deskNumber) {
-		setInterval(() => {
+		function processTask() {
 			if (!deskInProgress[deskNumber]) {
 				deskInProgress[deskNumber] = true;
+
 				const progressFill = document.getElementById(`progressFill${deskNumber}`);
-				progressFill.style.transition = 'none'; // Disable transitions for immediate action
-				progressFill.style.width = '0%'; // Reset to 0%
 
-				// Start filling the progress bar immediately
-				progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
-				progressFill.style.width = '100%'; // Fill the progress bar
+				// Reset progress bar
+				progressFill.style.transition = 'none'; // Disable animation for reset
+				progressFill.style.width = '0%'; // Reset width to 0%
 
+				// Start filling progress bar
 				setTimeout(() => {
-				    addCSP(pointsPerDesk[deskNumber]);
-					// Update CSP and total CSP earned using the full points
+					progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`; // Smooth transition
+					progressFill.style.width = '100%'; // Fill the bar
+				}, 50); // Slight delay to visually reset the bar
+
+				// Complete the task after the bar fills
+				setTimeout(() => {
+					// Update CSP and total points
 					csp += pointsPerDesk[deskNumber];
 					totalCspEarned += pointsPerDesk[deskNumber];
 					updateDisplay();
 
-					// Create the floating points effect
+					// Create floating points effect
 					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
 
-					// Immediately reset the progress bar without backtracking
-					progressFill.style.transition = 'none'; // Disable transition
-					progressFill.style.width = '0%'; // Clear the progress bar
-					deskInProgress[deskNumber] = false; // Mark the desk as not in progress
-					checkEndGame();
-				}, processingTimes[deskNumber]);
+					// Mark desk as ready for the next cycle
+					deskInProgress[deskNumber] = false;
+
+					// Immediately start the next task
+					processTask();
+				}, processingTimes[deskNumber]); // Matches the fill duration
 			}
-		}, processingTimes[deskNumber]); // Control the interval timing based on processing time
+		}
+
+		// Start the first task
+		processTask();
 	}
+	
 
 
 
@@ -1192,99 +1102,143 @@
 
     updateDisplay();
 	
-	function addCSP(points) {
-		if (levelCompleted) return; // Stop adding points after the level ends
+	function unlockSpecialProject(projectId) {
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'block'; // Show the button
+			projectButton.onclick = () => triggerSpecialProject(projectId); // Bind the handler
+			showNotification(`Special Project Unlocked: ${projectButton.innerText}`);
+		} else {
+			console.error(`Special project button with ID "${projectId}" not found.`);
+		}
+	}
 
-		csp += points;
-		totalCspEarned += points;
+		
+	function triggerSpecialProject(projectId) {
+		let quiz;
+		currentQuestionIndex = 0;
+		switch (projectId) {
+			case 'provostProject': // Provost Project logic
+				quiz = provostQuiz;
+				break;
+			case 'strategicProject': // Strategic Project logic
+				quiz = strategicQuiz;
+				break;
+			case 'studentProject': // Student Success logic
+				quiz = studentQuiz;
+				break;
+			default:
+				console.error(`Unknown project ID: ${projectId}`);
+				return;
+		}
+
+		// Show the quiz popup
+		currentQuestionIndex = 0; // Reset the index before starting
+		showQuizPopup(quiz, projectId);
+	}
+		
+	function showQuizPopup(quiz, projectId) {
+		let quizPopup = document.getElementById('quizPopup');
+		if (!quizPopup) {
+			quizPopup = document.createElement('div');
+			quizPopup.id = 'quizPopup';
+			quizPopup.style = `
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background: white;
+				padding: 20px;
+				border: 2px solid #ccc;
+				z-index: 100;
+				max-width: 80%;
+			`;
+			document.body.appendChild(quizPopup); // Add to DOM
+		}
+		renderQuestion(projectId, quiz); // Pass quiz to renderQuestion
+	}
+
+
+		function renderQuestion(projectId, quiz) {
+			const quizPopup = document.getElementById('quizPopup');
+			const question = quiz[currentQuestionIndex];
+
+			quizPopup.innerHTML = `
+				<h3>Special Project Quiz</h3>
+				<p>${question.question}</p>
+				${question.options.map((option, index) => `
+					<label>
+						<input type="radio" name="quizOption" value="${index}"> ${option}
+					</label><br>
+				`).join('')}
+				<button id="submitAnswerButton">Submit</button>
+			`;
+
+			document.getElementById('submitAnswerButton').addEventListener('click', () => checkAnswer(projectId, quiz));
+		}
+
+
+
+
+	function checkAnswer(projectId, quiz) {
+		const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+		if (!selectedOption) {
+			alert('Please select an answer.');
+			return;
+		}
+
+		const isCorrect = parseInt(selectedOption.value) === quiz[currentQuestionIndex].answer;
+		if (isCorrect) {
+			currentQuestionIndex++;
+			if (currentQuestionIndex < quiz.length) {
+				renderQuestion(projectId, quiz); // Move to the next question
+			} else {
+				closeQuizPopup(projectId); // Close the quiz popup and hide the button
+				handleSpecialProjectRewards(true); // Reward for completion
+			}
+		} else {
+			handleSpecialProjectRewards(false); // Penalize for incorrect answers
+		}
+	}
+
+
+
+
+	function closeQuizPopup(projectId) {
+		const quizPopup = document.getElementById('quizPopup');
+		if (quizPopup) {
+			document.body.removeChild(quizPopup); // Remove the quiz popup
+		}
+
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'none'; // Hide the button
+		} else {
+			console.error(`Special project button with ID "${projectId}" not found.`);
+		}
+	}
+
+
+	function handleSpecialProjectRewards(isCorrect) {
+		if (isCorrect) {
+			csp += 50; // Reward for completing all questions correctly
+			showNotification("Congratulations! You earned 50 CSP for successfully completing the special project.");
+		} else {
+			csp -= 20; // Penalty for incorrect answer
+			showNotification("Incorrect answer. You lost 20 CSP.");
+		}
 		updateDisplay();
-	}	
-
-
-	// Function to display the end screen
-	function showEndScreen() {
-		const endScreen = document.getElementById("endScreen");
-		const finalScore = document.getElementById("finalScore");
-
-		// Update the final score message
-		finalScore.innerText = `Congratulations! You earned a total of ${totalCspEarned} Customer Service Points (CSP)!`;
-
-		// Match endScreen to gameArea's size and position
-		const gameArea = document.getElementById("gameArea");
-		const gameAreaRect = gameArea.getBoundingClientRect();
-		endScreen.style.top = `${gameAreaRect.top}px`;
-		endScreen.style.left = `${gameAreaRect.left}px`;
-		endScreen.style.width = `${gameAreaRect.width}px`;
-		endScreen.style.height = `${gameAreaRect.height}px`;
-
-		// Show the end screen with fade-in effect
-		endScreen.style.display = "block";
-		endScreen.style.visibility = "visible";
-		endScreen.style.opacity = 1;
 	}
-
-
-
-		function replayLevel() {
-			initializeLevel1(); // Reset Level 1-specific variables and UI
-		}
-
-
-	function nextLevel() {
-		console.log("Next level function triggered");
-
-		isLevel2 = true; // Set Level 2 flag
-
-		// Hide the end screen
-		const endScreen = document.getElementById("endScreen");
-		endScreen.style.opacity = 0; // Fade out effect
-		setTimeout(() => {
-			endScreen.style.visibility = "hidden";
-			endScreen.style.display = "none"; // Fully hide after fade-out
-		}, 300); // Match the CSS transition time
-
-		// Clear Level 1 elements and reset game area
-		const gameArea = document.getElementById("gameArea");
-		gameArea.innerHTML = ""; // Clear Level 1 desks and UI
-		gameArea.style.backgroundImage = "url('RMACRAOUniversity2.png')"; // Set Level 2 background
-
-		// Reset variables for Level 2
-		csp = 0;
-		totalCspEarned = 0;
-		deskUnlocked = { 1: true }; // Reset desks
-		hasWorker = {};
-		nextDeskToBuy = 2;
-		pointsPerDesk = { 1: 3 };
-
-		// Update UI for Level 2
-		const infoPanel = document.getElementById("infoPanel");
-		infoPanel.innerHTML = `
-			<button id="buyDeskButton" onclick="buyNextDesk()">Buy ${deskLabelsLevel2[1]} (100 CSP)</button>
-		`;
-		document.getElementById("totalPointsDisplay").innerText = "Total CSP Earned: 0";
-
-		// Add desks for Level 2
-		for (let i = 1; i <= deskLabelsLevel2.length; i++) {
-			deskUnlocked[i] = false;
-		}
-		unlockDesk(1); // Unlock the first desk
-
-		// Reset game state and notify player
-		gameEnded = false; // Reset game end flag
-		updateLevelIndicator(); // Update level display
-		updateDisplay(); // Update UI
-		showNotification("Welcome to Level 2: Advanced Registrar Tasks!");
-	}
-
-
-
+	
+	
 		// Function to check if the end conditions are met
 	function checkEndGame() {
 		// Check if all desks are automated and CSP is 2,000 or more
 		const allDesksAutomated = Object.keys(hasWorker).length === 10;
-		if (allDesksAutomated && csp >= 2000) {
-			levelCompleted = true; // Stop CSP accumulation		
-			showEndScreen();
+		if (allDesksAutomated && csp >= 1000) {
+		        gameEnded = true; // Lock further updates
+			        console.log("Final CSP at completion:", finalCspAtCompletion); // Debugging log
+			showEndModal();
 		}
 	}
 
@@ -1293,10 +1247,46 @@
 	}
 
 
+	// Function to show the ending modal
+	function showEndModal() {
+		const endModal = document.getElementById("endModal");
+		const finalScoreModal = document.getElementById("finalScoreModal");
+
+		// Update the final score dynamically
+		finalScoreModal.innerText = `Hey, congrats! You managed to get all of your stations automated and working at maximum efficiency! Level 2 will focus on customer service. Let’s see if you can keep this going.`;
+
+		// Display the modal
+		endModal.style.display = "block";
+	}
+
+	// Function to close the modal
+	function closeModal() {
+		const endModal = document.getElementById("endModal");
+		endModal.style.display = "none";
+	}
+
+	// Function for Replay Level button
+	function replayLevel() {
+		// Reset game variables and reload the page to restart the level
+		location.reload();
+	}
+
+	// Function for Next Level button
+	function nextLevel() {
+		alert("Transitioning to Level 2...");
+		location.href = "RegistrarStory_Level2.html"; // Link to a separate file or setup
+	}
 
 
-			
+	// Call checkEndGame() after every CSP update
+	function updateDisplay() {
+		document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+		document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+		checkEndGame();
+	}
 
+		
+	
 	
 	
 </script>
