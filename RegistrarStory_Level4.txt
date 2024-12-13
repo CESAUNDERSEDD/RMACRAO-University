@@ -29,16 +29,16 @@
         .progress-bar-fill { height: 100%; width: 0; background-color: #33348c; transition: width linear; }
 
         /* Positioning each desk based on your numbered layout */
-        #deskContainer1 { top: 51%; left: 42%; }
-        #deskContainer2 { top: 25%; left: 42%; }
-        #deskContainer3 { top: 51%; left: 78%; }
-        #deskContainer4 { top: 51%; left: 10%; }
-        #deskContainer5 { top: 68%; left: 58%; }
-        #deskContainer6 { top: 68%; left: 25%; }
-        #deskContainer7 { top: 68%; left: 79%; }
-        #deskContainer8 { top: 68%; left: 5%; }
-        #deskContainer9 { top: 84%; left: 60%; }
-        #deskContainer10 { top: 84%; left: 30%; }
+        #deskContainer1 { top: 75%; left: 12%; }
+        #deskContainer2 { top: 75%; left: 75%; }
+        #deskContainer3 { top: 33%; left: 70%; }
+        #deskContainer4 { top: 33%; left: 14%; }
+        #deskContainer5 { top: 25%; left: 43%; }
+        #deskContainer6 { top: 50%; left: 13%; }
+        #deskContainer7 { top: 50%; left: 72%; }
+        #deskContainer8 { top: 63%; left: 30%; }
+        #deskContainer9 { top: 63%; left: 57%; }
+        #deskContainer10 { top: 75%; left: 42%; }
 
         #infoPanel { margin-top: 20px; font-weight: bold; text-align: center; }
         #notification { color: #3c744c; font-weight: bold; margin-top: 10px; min-height: 20px; transition: opacity 0.5s; opacity: 0; }
@@ -62,93 +62,6 @@
             border-radius: 50%; /* Make it circular */
         }
 		
-			#titleScreen {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #f4f4f4;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			z-index: 10;
-		}
-
-		#titleImage {
-			max-width: 80%;
-			height: auto;
-			margin-bottom: 20px;
-		}
-
-		#homeStartButton {
-			padding: 10px 20px;
-			font-size: 18px;
-			background-color: #33348c;
-			color: #fff;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-
-		#homeStartButton:hover {
-			background-color: #5555aa;
-		}
-
-		#gameArea {
-			display: none;
-		}
-
-
-		/* End Screen Styling */
-	#endScreen {
-		position: absolute;
-		top: 0; /* Adjust relative to the game area */
-		left: 0;
-		width: 100%; /* Match #gameArea dimensions */
-		height: 100%; /* Match #gameArea dimensions */
-		background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		visibility: hidden; /* Hidden by default */
-		opacity: 0;
-		transition: opacity 0.3s ease;
-		z-index: 1000; /* Ensures it's on top */
-	}
-
-
-
-	#endScreenContent {
-		width: 80%; /* Adjust as necessary */
-		height: auto; /* Maintain aspect ratio */
-		background: white;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		padding: 20px;
-		border-radius: 10px;
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	}
-
-
-		#replayButton, #nextLevelButton {
-			padding: 10px 20px;
-			margin: 10px;
-			font-size: 16px;
-			background-color: #33348c;
-			color: #fff;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-
-		#replayButton:hover, #nextLevelButton:hover {
-			background-color: #5555aa;
-		}
 
 	#specialProjectsPanel {
 		position: absolute; /* Anchors the panel to a fixed position */
@@ -159,113 +72,62 @@
 		display: block; /* Ensure proper rendering */
 	}		
 		
-	/* Modal Styling */
-	.modal {
-	  display: none; /* Hidden by default */
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100%;
-	  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-	  z-index: 1000;
-	  justify-content: center;
-	  align-items: center;
-	}
-
-	/* Modal Content */
-	.modal-content {
-	  background: white;
-	  padding: 20px;
-	  border-radius: 10px;
-	  text-align: center;
-	  max-width: 500px;
-	  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	  animation: slideDown 0.5s ease-out;
-	}
-
-	/* Animation for Modal Appearance */
-	@keyframes slideDown {
-	  from {
-		transform: translateY(-50%);
-		opacity: 0;
-	  }
-	  to {
-		transform: translateY(0);
-		opacity: 1;
-	  }
-	}
-
-	/* Presenter Image Styling */
-	#presenterImage {
-	  max-width: 150px;
-	  height: auto;
-	  margin-bottom: 20px;
-	}
-
-	/* Modal Content Styling */
-	.modal-content {
-	  background: white;
-	  padding: 20px;
-	  border-radius: 10px;
-	  text-align: left;
-	  max-width: 800px;
-	  display: flex; /* Use flexbox for side-by-side layout */
-	  align-items: center;
-	  gap: 20px; /* Space between the image and text */
-	  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	}
-
-	/* Presenter Container */
-	.presenter-container {
-	  flex: 1; /* Allow the presenter to take up one part of the space */
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	}
-
-	#presenterImage {
-	  max-width: 200px; /* Control the size of the image */
-	  height: auto;
-	}
-
-	/* Text Container */
 	.text-container {
-	  flex: 2; /* Allow the text area to take up more space */
-	  background-color: #4B0082; /* RMACRAO purple */
-	  color: white;
-	  padding: 20px;
-	  border-radius: 10px;
-	  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+		margin-left: 10px; /* Adjust to move closer to the image */
+		text-align: left; /* Optional: Align text to the left */
+		line-height: 1.8; /* Stretch lines (default is 1.0 or 1.2) */
+		max-width: 400px; /* Limit the width for better readability */
 	}
 
-	.text-container p,
-	.text-container ul {
-	  margin: 0;
-	  padding: 0;
+	.text-container p {
+		margin: 10px 0; /* Add spacing between paragraphs */
 	}
 
-	.text-container ul {
-	  list-style-type: disc;
-	  margin-left: 20px;
+
+	/* Modal Container */
+	.endmodal {
+		display: none; /* Hidden by default */
+		position: fixed;
+		z-index: 1000;
+		left: 0;
+		top: 0;
+		width: 100%; /* Cover the entire screen width */
+		height: 100%; /* Cover the entire screen height */
+		background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+		justify-content: center; /* Center horizontally */
+		align-items: center; /* Center vertically */
+		
 	}
 
-	#startGameButton {
-	  background-color: white;
-	  color: #4B0082; /* Purple text for branding */
-	  border: 2px solid #4B0082;
-	  border-radius: 5px;
-	  padding: 10px 20px;
-	  font-size: 16px;
-	  margin-top: 20px;
-	  cursor: pointer;
-	  display: block; /* Ensures it spans the width inside the container */
+	/* Modal Content Box */
+	.endmodal-content {
+		background-color: white;
+		margin: 15% auto;
+		padding: 20px;
+		border-radius: 10px;
+		width: 80%;
+		max-width: 500px;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+		text-align: center;
+		position: relative;
 	}
 
-	#startGameButton:hover {
-	  background-color: #6B28A6; /* Darker purple on hover */
-	  color: white;
+	/* Close Button */
+	.endmodalclose-button {
+		position: absolute;
+		top: 10px;
+		right: 20px;
+		font-size: 1.5rem;
+		cursor: pointer;
 	}
+
+	/* Character Image */
+	.endmodalcharacter-image {
+		max-width: 100%;
+		height: auto;
+		margin-bottom: 20px;
+		border-radius: 10px;
+	}	
 
 		
 		
@@ -275,29 +137,8 @@
 
 
 
-	<div id="titleScreen">
-		<img src="RMACRAOUniversityTitle.png" alt="RMACRAO University: From Admissions to Graduation" id="titleImage">
-		<button id="homeStartButton">Start Game</button>
-	</div>
 
-	<div id="welcomeModal" class="modal">
-		<div class="modal-content">
-			<div class="presenter-container">
-				<img src="RMACRAOUniversityPresenter1.png" alt="Presenter" id="presenterImage">
-			</div>
-			<div class="text-container">
-				<p>Welcome to RMACRAO University! Here’s how to play:</p>
-				<ul>
-					<li>Click on desks to process forms and earn CSP points.</li>
-					<li>Complete the Provost Quiz to activate multipliers!</li>
-					<li>Manage your time wisely to maximize points.</li>
-				</ul>
-				<button id="modalStartButton">Let's Go!</button>
-			</div>
-		</div>
-	</div>
-
-<div id="welcomeMessage">Welcome to RMACRAO University. Process some forms to gain points. Click the desk to process a form.</div>
+<div id="welcomeMessage">Welcome to RMACRAO University: Admissions Level 1! This level will focus on recruitment. Click the desk to get started.</div>
 
 <div id="totalPointsDisplay">Total CSP Earned: 0</div>
 
@@ -313,20 +154,12 @@
     <img id="studentImage" src="Student1.png" alt="Student Worker" class="student-image" />
 </div>
 
-<!-- End Screen Popup -->
-<div id="endScreen">
-    <div id="endScreenContent">
-        <h2>Office Successfully Managed!</h2>
-        <p id="finalScore"></p>
-        <button id="replayButton" onclick="replayLevel()">Replay Level</button>
-		<button id="nextLevelButton" onclick="loadNextLevel()">Next Level</button>
-    </div>
-</div>
+
 
 <div id="specialProjectsPanel">
-	<button id="highSchoolPartnership" style="display: none;" onclick="triggerSpecialProject('highSchool')">Community High School Partnership Drive</button>
+	<button id="highSchool" style="display: none;" onclick="triggerSpecialProject('highSchool')">Community High School Partnership Drive</button>
 	<button id="virtualRecruitment" style="display: none;" onclick="triggerSpecialProject('virtualRecruitment')">Virtual Recruitment Blitz</button>
-	<button id="scholarshipCampaign" style="display: none;" onclick="triggerSpecialProject('scholarship')">Scholarship Awareness Campaign</button>
+	<button id="scholarshipCampaign" style="display: none;" onclick="triggerSpecialProject('scholarshipCampaign')">Scholarship Awareness Campaign</button>
 </div>
 
 
@@ -335,11 +168,25 @@
 <div id="infoPanel">
     <div id="notification"></div>
     <p id="pointsDisplay">Customer Service Points (CSP): 0</p>
+	<p id="additionalText" style="margin-top: 10px; color: #333;">Special projects available this level: High School Partnership Drive, Virtual Recruitment Blitz, and Scholarship Awareness Campaign </p>	
     <button id="buyDeskButton" onclick="buyNextDesk()">Buy Campus Tours (100 CSP)</button>
     <button id="hireWorkerButton1" onclick="hireWorker(1, 30)">Hire Work-Study Student for Student Inquiries Desk (30 CSP)</button>
 </div>
 
-<!-- <div id="levelIndicator">Level 2</div> -->
+<div class="endmodal" id="endModal">
+    <div class="endmodal-content">
+        <span class="endmodalclose-button" onclick="closeModal()">X</span>
+        <div class="endmodal-body">
+            <h2>Congratulations!</h2>
+            <p id="finalScoreModal">Final Score: 1000</p>
+            <button onclick="replayLevel()">Replay Level</button>
+            <button onclick="nextLevel()">Next Level</button>
+        </div>
+        <img src="RMACRAOUniversityPresenter3.png" alt="Character" class="endmodalcharacter-image">
+    </div>
+</div>
+
+
 
 
 
@@ -362,19 +209,12 @@
     let baseHireCost = 30;
     let deskInProgress = {};
 	let usedImages = []; // Initialize an array to keep track of used images
-	let gameEnded = false; // Flag to avoid retriggering
 	let levelCompleted = false; // Initially, the level is not completed
 	let multiplierActive = false;
 	let gameStarted = false; // Flag to prevent double game starts
+	let finalCspAtCompletion = 0; // Holds the total CSP when the game ends
+	let gameEnded = false; // Prevents re-triggering end-game logic
 
-	//Level 2 //
-	let isLevel2 = false; // Initially set to false for Level 1
-	let cspLevel2 = 0;
-	let totalCspEarnedLevel2 = 0;
-	let deskUnlockedLevel2 = { 1: true }; // Reset for Level 2 desks
-	let hasWorkerLevel2 = {};
-	let nextDeskToBuyLevel2 = 2; // Reset to start fresh for Level 2
-	let pointsPerDeskLevel2 = { 1: 3 }; // Adjust point values for Level 2
 
     const penaltyTime = 30000; // 30 seconds penalty time
 
@@ -386,22 +226,8 @@
     ];
 
 	document.addEventListener("DOMContentLoaded", () => {
-		const homeStartButton = document.getElementById("homeStartButton");
-		const modalStartButton = document.getElementById("modalStartButton");
-
-		homeStartButton.addEventListener("click", () => {
-			document.getElementById("welcomeModal").style.display = "flex";
-		});
-
-		modalStartButton.addEventListener("click", () => {
-			startGame();
-		});
+		startGame(); // Automatically start the game when the page loads
 	});
-
-
-
-
-
 
     // Array of student image paths
     const studentImages = [
@@ -515,19 +341,19 @@
 
 
 	const specialProjects = {
-		provost: {
+		highSchool: {
 			unlocked: false,
 			message: "High School Partnership unlocked! Complete the task to gain a CSP multiplier!",
 			reward: () => applyCSPMultiplier(2, 30), // Example: 2x multiplier for 30 seconds
 			penalty: () => showNotification("Provost's Directive failed. Better luck next time!"),
 		},
-		strategic: {
+		virtualRecruitment: {
 			unlocked: false,
 			message: "Virtual Recruitment unlocked! Complete the task for extra points!",
 			reward: () => { csp += 50; updateDisplay(); },
 			penalty: () => showNotification("Strategic Initiative failed. No bonus points this time."),
 		},
-		student: {
+		scholarshipCampsign: {
 			unlocked: false,
 			message: "Scholarship Campaign unlocked! Complete the task to boost all desk speeds!",
 			reward: () => {
@@ -603,8 +429,6 @@
 
 	function startGame() {
 		console.log("Game started");
-		document.getElementById("titleScreen").style.display = "none";
-		document.getElementById("welcomeModal").style.display = "none";
 		document.getElementById("gameArea").style.display = "block";
 		updateDisplay();
 	}
@@ -694,7 +518,20 @@
 		document.body.appendChild(popup);
 	}
 
+	function closeQuizPopup(projectId) {
+		const quizPopup = document.getElementById('quizPopup');
+		if (quizPopup) {
+			document.body.removeChild(quizPopup); // Remove the quiz popup
+		}
 
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'none'; // Hide the button
+		} else {
+			console.error(`Special project button with ID "${projectId}" not found.`);
+		}
+	}
+	
 	function closeAdmissionsPopup() {
 		const popup = document.getElementById("admissionsQuestionPopup");
 		if (popup) {
@@ -702,6 +539,16 @@
 		}
 	}
 
+	function handleSpecialProjectRewards(isCorrect) {
+		if (isCorrect) {
+			csp += 50; // Reward for completing all questions correctly
+			showNotification("Congratulations! You earned 50 CSP for successfully completing the special project.");
+		} else {
+			csp -= 20; // Penalty for incorrect answer
+			showNotification("Incorrect answer. You lost 20 CSP.");
+		}
+		updateDisplay();
+	}
 
 	function checkAdmissionsAnswer(deskNumber) {
 		const selectedOption = document.querySelector('input[name="admissionsOption"]:checked');
@@ -739,214 +586,147 @@
 	}
 
 
-
-	function unlockSpecialProject(project) {
-		if (!specialProjects[project].unlocked) {
-			specialProjects[project].unlocked = true;
-			document.getElementById(`${project}Project`).style.display = "block"; // Show the button
-			alert(specialProjects[project].message); // Notify the player
+	function unlockSpecialProject(projectId) {
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'block'; // Show the button
+			showNotification(`Special Project Unlocked: ${projectButton.innerText}`);
+		} else {
+			console.error(`Special project button with ID "${projectId}" not found.`);
 		}
 	}
-
-	
-	function triggerSpecialProject(project) {
-		if (project === 'highSchool') {
-			currentProvostQuestion = 0;
-			correctAnswers = 0;
-			showProvostQuestion();
-		} else if (project === 'recruitment') {
-			currentStrategicQuestion = 0;
-			correctStrategicAnswers = 0;
-			showStrategicQuestion();
-		} else if (project === 'scholarship') {
-			currentStudentQuestion = 0;
-			correctStudentAnswers = 0;
-			showStudentQuestion();
+		
+	function triggerSpecialProject(projectId) {
+		let quiz;
+		switch (projectId) {
+			case 'highSchool':
+				quiz = partnershipQuiz;
+				break;
+			case 'virtualRecruitment':
+				quiz = recruitmentQuiz;
+				break;
+			case 'scholarshipCampaign':
+				quiz = scholarshipQuiz;
+				break;
+			default:
+				console.error(`Unknown project ID: ${projectId}`);
+				return;
 		}
+
+		showQuizPopup(quiz, projectId); // Pass the projectId and quiz to the popup
 	}
 
-
-		function showStrategicQuestion() {
-		const questionData = strategicQuiz[currentStrategicQuestion];
-		const popup = document.createElement("div");
-		popup.id = "strategicQuizPopup";
-		popup.innerHTML = `
-			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-				<h3>Strategic Initiative</h3>
-				<p>${questionData.question}</p>
-				${questionData.options.map((option, index) => `
-					<label>
-						<input type="radio" name="strategicOption" value="${index}"> ${option}
-					</label><br>
-				`).join('')}
-				<button onclick="checkStrategicAnswer()">Submit</button>
-			</div>
+	function showQuizPopup(quiz, projectId) {
+		const quizPopup = document.createElement('div');
+		quizPopup.id = 'quizPopup';
+		quizPopup.style = `
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: white;
+			padding: 20px;
+			border: 2px solid #ccc;
+			z-index: 100;
+			max-width: 80%;
 		`;
-		document.body.appendChild(popup);
+		document.body.appendChild(quizPopup);
+
+		currentQuestionIndex = 0; // Initialize the question index
+
+		renderQuestion(projectId, quiz); // Start rendering the first question
 	}
-	
-	
-		function showStudentQuestion() {
-		const questionData = studentQuiz[currentStudentQuestion];
-		const popup = document.createElement("div");
-		popup.id = "studentQuizPopup";
-		popup.innerHTML = `
-			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-				<h3>Student Success Drive</h3>
-				<p>${questionData.question}</p>
-				${questionData.options.map((option, index) => `
-					<label>
-						<input type="radio" name="studentOption" value="${index}"> ${option}
-					</label><br>
-				`).join('')}
-				<button onclick="checkStudentAnswer()">Submit</button>
-			</div>
+
+
+	function renderQuestion(projectId, quiz) {
+		const quizPopup = document.getElementById('quizPopup');
+		const question = quiz[currentQuestionIndex];
+
+		quizPopup.innerHTML = `
+			<h3>Special Project Quiz</h3>
+			<p>${question.question}</p>
+			${question.options.map((option, index) => `
+				<label>
+					<input type="radio" name="quizOption" value="${index}"> ${option}
+				</label><br>
+			`).join('')}
+			<button id="submitAnswerButton">Submit</button>
 		`;
-		document.body.appendChild(popup);
-	}
-	
 
-		function showProvostQuestion() {
-		const questionData = provostQuiz[currentProvostQuestion];
-
-		const popup = document.createElement("div");
-		popup.id = "provostQuizPopup";
-		popup.innerHTML = `
-			<div style="background-color: white; padding: 20px; border: 1px solid #ccc;">
-				<h3>Provost's Directive</h3>
-				<p>${questionData.question}</p>
-				${questionData.options.map((option, index) => `
-					<label>
-						<input type="radio" name="provostOption" value="${index}"> ${option}
-					</label><br>
-				`).join('')}
-				<button onclick="checkProvostAnswer()">Submit</button>
-			</div>
-		`;
-		document.body.appendChild(popup);
+		document.getElementById('submitAnswerButton').addEventListener('click', () => checkAnswer(projectId, quiz));
 	}
 
-	function checkProvostAnswer() {
-		const selectedOption = document.querySelector('input[name="provostOption"]:checked');
-		if (selectedOption) {
-			const selectedIndex = parseInt(selectedOption.value);
-			const correctAnswer = provostQuiz[currentProvostQuestion].answer;
 
-			if (selectedIndex === correctAnswer) {
-				correctAnswers++;
-				showNotification("Correct! Great job!");
+	function checkAnswer(projectId, quiz) {
+		const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+		if (!selectedOption) {
+			alert('Please select an answer.');
+			return;
+		}
+
+		const isCorrect = parseInt(selectedOption.value) === quiz[currentQuestionIndex].answer;
+		if (isCorrect) {
+			currentQuestionIndex++;
+			if (currentQuestionIndex < quiz.length) {
+				renderQuestion(projectId, quiz); // Move to the next question
 			} else {
-				showNotification("Incorrect. Think about what the Provost would prioritize!");
-			}
-
-			// Move to the next question or finish the quiz
-			document.getElementById("provostQuizPopup").remove();
-			currentProvostQuestion++;
-
-			if (currentProvostQuestion < provostQuiz.length) {
-				showProvostQuestion();
-			} else {
-				finishProvostQuiz();
+				closeQuizPopup(projectId); // Close the quiz popup and hide the button
+				handleSpecialProjectRewards(true); // Reward for completion
 			}
 		} else {
-			showNotification("Please select an answer.");
+			handleSpecialProjectRewards(false); // Penalize for incorrect answers
 		}
 	}
-	
-	
-	function checkStrategicAnswer() {
-		const selectedOption = document.querySelector('input[name="strategicOption"]:checked');
+
+
+
+	function completeProject(projectId, quiz) {
+		const selectedOption = document.querySelector(`input[name="${projectId}Option"]:checked`);
 		if (selectedOption) {
 			const selectedIndex = parseInt(selectedOption.value);
-			const correctAnswer = strategicQuiz[currentStrategicQuestion].answer;
+			const correctAnswer = quiz[currentQuestionIndex].answer;
 
 			if (selectedIndex === correctAnswer) {
-				correctStrategicAnswers++;
 				showNotification("Correct! Great job!");
-			} else {
-				showNotification("Incorrect. Please think about strategic goals!");
-			}
+				currentQuestionIndex++;
 
-			// Move to the next question or finish the quiz
-			document.getElementById("strategicQuizPopup").remove();
-			currentStrategicQuestion++;
-
-			if (currentStrategicQuestion < strategicQuiz.length) {
-				showStrategicQuestion();
+				// Move to the next question or complete the quiz
+				if (currentQuestionIndex < quiz.length) {
+					renderQuestion(projectId, quiz); // Move to the next question
+				} else {
+					applyProjectRewards(projectId, true); // Quiz completed successfully
+					closeQuizPopup(projectId);
+				}
 			} else {
-				finishStrategicQuiz();
+				showNotification("Incorrect. Think about the focus of this project.");
+				applyProjectRewards(projectId, false); // Apply penalty for incorrect answer
+				closeQuizPopup(projectId);
 			}
 		} else {
 			showNotification("Please select an answer.");
 		}
 	}
 
-	function checkStudentAnswer() {
-		const selectedOption = document.querySelector('input[name="studentOption"]:checked');
-		if (selectedOption) {
-			const selectedIndex = parseInt(selectedOption.value);
-			const correctAnswer = studentQuiz[currentStudentQuestion].answer;
 
-			if (selectedIndex === correctAnswer) {
-				correctStudentAnswers++;
-				showNotification("Correct! Great job!");
-			} else {
-				showNotification("Incorrect. Focus on student success!");
-			}
+	function applyProjectRewards(projectId, isSuccessful) {
+		const project = specialProjects[projectId];
 
-			// Move to the next question or finish the quiz
-			document.getElementById("studentQuizPopup").remove();
-			currentStudentQuestion++;
-
-			if (currentStudentQuestion < studentQuiz.length) {
-				showStudentQuestion();
-			} else {
-				finishStudentQuiz();
-			}
+		if (isSuccessful) {
+			project.reward(); // Apply reward logic from `specialProjects`
+			showNotification(`${projectId} completed successfully!`);
 		} else {
-			showNotification("Please select an answer.");
+			project.penalty(); // Apply penalty logic from `specialProjects`
+			showNotification(`${projectId} failed. Better luck next time.`);
+		}
+
+		// Hide the button for the completed project
+		const projectButton = document.getElementById(projectId);
+		if (projectButton) {
+			projectButton.style.display = 'none'; // Hide the button
 		}
 	}
 
-		function finishStrategicQuiz() {
-			if (correctStrategicAnswers === strategicQuiz.length) {
-				specialProjects.strategic.reward();
-				showNotification("Strategic Initiative successfully completed! +50 CSP!");
-			} else {
-				specialProjects.strategic.penalty();
-			}
-			document.getElementById("strategicProject").style.display = "none";
-		}
 
-		function finishStudentQuiz() {
-			if (correctStudentAnswers === studentQuiz.length) {
-				specialProjects.student.reward();
-				showNotification("Student Success Drive completed! All desks are faster!");
-			} else {
-				specialProjects.student.penalty();
-			}
-			document.getElementById("studentProject").style.display = "none";
-		}
-			
-			
-
-	function finishProvostQuiz() {
-		if (correctAnswers === provostQuiz.length) {
-			specialProjects.provost.reward();
-			applyCSPMultiplier(2, 60); // Apply a 2x multiplier for 60 seconds
-			showNotification("You completed the Provost's Directive successfully! CSP multiplier activated.");
-		} else {
-			specialProjects.provost.penalty();
-			showNotification("You didn't complete the Provost's Directive. Better luck next time!");
-		}
-
-		// Hide the Provost Project button
-		document.getElementById("provostProject").style.display = "none";
-
-		// Reset quiz state
-		correctAnswers = 0;
-		currentProvostQuestion = 0;
-	}
 
 
 	function applyCSPMultiplier(multiplier, duration = 30) {
@@ -1005,7 +785,6 @@
 	
 	
 
-	// Update unlockDesk to include special project unlocking
 	function unlockDesk(deskNumber) {
 		const newDeskContainer = document.createElement("div");
 		newDeskContainer.className = "desk-container";
@@ -1014,13 +793,14 @@
 		const newDesk = document.createElement("div");
 		newDesk.className = "desk";
 		newDesk.id = `desk${deskNumber}`;
-		newDesk.innerText = isLevel2 ? deskLabelsLevel2[deskNumber - 1] : deskLabels[deskNumber - 1];
+		newDesk.innerText = deskLabels[deskNumber - 1];
 		newDesk.onclick = () => serveStudent(deskNumber);
 
 		const worker = document.createElement("div");
 		worker.className = "worker";
 		worker.id = `worker${deskNumber}`;
 
+		// Ensure progress bar and progress fill are created for every desk
 		const progressBar = document.createElement("div");
 		progressBar.className = "progress-bar";
 		progressBar.id = `progressBar${deskNumber}`;
@@ -1055,13 +835,12 @@
 
 		updateDisplay();
 		showNotification(`${deskLabels[deskNumber - 1]} unlocked!`);
-
-		// Unlock special projects when specific desks are purchased
-		if (deskNumber === 3) unlockSpecialProject('provost');
-		if (deskNumber === 6) unlockSpecialProject('strategic');
-		if (deskNumber === 9) unlockSpecialProject('student');
+		
+		// Unlock special projects when specific desks are purchased in Level
+			if (deskNumber === 3) unlockSpecialProject('highSchool');
+			if (deskNumber === 6) unlockSpecialProject('virtualRecruitment');
+			if (deskNumber === 9) unlockSpecialProject('scholarshipCampaign');
 	}
-
 
 
 	function serveStudent(deskNumber) {
@@ -1145,42 +924,51 @@
 			studentImage.style.left = `${document.getElementById(`deskContainer${deskNumber}`).offsetLeft + 30}px`;
 			document.getElementById("gameArea").appendChild(studentImage);
 		} else {
-			showNotification("Not enough CSP or worker already hired for this desk!");
+			showNotification("Not enough CSP!");
 		}
 	}
 
 
-	function startAutoProcessing(deskNumber) {
-		setInterval(() => {
-			if (!deskInProgress[deskNumber]) {
-				deskInProgress[deskNumber] = true;
-				const progressFill = document.getElementById(`progressFill${deskNumber}`);
-				progressFill.style.transition = 'none'; // Disable transitions for immediate action
-				progressFill.style.width = '0%'; // Reset to 0%
+		function startAutoProcessing(deskNumber) {
+			function processTask() {
+				if (!deskInProgress[deskNumber]) {
+					deskInProgress[deskNumber] = true;
 
-				// Start filling the progress bar immediately
-				progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`;
-				progressFill.style.width = '100%'; // Fill the progress bar
+					const progressFill = document.getElementById(`progressFill${deskNumber}`);
 
-				setTimeout(() => {
-				    addCSP(pointsPerDesk[deskNumber]);
-					// Update CSP and total CSP earned using the full points
-					csp += pointsPerDesk[deskNumber];
-					totalCspEarned += pointsPerDesk[deskNumber];
-					updateDisplay();
+					// Reset progress bar
+					progressFill.style.transition = 'none'; // Disable animation for reset
+					progressFill.style.width = '0%'; // Reset width to 0%
 
-					// Create the floating points effect
-					createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+					// Start filling progress bar
+					setTimeout(() => {
+						progressFill.style.transition = `width ${processingTimes[deskNumber]}ms linear`; // Smooth transition
+						progressFill.style.width = '100%'; // Fill the bar
+					}, 50); // Slight delay to visually reset the bar
 
-					// Immediately reset the progress bar without backtracking
-					progressFill.style.transition = 'none'; // Disable transition
-					progressFill.style.width = '0%'; // Clear the progress bar
-					deskInProgress[deskNumber] = false; // Mark the desk as not in progress
-					checkEndGame();
-				}, processingTimes[deskNumber]);
+					// Complete the task after the bar fills
+					setTimeout(() => {
+						// Update CSP and total points
+						csp += pointsPerDesk[deskNumber];
+						totalCspEarned += pointsPerDesk[deskNumber];
+						updateDisplay();
+
+						// Create floating points effect
+						createFloatingPoints(pointsPerDesk[deskNumber], deskNumber);
+
+						// Mark desk as ready for the next cycle
+						deskInProgress[deskNumber] = false;
+
+						// Immediately start the next task
+						processTask();
+					}, processingTimes[deskNumber]); // Matches the fill duration
+				}
 			}
-		}, processingTimes[deskNumber]); // Control the interval timing based on processing time
-	}
+
+			// Start the first task
+			processTask();
+		}
+		
 
 
 
@@ -1265,12 +1053,12 @@
 		// Update UI for Level 2
 		const infoPanel = document.getElementById("infoPanel");
 		infoPanel.innerHTML = `
-			<button id="buyDeskButton" onclick="buyNextDesk()">Buy ${deskLabelsLevel2[1]} (100 CSP)</button>
+			<button id="buyDeskButton" onclick="buyNextDesk()">Buy ${deskLabels[1]} (100 CSP)</button>
 		`;
 		document.getElementById("totalPointsDisplay").innerText = "Total CSP Earned: 0";
 
 		// Add desks for Level 2
-		for (let i = 1; i <= deskLabelsLevel2.length; i++) {
+		for (let i = 1; i <= deskLabels.length; i++) {
 			deskUnlocked[i] = false;
 		}
 		unlockDesk(1); // Unlock the first desk
@@ -1283,14 +1071,15 @@
 	}
 
 
-
 		// Function to check if the end conditions are met
 	function checkEndGame() {
 		// Check if all desks are automated and CSP is 2,000 or more
 		const allDesksAutomated = Object.keys(hasWorker).length === 10;
-		if (allDesksAutomated && csp >= 2000) {
-			levelCompleted = true; // Stop CSP accumulation		
-			showEndScreen();
+		if (allDesksAutomated && csp >= 1000) {
+		        gameEnded = true; // Lock further updates
+				        console.log("End conditions met");
+			        console.log("Final CSP at completion:", finalCspAtCompletion); // Debugging log
+			showEndModal();
 		}
 	}
 
@@ -1299,6 +1088,43 @@
 	}
 
 
+	// Function to show the ending modal
+	function showEndModal() {
+		const endModal = document.getElementById("endModal");
+		const finalScoreModal = document.getElementById("finalScoreModal");
+
+		// Update the final score dynamically
+		finalScoreModal.innerText = `Hey, congrats! You managed to get all of your stations automated and working at maximum efficiency! Level 2 will focus on application processing. Let’s see if you can keep this going.`;
+
+		// Display the modal
+		endModal.style.display = "block";
+	}
+
+	// Function to close the modal
+	function closeModal() {
+		const endModal = document.getElementById("endModal");
+		endModal.style.display = "none";
+	}
+
+	// Function for Replay Level button
+	function replayLevel() {
+		// Reset game variables and reload the page to restart the level
+		location.reload();
+	}
+
+	// Function for Next Level button
+	function nextLevel() {
+		alert("Transitioning to Level 2...");
+		location.href = "RegistrarStory_Level5.html"; // Link to a separate file or setup
+	}
+
+
+	// Call checkEndGame() after every CSP update
+	function updateDisplay() {
+		document.getElementById("pointsDisplay").innerText = `Customer Service Points (CSP): ${csp}`;
+		document.getElementById("totalPointsDisplay").innerText = `Total CSP Earned: ${totalCspEarned}`;
+		checkEndGame();
+	}
 
 
 			
